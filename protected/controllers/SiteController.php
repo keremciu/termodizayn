@@ -1,5 +1,4 @@
 <?php
-
 class SiteController extends Controller
 {
 	public function actions()
@@ -10,13 +9,17 @@ class SiteController extends Controller
 			),
 		);
 	}
-
 	public function actionIndex()
 	{
+		$gallery = Gallery::model()->findByAttributes(array('slug'=>'slider'));
+		$photos=Photos::model()->findAll(array('condition'=>'gallery = :gallery','order'=>'t.ordering DESC','params'=>array(':gallery'=>$gallery->id)));
 
-		$this->render('index');
+		$this->render('index',
+			array(
+				'gallery'=>$gallery,
+				'photos'=>$photos,
+			));
 	}
-
 	public function actionError()
 	{
 		if($error=Yii::app()->errorHandler->error)
@@ -27,6 +30,5 @@ class SiteController extends Controller
 				$this->render('error', $error);
 		}
 	}
-
 	
 }

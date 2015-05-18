@@ -1,16 +1,16 @@
 <!-- Site Cover -->
 	<div class="site-cover">
 		<ul class="site-slider">
+		{% for photo in photos %}
 			<li class="site-slider-frame">
-				<div class="site-slider-content site-slider-content--one">
+				<div class="site-slider-content" style="background-image:url(img/photos/{{ photo.photo }})">
 					<div class="container">
 						<div class="site-slogan">
 							<h1 class="site-slogan_title">
-							Soğuk zincirin en sağlam halkası
+							{{ photo.name }}
 							</h1>
 							<p class="site-slogan_text">
-								Kalite ve ihracat çabaları neticesinde TERMODİZAYN ürünleri, <br>
-								Avrupa, Asya ve Afrika ülkelerinde geniş bir satış yelpazesine ulaştı.
+							{{ photo.desc}}
 							</p>
 							<a href="#" title="Hakkımızda" class="site-slogan_button hidden-xs">
 								Hakkımızda <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
@@ -19,13 +19,7 @@
 					</div>
 				</div>
 			</li>
-			<li class="site-slider-frame">
-				<div class="site-slider-content site-slider-content--two">
-					<div class="container">
-						
-					</div>
-				</div>
-			</li>
+		{% endfor %}
 		</ul>
 	</div>
 <!-- Site Content -->
