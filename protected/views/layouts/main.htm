@@ -1,0 +1,269 @@
+﻿{% set base = App.baseurl %}
+{% set cs = App.clientScript %}
+{{ void(cs.registerMetaTag(NULL,NULL,NULL,{'charset':'utf-8'})) }}
+{{ void(cs.registerMetaTag('en-GB','language')) }}
+{{ void(cs.registerLinkTag('shortcut icon','image/x-ico',base ~ '/img/favicon.png')) }}
+{{ void(cs.registerLinkTag('author',NULL,'https://kerem.ws')) }}
+{{ void(cs.registerLinkTag('stylesheet','text/css','http://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Condensed:400,300,700&subset=latin,latin-ext')) }}
+{{ void(cs.registerMetaTag('yes','apple-mobile-web-app-capable')) }}
+{{ void(cs.registerMetaTag('width=device-width, initial-scale=1, user-scalable=non','viewport')) }}
+{{ void(cs.registerMetaTag('termodizayn,açıklama.','description')) }}
+{{ void(cs.registerMetaTag('termodizayn.','keywords')) }}
+{{ void(cs.registerCssFile(base ~ '/css/style.css')) }}
+{{ void(cs.registerScriptFile(base ~ '/js/vendor/jquery-1.11.1.min.js')) }}
+{{ void(cs.registerScriptFile(base ~ '/js/plugin.js')) }}
+{{ void(cs.registerScriptFile(base ~ '/js/main.js')) }}
+<!DOCTYPE html>
+<html lang="{{ app.language }}">
+<head><title>{{ html.encode(this.pageTitle) | raw }}</title></head>
+<body>
+	{{ this.renderPartial('//layouts/svgfiles')}}
+	<div class="overlay--mobile"></div>
+	<!-- Header -->
+	<header class="site-header">
+		<!-- Navbar -->
+		<div class="site-navbar">
+			<div class="container">
+				<!-- Navbar Left -->
+				<div class="pull-left hidden-xs">
+					{{ void(this.widget('application.components.widgets.LanguageSelect')) }}
+					<a href="tel:+902126232293" title="Telefon" class="site-navbar_item">
+						<span>
+							<svg class="icon"><use xlink:href="#icon-phone"></use></svg> +90 (212) 623 22 93
+						</span>
+					</a>
+					<a href="mailto:info@termodizayn.com" title="E-Mail" class="site-navbar_item">
+						<span><svg class="icon"><use xlink:href="#icon-email"></use></svg> info@termodizayn.com</span>
+					</a>
+				</div>
+				<!-- Navbar Right -->
+				<div class="pull-right hidden-xs">
+					<div id="user-box" class="user-box-frame">
+						<div class="site-navbar_item user-box-frame_item">
+							<span>
+								<svg class="icon"><use xlink:href="#icon-login"></use></svg>
+								Giriş Yap veya Kaydol
+								<svg class="icon"><use xlink:href="#icon-arrow-drop-down"></use></svg>
+							</span>
+						</div>
+						<div class="user-box">
+							<!-- Sign-In -->
+							<div class="user-box_sign-in">
+								<form class="user-box-form" action="#" autocomplete="off">
+									<input type="text" class="user-box-form_textbox" placeholder="E-Posta">
+									<input type="password" class="user-box-form_textbox" placeholder="Parola">
+									<button type="button" class="button">Giriş Yap</button>
+								</form>
+								<a href="forgot-password.php" class="user-box-forgot-password" title="Şifremi Unuttum!">Şifremi Unuttum!</a>
+							</div>
+							<!-- Register Button -->
+							<a href="register.php" class="user-box_register" title="Kayıt olmak istiyorum">
+								<svg class="icon"><use xlink:href="#icon-register"></use></svg> Kayıt olmak istiyorum
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<!-- Logo -->
+			<a href="{{ base }}" class="site-logo" title="Termodizayn">
+				<img src="img/site-logo.png" alt="Termodizayn">
+			</a>
+			<!-- Menu -->
+			<nav class="site-nav hidden-xs">
+				{% set geturl = App.request.getUrl() %}
+				{% for menu in this.dynamicmenu %}
+					{% set link = menu.alias %}
+					{% if menu.type == "frontpage" %}
+						{% set link = base %}
+					{% endif %}
+					<a href="{{ link }}" title="{{ menu.name }}" class="site-nav_item {{ menu.alias in geturl ? 'isActive' : '' }}">{{ menu.name }}</a>
+				{% endfor %}
+			</nav>
+			<!-- Mobile Navigation -->
+			<nav class="mobile-nav visible-xs">
+				<div class="mobile-nav-button">
+					<svg class="icon"><use xlink:href="#icon-menu"></use></svg>
+				</div>
+				<div class="mobile-nav-frame">
+					<ul class="mobile-nav-menu">
+						<li>
+							<a href="index.php" title="Anasayfa" class="mobile-nav-menu_item">Anasayfa</a>
+						</li>
+						<li>
+							<a href="products.php" title="Ürünler" class="mobile-nav-menu_item">Ürünler</a>
+						</li>
+						<li>
+							<a href="#" title="Kurumsal" class="mobile-nav-menu_item">Kurumsal</a>
+						</li>
+						<li>
+							<a href="#" title="İletişim" class="mobile-nav-menu_item">İletişim</a>
+						</li>
+					</ul>
+					<div class="mobile-navbar">
+						<div class="mobile-navbar_item">
+							<select id="mobile-language-selectbox" name="language-select" class="mobile-navbar-selectbox needsclick">
+								<option value="tr">Türkçe</option>
+								<option value="en">English</option>
+								<option value="fr">French</option>
+							</select>
+						</div>
+						<div class="mobile-navbar_item">
+							<a href="tel:+902126232293" title="Telefon" class="mobile-navbar-link">+90 (212) 623 22 93 <svg class="icon"><use xlink:href="#icon-phone"></use></svg></a>
+						</div>
+						<div class="mobile-navbar_item">
+							<a href="mailto:info@termodizayn.com" title="E-Posta" class="mobile-navbar-link">info@termodizayn.com <svg class="icon"><use xlink:href="#icon-email"></use></svg></a>
+						</div>
+					</div>
+				</div>
+			</nav>
+			<!-- Mobile - Sign-in -->
+			<div class="mobile-sign-in visible-xs">
+				<div class="mobile-sign-in-button">
+					<svg class="icon"><use xlink:href="#icon-login"></use></svg>
+				</div>
+				<div class="user-box user-box--mobile">
+					<!-- Sign-In -->
+					<div class="user-box_sign-in">
+						<form class="user-box-form" action="#" autocomplete="off">
+							<input type="email" class="user-box-form_textbox" placeholder="E-Posta">
+							<input type="password" class="user-box-form_textbox" placeholder="Parola">
+							<button type="button" class="button">Giriş Yap</button>
+						</form>
+						<a href="forgot-password.php" class="user-box-forgot-password" title="Şifremi Unuttum!">Şifremi Unuttum!</a>
+					</div>
+					<!-- Register Button -->
+					<a href="register.php" class="user-box_register" title="Kayıt olmak istiyorum">
+						<svg class="icon"><use xlink:href="#icon-login"></use></svg> Kayıt olmak istiyorum
+					</a>
+				</div>
+			</div>
+		</div>
+	</header>
+	{% block content %}{{ content }}{% endblock %}
+	<!-- Footer -->
+	<footer class="site-footer">
+		<div class="container">
+			<!-- Footer Menu -->
+			<div class="col-md-3 col-md-offset-1">
+				<h4 class="footer-title">Hızlı Ulaşım</h4>
+				<ul class="footer-nav">
+					<li>
+						<a href="#" title="Buz Makineleri" class="footer-nav_item">Buz Makineleri</a>
+					</li>
+					<li>
+						<a href="#" title="Soğutma Sistemleri" class="footer-nav_item">Soğutma Sistemleri</a>
+					</li>
+					<li>
+						<a href="#" title="Kullanım Alanları" class="footer-nav_item">Kullanım Alanları</a>
+					</li>
+					<li>
+						<a href="#" title="Kataloglar" class="footer-nav_item">Kataloglar</a>
+					</li>
+					<li>
+						<a href="#" title="Fiyat Listesi" class="footer-nav_item">Fiyat Listesi</a>
+					</li>
+					<li>
+						<a href="#" title="Soğutma Hakkında Bilgiler" class="footer-nav_item">Soğutma Hakkında Bilgiler</a>
+					</li>
+					<li>
+						<a href="#" title="Gelecek Fuarlar" class="footer-nav_item">Gelecek Fuarlar</a>
+					</li>
+					<li>
+						<a href="#" title="İnsan Kaynakları" class="footer-nav_item">İnsan Kaynakları</a>
+					</li>
+					<li>
+						<a href="#" title="İletişim" class="footer-nav_item">İletişim</a>
+					</li>
+				</ul>
+			</div>
+			
+			<!-- Subscribe & Social Networks -->
+			<div class="col-md-4">
+				<!-- Mail Subscribe -->
+				<div class="footer-subscribe hidden-xs">
+					<h4 class="footer-title">Yeniliklerden Haberdar Olun!</h4>
+					<span class="footer-subscribe_description">
+						Yeni ürünler, gelecek fuarlar ve güncel gelişmelerden
+						haberdar olmak için e-posta listemize kayıt olun.
+					</span>
+					<form class="footer-subscribe_form" action="#" autocomplete="off">
+						<input class="footer-subscribe-textbox" type="text" placeholder="Email adresinizi yazın">
+						<button type="button" class="footer-subscribe-button">
+						<svg class="icon"><use xlink:href="#icon-done"></use></svg>
+						</button>
+					</form>
+				</div>
+				<!-- Social Networks -->
+				<div class="footer-social-frame">
+					<h4 class="footer-title">Takip Edin</h4>
+					<div class="footer-social">
+						<a href="https://www.facebook.com/pages/Termodizayn-Termik-Cihazlar-San-ve-Tic-Ltd-Sti/178235109026678" title="Facebook" target="_blank" class="footer-social_item">
+							<svg class="icon"><use xlink:href="#icon-facebook"></use></svg>
+						</a>
+						<a href="https://twitter.com/Termodizayn" title="Twitter" target="_blank" class="footer-social_item">
+							<svg class="icon"><use xlink:href="#icon-twitter"></use></svg>
+						</a>
+						<a href="https://plus.google.com/113484728251841838141/posts" title="Google+" target="_blank" class="footer-social_item">
+							<svg class="icon"><use xlink:href="#icon-google-plus-square"></use></svg>
+						</a>
+						<a href="https://www.youtube.com/user/TDGURAY/" title="Youtube" target="_blank" class="footer-social_item">
+							<svg class="icon icon-youtube"><use xlink:href="#icon-youtube"></use></svg>
+						</a>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Footer Contact -->
+			<div class="col-md-3">
+				<h4 class="footer-title">İletişim</h4>
+				<ul class="footer-contact" itemscope itemtype="http://schema.org/LocalBusiness">
+					<!-- E-Mail -->
+					<li class="footer-contact_item">
+						<i class="footer-contact_icon hidden-xs">
+						<svg class="icon"><use xlink:href="#icon-email"></use></svg>
+						</i>
+						<div class="footer-contact_detail">
+							<a itemprop="email" href="mailto:info@termodizayn.com" title="E-Mail">info@termodizayn.com</a>
+						</div>
+					</li>
+					<!-- Phone Numbers -->
+					<li class="footer-contact_item">
+						<i class="footer-contact_icon hidden-xs">
+						<svg class="icon"><use xlink:href="#icon-phone"></use></svg>
+						</i>
+						<div class="footer-contact_detail">
+							<a itemprop="telephone" href="tel:+902126232293" title="Telefon">+90 (212) 623 22 93 (Pbx)</a>
+							<span itemprop="faxNumber" class="footer-contact_line hidden-xs">+90 (212) 623 22 96 (Fax)</span>
+						</div>
+					</li>
+					<!-- Address -->
+					<li class="footer-contact_item" itemscope itemtype="http://schema.org/PostalAddress">
+						<i class="footer-contact_icon hidden-xs">
+						<svg class="icon"><use xlink:href="#icon-home"></use></svg>
+						</i>
+						<address class="footer-contact_detail">
+							<span itemprop="streetAddress" class="footer-contact_line">
+								Sanayi Mah. Isıso Sanayi Sitesi
+								<span class="footer-contact_line">D-Blok, 3. Yol, No:11</span>
+							</span>
+							<span class="footer-contact_line">
+								Hadımköy Yolu,
+								<span itemprop="postalCode">34517</span>
+							</span>
+							<span class="footer-contact_line">
+								<span itemprop="addressLocality">Esenyurt</span>,
+								<span itemprop="addressRegion">İstanbul</span>,
+								<span itemprop="addressCountry">TÜRKİYE</span>
+							</span>
+						</address>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- Copyright -->
+		<div class="footer-copyright">Telif hakları saklıdır. © 2015 Termodizayn</div>
+	</footer>
+</body>
+</html>

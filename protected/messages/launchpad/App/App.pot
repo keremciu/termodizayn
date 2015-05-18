@@ -1,0 +1,77 @@
+# translation of App.php to LANGUAGE
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: App.php\n"
+"POT-Creation-Date: 2013-11-03 14:16+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Yii EMessage\n"
+"Generated-By: Yii EMessage\n"
+
+msgid "Are you sure to delete this item?"
+msgstr ""
+
+msgid "Back to Overview"
+msgstr ""
+
+msgid "Create"
+msgstr "Ekle"
+
+msgid "Create New Item"
+msgstr ""
+
+msgid "Create Template"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Fields with <span class=\"required\">*</span> are required."
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Manage"
+msgstr ""
+
+msgid "Manage Templates"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Templates"
+msgstr ""
+
+msgid "Translation"
+msgstr ""
+
+msgid "Translation Category"
+msgstr ""
+
+msgid "Update"
+msgstr ""
+
+msgid "Update Template"
+msgstr ""
+
+msgid "Your changes have been saved"
+msgstr ""
+
+msgid "Your changes have been saved."
+msgstr ""
+

@@ -1,0 +1,20 @@
+# translation of strings.php to LANGUAGE
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: strings.php\n"
+"POT-Creation-Date: 2013-11-03 14:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Yii EMessage\n"
+"Generated-By: Yii EMessage\n"
+
+msgid "Anasayfa"
+msgstr "Homepage"
+
