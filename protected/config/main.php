@@ -1,5 +1,8 @@
 <?php
 
+$langs = require_once('_lang.php');
+$langlist = implode("|",array_keys($langs));
+
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Termodizayn',
@@ -51,7 +54,7 @@ return array(
 	        'showScriptName'=>false,
 			'caseSensitive'=>false,
 			'rules'=>array(
-				'<language:(de|tr|en)>/'=>'site/index',
+				'<language:('.$langlist.')>/'=>'site/index',
 				'<alias:[a-z0-9-]+>'=>'component/router',
 				'<alias:[a-z0-9-]+>/<slug:[a-z0-9-]+>'=>'component/cliper',
 				'<controller:\w+>/<title:.*?>/<id:\d+>'=>'<controller>/view',
@@ -74,7 +77,7 @@ return array(
 		),
 	),
 	'params'=>array(
-		'languages'=>require_once('_lang.php'),
+		'languages'=>$langs,
 		'adminEmail'=>'info@termodizayn.com',
 	),
 );
