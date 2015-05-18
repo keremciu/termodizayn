@@ -124,6 +124,9 @@ class ETwigViewRenderer extends CApplicationComponent implements IViewRenderer
             $this->setLexerOptions($this->lexerOptions);
         }
 
+        $Yii = new ETwigViewRendererStaticClassProxy ('Yii');
+        $this->_twig-> addGlobal ('lang', $Yii);
+
         return parent::init();
     }
 
