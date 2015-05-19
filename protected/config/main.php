@@ -5,7 +5,7 @@ $langlist = implode("|",array_keys($langs));
 
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Termodizayn',
+	'name'=>"Termodizayn",
 	'language'=>'tr',
 	'sourceLanguage'=>'tr',
 	'preload'=>array('log'),
@@ -41,6 +41,12 @@ return array(
 		'cache'=>array( 
 	    	'class'=>'system.caching.CFileCache',
 		),
+		'settings'=>array(
+	        'class'             => 'CmsSettings',
+	        'cacheTime'         => 84000,
+	        'tableName'     	=> 'settings',
+	        'dbEngine'      	=> 'InnoDB',
+        ),
 		'request'=>array(
 	        'enableCookieValidation'=>true,
 	        'enableCsrfValidation'=>true,

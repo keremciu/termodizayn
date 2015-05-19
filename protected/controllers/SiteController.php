@@ -11,6 +11,7 @@ class SiteController extends Controller
 	}
 	public function actionIndex()
 	{
+
 		$gallery = Gallery::model()->findByAttributes(array('slug'=>'slider'));
 		$photos=Photos::model()->findAll(array('condition'=>'gallery = :gallery','order'=>'t.ordering DESC','params'=>array(':gallery'=>$gallery->id)));
 

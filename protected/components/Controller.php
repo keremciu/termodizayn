@@ -37,7 +37,8 @@ class Controller extends CController
 	        Yii::app()->language = Yii::app()->user->getState('language');
 	    else if(isset(Yii::app()->request->cookies['language']))
 	        Yii::app()->language = Yii::app()->request->cookies['language']->value;
-	    
+
+	    Yii::app()->name = Yii::app()->settings->get("system","sitename");
 
 	    $this->dynamicmenu = Menu::model()->language(Yii::app()->getLanguage())->findAll(array('condition'=>'(t.parent=0 AND t.menutype="navigasyon") AND t.is_published=1','order'=>'t.ordering ASC'));
 	}

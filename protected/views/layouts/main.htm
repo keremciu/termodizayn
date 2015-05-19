@@ -8,7 +8,7 @@
 {{ void(cs.registerMetaTag('yes','apple-mobile-web-app-capable')) }}
 {{ void(cs.registerMetaTag('width=device-width, initial-scale=1, user-scalable=non','viewport')) }}
 {{ void(cs.registerMetaTag('termodizayn,açıklama.','description')) }}
-{{ void(cs.registerMetaTag('termodizayn.','keywords')) }}
+{{ void(cs.registerMetaTag(App.settings.get("system","sitename"),'keywords')) }}
 {{ void(cs.registerCssFile(base ~ '/css/style.css')) }}
 {{ void(cs.registerCssFile(base ~ '/css/exclude.css')) }}
 {{ void(cs.registerScriptFile(base ~ '/js/vendor/jquery-1.11.1.min.js')) }}
@@ -145,7 +145,7 @@
 		<div class="container">
 			<!-- Footer Menu -->
 			<div class="col-md-3 col-md-offset-1">
-				<h4 class="footer-title">Hızlı Ulaşım</h4>
+				<h4 class="footer-title">{{lang.t ('main', 'Hızlı Ulaşım') }}</h4>
 				<ul class="footer-nav">
 					<li>
 						<a href="#" title="Buz Makineleri" class="footer-nav_item">Buz Makineleri</a>
@@ -181,13 +181,12 @@
 			<div class="col-md-4">
 				<!-- Mail Subscribe -->
 				<div class="footer-subscribe hidden-xs">
-					<h4 class="footer-title">Yeniliklerden Haberdar Olun!</h4>
+					<h4 class="footer-title">{{lang.t ('main', 'Yeniliklerden Haberdar Olun!') }}</h4>
 					<span class="footer-subscribe_description">
-						Yeni ürünler, gelecek fuarlar ve güncel gelişmelerden
-						haberdar olmak için e-posta listemize kayıt olun.
+					{{lang.t ('main', 'Yeni ürünler, gelecek fuarlar ve güncel gelişmelerden haberdar olmak için e-posta listemize kayıt olun.') }}
 					</span>
 					<form class="footer-subscribe_form" action="#" autocomplete="off">
-						<input class="footer-subscribe-textbox" type="text" placeholder="Email adresinizi yazın">
+						<input class="footer-subscribe-textbox" type="text" placeholder="{{lang.t ('main', 'E-Posta adresinizi yazın') }}">
 						<button type="button" class="footer-subscribe-button">
 						<svg class="icon"><use xlink:href="#icon-done"></use></svg>
 						</button>
@@ -195,7 +194,7 @@
 				</div>
 				<!-- Social Networks -->
 				<div class="footer-social-frame">
-					<h4 class="footer-title">Takip Edin</h4>
+					<h4 class="footer-title">{{lang.t ('main', 'Takip Edin') }}</h4>
 					<div class="footer-social">
 						<a href="https://www.facebook.com/pages/Termodizayn-Termik-Cihazlar-San-ve-Tic-Ltd-Sti/178235109026678" title="Facebook" target="_blank" class="footer-social_item">
 							<svg class="icon"><use xlink:href="#icon-facebook"></use></svg>
@@ -215,7 +214,7 @@
 			
 			<!-- Footer Contact -->
 			<div class="col-md-3">
-				<h4 class="footer-title">İletişim</h4>
+				<h4 class="footer-title">{{lang.t ('main', 'İletişim') }}</h4>
 				<ul class="footer-contact" itemscope itemtype="http://schema.org/LocalBusiness">
 					<!-- E-Mail -->
 					<li class="footer-contact_item">
@@ -261,7 +260,7 @@
 			</div>
 		</div>
 		<!-- Copyright -->
-		<div class="footer-copyright">Telif hakları saklıdır. © 2015 Termodizayn</div>
+		<div class="footer-copyright">{{lang.t ('main', 'Telif hakları saklıdır') }}. © 2015 Termodizayn</div>
 	</footer>
 </body>
 </html>
