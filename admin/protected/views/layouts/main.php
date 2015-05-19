@@ -44,7 +44,7 @@
 
 	 $this->widget('bootstrap.widgets.TbNavbar', array(
 	    'type'=>'inverse',
-	    'brand'=>'Termodizayn',
+	    'brand'=>'TD',
 	    'brandUrl'=>array('/site/index'),
 	    'collapse'=>true,
 	    'items'=>array(
@@ -52,15 +52,19 @@
 	            'class'=>'bootstrap.widgets.TbMenu',
 	            'items'=>array(
 	            	array('label'=>'Slider', 'url'=>array('/photos/index')),
-	                array('label'=>'Anasayfa', 'url'=>array('/site/index')),
-	                array('label'=>'Menü', 'url'=>array('/menu/index'),
+	            	array('label'=>'Partner', 'url'=>array('/photos/index')),
+	            	array('label'=>'Referans', 'url'=>array('/photos/index')),
+	            	array('label'=>'Haber', 'url'=>array('/news/index')),
+	            	array('label'=>'Katalog', 'url'=>array('/category/index')),
+	            	array('label'=>'Ürün', 'url'=>array('/product/index')),
+	            	array('label'=>'Firma', 'url'=>array('/photos/index')),
+	            	array('label'=>'Sayfa', 'url'=>array('/menu/index'),
 	                	'items'=>$items,
 	                ),
-	                array('label'=>'Kategoriler/Yıllar', 'url'=>array('/category/index')),
-					array('label'=>'Projeler', 'url'=>array('/product/index')),
-	                array('label'=>'İçerikler', 'url'=>array('/news/index')),
-					array('label'=>'CV', 'url'=>array('/timeline/index')),
-					array('label'=>'Çeviri', 'url'=>array('/translates/index')),
+	            	array('label'=>'Çeviri', 'url'=>array('/translates/index')),
+	            	array('label'=>'Teklif', 'url'=>array('/photos/index')),
+	            	array('label'=>'Üye', 'url'=>array('/user/index')),
+	            	array('label'=>'Bayi', 'url'=>array('/user/index')),
 	            ),
 	        ),
 	        array(

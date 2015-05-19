@@ -3,7 +3,7 @@ $dif = dirname(__FILE__).DIRECTORY_SEPARATOR.'..';
 
 return array(
 	'basePath'=>$dif,
-	'name'=>'Yönetici - Suzy Hug Levy',
+	'name'=>'Termo Dizayn - Admin',
 	'language'=>'tr',
 	'sourceLanguage'=>'tr',
 	'preload'=>array('log','bootstrap'),
@@ -66,6 +66,5 @@ return array(
 	),
 	'params'=>array(
 		'languages'=>require($dif.'/../../protected/config/_lang.php'),
-		'adminEmail'=>'webmaster@example.com',
 	),
 );
