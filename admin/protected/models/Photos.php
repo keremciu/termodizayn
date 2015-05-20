@@ -41,6 +41,7 @@ class Photos extends CActiveRecord
 	            'class'                 => 'ext.Translatable',
 	            'translationAttributes' => array('name','url','desc'),
 	            'translationRelation'   => 'translates',
+	            'translationTable'   	=> $this->tableName(),
 	            'languageColumn'        => 'lang_id',
 	        ),
 	    );

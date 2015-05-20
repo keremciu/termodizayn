@@ -13,7 +13,7 @@ class SiteController extends Controller
 	{
 
 		$gallery = Gallery::model()->findByAttributes(array('slug'=>'slider'));
-		$photos=Photos::model()->findAll(array('condition'=>'gallery = :gallery','order'=>'t.ordering DESC','params'=>array(':gallery'=>$gallery->id)));
+		$photos=Photos::model()->language(Yii::app()->getLanguage())->findAll(array('condition'=>'gallery = :gallery','order'=>'t.ordering DESC','params'=>array(':gallery'=>$gallery->id)));
 
 		$this->render('index',
 			array(

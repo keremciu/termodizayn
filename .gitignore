@@ -1,5 +1,7 @@
 assets
 protected/runtime
+admin/protected/runtime
+admin/assets
 img/photos
 img/news
 img/products

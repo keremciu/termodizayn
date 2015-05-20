@@ -1,6 +1,6 @@
 <?php
 
-$langs = array('tr'=>'Türkçe', 'en'=>'English', 'fr'=>'French');
+$langs = require_once('_lang.php');
 $langlist = implode("|",array_keys($langs));
 
 return array(
