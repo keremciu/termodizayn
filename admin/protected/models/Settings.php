@@ -38,6 +38,12 @@ class Settings extends CFormModel
         'postCode'=>'',
         'additionalInfo'=>'',
     );
+    public $social = array(
+        'facebook'=>'',
+        'twitter'=>'',
+        'googleplus'=>'',
+        'youtube'=>'',
+    );
  
     /**
      * Declares customized attribute labels.

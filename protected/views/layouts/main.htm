@@ -196,16 +196,16 @@
 				<div class="footer-social-frame">
 					<h4 class="footer-title">{{lang.t ('main', 'Takip Edin') }}</h4>
 					<div class="footer-social">
-						<a href="https://www.facebook.com/pages/Termodizayn-Termik-Cihazlar-San-ve-Tic-Ltd-Sti/178235109026678" title="Facebook" target="_blank" class="footer-social_item">
+						<a href="{{ App.settings.get('social','facebook') }}" title="Facebook" target="_blank" class="footer-social_item">
 							<svg class="icon"><use xlink:href="#icon-facebook"></use></svg>
 						</a>
-						<a href="https://twitter.com/Termodizayn" title="Twitter" target="_blank" class="footer-social_item">
+						<a href="{{ App.settings.get('social','twitter') }}" title="Twitter" target="_blank" class="footer-social_item">
 							<svg class="icon"><use xlink:href="#icon-twitter"></use></svg>
 						</a>
-						<a href="https://plus.google.com/113484728251841838141/posts" title="Google+" target="_blank" class="footer-social_item">
+						<a href="{{ App.settings.get('social','googleplus') }}" title="Google+" target="_blank" class="footer-social_item">
 							<svg class="icon"><use xlink:href="#icon-google-plus-square"></use></svg>
 						</a>
-						<a href="https://www.youtube.com/user/TDGURAY/" title="Youtube" target="_blank" class="footer-social_item">
+						<a href="{{ App.settings.get('social','youtube') }}" title="Youtube" target="_blank" class="footer-social_item">
 							<svg class="icon icon-youtube"><use xlink:href="#icon-youtube"></use></svg>
 						</a>
 					</div>
