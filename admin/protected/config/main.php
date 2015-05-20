@@ -29,6 +29,15 @@ return array(
 		),
 	),
 	'components'=>array(
+		'cache'=>array( 
+	    	'class'=>'system.caching.CFileCache',
+		),
+		'settings'=>array(
+	        'class'             => 'CmsSettings',
+	        'cacheTime'         => 84000,
+	        'tableName'     	=> 'settings',
+	        'dbEngine'      	=> 'InnoDB',
+        ),
         'i18n' => array(
             'class' => 'CDbMessageSource',
             'connectionID' => 'i18n_db',

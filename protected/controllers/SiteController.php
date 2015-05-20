@@ -21,6 +21,13 @@ class SiteController extends Controller
 				'photos'=>$photos,
 			));
 	}
+
+	public function actionDeleteCache()
+	{
+		Yii::app()->settings->deleteCache();
+		$this->redirect(Yii::app()->request->urlReferrer);
+	}
+
 	public function actionError()
 	{
 		if($error=Yii::app()->errorHandler->error)

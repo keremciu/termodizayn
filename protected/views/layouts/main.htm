@@ -7,8 +7,8 @@
 {{ void(cs.registerLinkTag('stylesheet','text/css','http://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Condensed:400,300,700&subset=latin,latin-ext')) }}
 {{ void(cs.registerMetaTag('yes','apple-mobile-web-app-capable')) }}
 {{ void(cs.registerMetaTag('width=device-width, initial-scale=1, user-scalable=non','viewport')) }}
-{{ void(cs.registerMetaTag('termodizayn,açıklama.','description')) }}
-{{ void(cs.registerMetaTag(App.settings.get("system","sitename"),'keywords')) }}
+{{ void(cs.registerMetaTag(App.settings.get("seo","mainDescr"),'description')) }}
+{{ void(cs.registerMetaTag(App.settings.get("seo","mainKwrds"),'keywords')) }}
 {{ void(cs.registerCssFile(base ~ '/css/style.css')) }}
 {{ void(cs.registerCssFile(base ~ '/css/exclude.css')) }}
 {{ void(cs.registerScriptFile(base ~ '/js/vendor/jquery-1.11.1.min.js')) }}
@@ -28,13 +28,13 @@
 				<!-- Navbar Left -->
 				<div class="pull-left hidden-xs">
 					{{ void(this.widget('application.components.widgets.LanguageSelect')) }}
-					<a href="tel:+902126232293" title="Telefon" class="site-navbar_item">
+					<a href="tel:{{ App.settings.get("contact","phone") }}" title="Telefon" class="site-navbar_item">
 						<span>
-							<svg class="icon"><use xlink:href="#icon-phone"></use></svg> +90 (212) 623 22 93
+							<svg class="icon"><use xlink:href="#icon-phone"></use></svg> {{ App.settings.get("contact","phone") }}
 						</span>
 					</a>
-					<a href="mailto:info@termodizayn.com" title="E-Mail" class="site-navbar_item">
-						<span><svg class="icon"><use xlink:href="#icon-email"></use></svg> info@termodizayn.com</span>
+					<a href='mailto:{{ App.settings.get("contact","email") }}' title="E-Mail" class="site-navbar_item">
+						<span><svg class="icon"><use xlink:href="#icon-email"></use></svg> {{ App.settings.get("contact","email") }}</span>
 					</a>
 				</div>
 				<!-- Navbar Right -->
@@ -108,10 +108,10 @@
 							</select>
 						</div>
 						<div class="mobile-navbar_item">
-							<a href="tel:+902126232293" title="Telefon" class="mobile-navbar-link">+90 (212) 623 22 93 <svg class="icon"><use xlink:href="#icon-phone"></use></svg></a>
+							<a href="tel:{{ App.settings.get("contact","phone") }}" title="Telefon" class="mobile-navbar-link">{{ App.settings.get("contact","phone") }} <svg class="icon"><use xlink:href="#icon-phone"></use></svg></a>
 						</div>
 						<div class="mobile-navbar_item">
-							<a href="mailto:info@termodizayn.com" title="E-Posta" class="mobile-navbar-link">info@termodizayn.com <svg class="icon"><use xlink:href="#icon-email"></use></svg></a>
+							<a href="mailto:{{ App.settings.get("contact","email") }}" title="E-Posta" class="mobile-navbar-link">{{ App.settings.get("contact","email") }} <svg class="icon"><use xlink:href="#icon-email"></use></svg></a>
 						</div>
 					</div>
 				</div>
@@ -222,7 +222,7 @@
 						<svg class="icon"><use xlink:href="#icon-email"></use></svg>
 						</i>
 						<div class="footer-contact_detail">
-							<a itemprop="email" href="mailto:info@termodizayn.com" title="E-Mail">info@termodizayn.com</a>
+							<a itemprop="email" href="mailto:{{ App.settings.get("contact","email") }}" title="E-Mail">{{ App.settings.get("contact","email") }}</a>
 						</div>
 					</li>
 					<!-- Phone Numbers -->
@@ -231,8 +231,8 @@
 						<svg class="icon"><use xlink:href="#icon-phone"></use></svg>
 						</i>
 						<div class="footer-contact_detail">
-							<a itemprop="telephone" href="tel:+902126232293" title="Telefon">+90 (212) 623 22 93 (Pbx)</a>
-							<span itemprop="faxNumber" class="footer-contact_line hidden-xs">+90 (212) 623 22 96 (Fax)</span>
+							<a itemprop="telephone" href="tel:{{ App.settings.get("contact","phone") }}" title="Telefon">{{ App.settings.get("contact","phone") }} (Pbx)</a>
+							<span itemprop="faxNumber" class="footer-contact_line hidden-xs">{{ App.settings.get("contact","fax") }} (Fax)</span>
 						</div>
 					</li>
 					<!-- Address -->
@@ -242,17 +242,17 @@
 						</i>
 						<address class="footer-contact_detail">
 							<span itemprop="streetAddress" class="footer-contact_line">
-								Sanayi Mah. Isıso Sanayi Sitesi
-								<span class="footer-contact_line">D-Blok, 3. Yol, No:11</span>
+								{{ App.settings.get("contact","address") }}
+								<span class="footer-contact_line">{{ App.settings.get("contact","address2") }}</span>
 							</span>
 							<span class="footer-contact_line">
-								Hadımköy Yolu,
-								<span itemprop="postalCode">34517</span>
+								{{ App.settings.get("contact","address3") }},
+								<span itemprop="postalCode">{{ App.settings.get("contact","postCode") }}</span>
 							</span>
 							<span class="footer-contact_line">
-								<span itemprop="addressLocality">Esenyurt</span>,
-								<span itemprop="addressRegion">İstanbul</span>,
-								<span itemprop="addressCountry">TÜRKİYE</span>
+								<span itemprop="addressLocality">{{ App.settings.get("contact","locality") }}</span>,
+								<span itemprop="addressRegion">{{ App.settings.get("contact","region") }}</span>,
+								<span itemprop="addressCountry">{{ App.settings.get("contact","country") }}</span>
 							</span>
 						</address>
 					</li>

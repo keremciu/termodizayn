@@ -1,6 +1,6 @@
 <?php
 
-$langs = require_once('_lang.php');
+$langs = array('tr'=>'Türkçe', 'en'=>'English', 'fr'=>'French');
 $langlist = implode("|",array_keys($langs));
 
 return array(
@@ -61,6 +61,7 @@ return array(
 			'caseSensitive'=>false,
 			'rules'=>array(
 				'<language:('.$langlist.')>/'=>'site/index',
+				'site/<action:\w+>'=>'site/<action>',
 				'<alias:[a-z0-9-]+>'=>'component/router',
 				'<alias:[a-z0-9-]+>/<slug:[a-z0-9-]+>'=>'component/cliper',
 				'<controller:\w+>/<title:.*?>/<id:\d+>'=>'<controller>/view',
