@@ -13,7 +13,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array('action'=>Yii::a
 	echo '<div class="btn-group btn-raddip" style="margin-top:20px">';
 	foreach ($languages as $key => $language) {
 		if (Yii::app()->language != $key) {
-			echo '<label for="'.$key.'lfilter" class="'.(($key==$lang) ? "active" : "").' btn btn-success btn-small">'.$language.' diline ait çevirileri göster</label>';
+			echo '<label for="'.$key.'lfilter" class="'.(($key==$lang) ? "active" : "").' btn btn-success">'.$language.' diline ait çevirileri göster</label>';
 			echo '<input id="'.$key.'lfilter" type="submit" value="'.$key.'" name="lang" style="display:none"/>';
 		}
 	}

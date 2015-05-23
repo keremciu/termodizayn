@@ -43,7 +43,7 @@ return array(
 		),
 		'settings'=>array(
 	        'class'             => 'CmsSettings',
-	        'cacheTime'         => 84000,
+	        'cacheTime'         => 0,
 	        'tableName'     	=> 'settings',
 	        'dbEngine'      	=> 'InnoDB',
         ),
@@ -60,13 +60,16 @@ return array(
 	        'showScriptName'=>false,
 			'caseSensitive'=>false,
 			'rules'=>array(
+				//'http://<language:('.$langlist.')>.localhost:8080/termodizayn/' => 'site/index',
 				'<language:('.$langlist.')>/'=>'site/index',
 				'site/<action:\w+>'=>'site/<action>',
-				'<alias:[a-z0-9-]+>'=>'component/router',
+				'<alias:[a-z0-9-]+>'=>'parser/router',
+				/*
 				'<alias:[a-z0-9-]+>/<slug:[a-z0-9-]+>'=>'component/cliper',
 				'<controller:\w+>/<title:.*?>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+				*/
 			),
 		),
 		'db'=>require_once('_db.php'),

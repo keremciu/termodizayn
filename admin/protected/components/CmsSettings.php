@@ -67,7 +67,90 @@ class CmsSettings extends CApplicationComponent
             else
                 $this->items[$category]=array($key=>$value); 
         }
-        return $this;   
+        return $this;
+    }
+
+    /**
+     * CmsSettings::setWithLang()
+     * 
+     * @param string $category name of the category 
+     * @param mixed $key 
+     * can be either a single item (string) or an array of item=>value pairs 
+     * @param mixed $value value to set for the key, leave this empty if $key is an array
+     * @param bool $toDatabase whether to save the items to the database
+     * @return CmsSettings
+     */
+    public function setWithLang($category='system', $key='', $lang='', $toDatabase=true)
+    {
+        $str_name = 'lang_'.$lang;
+
+        if(is_array($key))
+        {
+            foreach($key AS $k=>$v) {
+
+                if (isset($v[$str_name])) {
+                    if (Yii::app()->language == $lang) {
+                        $this->deleteCache();
+                        $this->set($category, $k, $v[$str_name], true);
+                    } else {
+                            // get item
+                            $getitem = $this->getItem($category,$k);
+                            // serialized new value
+                            $value = @serialize($v[$str_name]);
+
+                            // Check translate if it isset
+                            $translate = Translates::model()->find(array(
+                                'condition'=>'((reference_id=:refid AND reference_field=:field) AND lang_id=:lang) AND reference_table=:table',
+                                'params'=>
+                                    array(
+                                        ':refid'=>$getitem["id"],
+                                        ':field'=>$k,
+                                        ':lang'=>$lang,
+                                        ':table'=>$this->getTableName(),
+                                    )
+                                )
+                            );
+
+                            if (isset($translate)) {
+                                
+                                // Update the translate for one of site settings key
+                                $translate->original_value=$getitem["value"];
+                                $translate->original_text=$getitem["value"];
+                                $translate->value = $value;
+                                $translate->save();
+
+                            } else {
+
+                                // Create a translate for one of site settings key
+                                if ($value != $getitem["value"]) {
+                                    $add = new Translates;
+                                    $add->lang_id = $lang;
+                                    $add->reference_id = $getitem["id"];
+                                    $add->reference_table = $this->getTableName();
+                                    $add->reference_field = $k;
+                                    $add->value=$value;
+                                    $add->original_value=$getitem["value"];
+                                    $add->original_text=$getitem["value"];
+                                    $add->modified_by=1;
+                                    $add->is_published=1;
+                                    $add->save();
+                                }
+                            }
+                    }
+                }
+            }
+        }
+    }
+
+    public function getItem($category, $key) {
+
+            $connection=$this->getDbComponent();
+            $command=$connection->createCommand('SELECT `id`, `value` FROM '.$this->getTableName().' WHERE `category`=:cat AND `key`=:k');
+            $command->bindParam(':cat', $category);
+            $command->bindParam(':k', $key);
+            $result=$command->queryAll();
+
+            return $result[0];
     }
 
     /**
@@ -84,28 +167,53 @@ class CmsSettings extends CApplicationComponent
      */
     public function get($category='system', $key='', $default=null)
     {
-        if(!isset($this->loaded[$category]))
-            $this->load($category);
+        $connection=$this->getDbComponent();
+        $command=$connection->createCommand('SELECT `id`, `value` FROM '.$this->getTableName().' WHERE `category`=:cat AND `key`=:k');
+        $command->bindParam(':cat', $category);
+        $command->bindParam(':k', $key);
+        $result=$command->queryAll()[0];
 
-        if(empty($key)&&empty($default)&&!empty($category))
-            return isset($this->items[$category])?$this->items[$category]:null;
+        return @unserialize($result["value"]);
+    }
 
-        if(!empty($key)&&is_array($key))
-        {
-            $toReturn=array();
-			foreach($key AS $k=>$v)
-            {
-				if(is_numeric($k))
-					$toReturn[$v]=$this->get($category, $v);
-                else
-                    $toReturn[$k]=$this->get($category, $k, $v);
-			}
-			return $toReturn;
+    /**
+     * CmsSettings::getWithLang()
+     * 
+     * @param string $category name of the category
+     * @param mixed $key 
+     * can be either :
+     * empty, returning all items of the selected category
+     * a string, meaning a single key will be returned
+     * an array, returning an array of key=>value pairs  
+     * @param string $lang the lang value
+     * @return mixed
+     */
+    public function getWithLang($category='system', $key='', $lang=null)
+    {
+        $connection=$this->getDbComponent();
+        $command=$connection->createCommand('SELECT `id`, `value` FROM '.$this->getTableName().' WHERE `category`=:cat AND `key`=:k');
+        $command->bindParam(':cat', $category);
+        $command->bindParam(':k', $key);
+        $result=$command->queryAll()[0];
+
+        // Check translate if it isset
+        $translate = Translates::model()->find(array(
+            'condition'=>'((reference_id=:refid AND reference_field=:field) AND lang_id=:lang) AND reference_table=:table',
+            'params'=>
+                array(
+                    ':refid'=>$result["id"],
+                    ':field'=>$key,
+                    ':lang'=>$lang,
+                    ':table'=>$this->getTableName(),
+                )
+            )
+        );
+
+        if (isset($translate)) {
+            $result["value"] = $translate->value;
         }
-        
-        if(isset($this->items[$category][$key]))
-            return $this->items[$category][$key];
-        return $default;
+
+        return @unserialize($result["value"]);
     }
 
     /**
@@ -249,11 +357,15 @@ class CmsSettings extends CApplicationComponent
             $items=array();
             foreach($result AS $row)
                 $items[$row['key']] = @unserialize($row['value']);
+
+
             $this->getCacheComponent()->set($category.'_'.$this->getCacheId(), $items, $this->getCacheTime()); 
         }
 
         if(isset($this->items[$category]))
             $items=CMap::mergeArray($items, $this->items[$category]);
+
+
         
         $this->set($category, $items, null, false); 
         return $items;

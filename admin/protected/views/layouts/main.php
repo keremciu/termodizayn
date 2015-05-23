@@ -28,13 +28,6 @@
 			array_push($items,$new);
 		}
 
-		$totelephone = Totelephone::model()->findAll(array('condition'=>'active=0'));
-		if (count($totelephone) > 0) {
-			$telephonesays = " (".count($totelephone).")";
-		} else {
-			$telephonesays = "";
-		}
-
 		$hr = Hr::model()->findAll(array('condition'=>'active=0'));
 		if (count($hr) > 0) {
 			$hrsays = " (".count($hr).")";

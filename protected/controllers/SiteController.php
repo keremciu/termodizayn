@@ -24,7 +24,7 @@ class SiteController extends Controller
 
 	public function actionDeleteCache()
 	{
-		Yii::app()->settings->deleteCache();
+		Yii::app()->settings->deleteCache2();
 		$this->redirect(Yii::app()->request->urlReferrer);
 	}
 

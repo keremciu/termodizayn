@@ -6,3 +6,7 @@ Later additions to main.css
 .site-nav_item {
 	border-bottom:4px solid transparent;
 }
+
+.user-box-frame {
+	width: auto;
+}

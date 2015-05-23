@@ -1,0 +1,36 @@
+{% extends '//views/layouts/main.htm' %}
+
+{% block content %}
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+	<div class="container">
+		<ul itemscope="" itemtype="http://schema.org/BreadcrumbList">
+		{{ this.widget('zii.widgets.CBreadcrumbs',
+			{
+				'activeLinkTemplate' : '
+				<li class="breadcrumbs_item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+					<a href="{url}" title="{label}" itemprop="item">
+						<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chevron-right"></use></svg>
+						<span>{label}</span>
+					</a>
+				</li>',
+				'inactiveLinkTemplate' : '
+				<li class="breadcrumbs_item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+					<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chevron-right"></use></svg>
+					<span>{label}</span>
+				</li>',
+				'separator':'',
+				'links':["Kurumsal","Haberler"],
+				'homeLink': '<li class="breadcrumbs_item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">\n ' ~ C.Html.link('<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-home"></use></svg>', ['/site/index'])
+			}, true) | raw
+		}}
+		</ul>
+	</div>
+</div>
+<!-- Site Content -->
+<section class="site-content">
+	<div class="container">
+		{{ content }}
+	</div>
+</section>
+{% endblock %}

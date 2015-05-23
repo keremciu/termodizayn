@@ -17,22 +17,22 @@ class CmsSettings extends CApplicationComponent
     protected $items=array();
     protected $loaded=array();
 
-	protected $_cacheComponentId='cache';
-    protected $_cacheId='global_website_settings';
+    protected $_cacheComponentId='cache';
+    protected $_cacheId='glob_website_settings';
     protected $_cacheTime=0;
 
-	protected $_dbComponentId='db';
-	protected $_tableName='{{settings}}';
-	protected $_createTable=false;
-	protected $_dbEngine='InnoDB';
-	
+    protected $_dbComponentId='db';
+    protected $_tableName='{{settings}}';
+    protected $_createTable=false;
+    protected $_dbEngine='InnoDB';
+    
     public function init()
     {
         parent::init();
         Yii::app()->attachEventHandler('onEndRequest', array($this, 'whenRequestEnds'));
-		
-		if($this->getCreateTable())
-			$this->createTable();
+        
+        if($this->getCreateTable())
+            $this->createTable();
     }
 
 
@@ -71,6 +71,88 @@ class CmsSettings extends CApplicationComponent
     }
 
     /**
+     * CmsSettings::setWithLang()
+     * 
+     * @param string $category name of the category 
+     * @param mixed $key 
+     * can be either a single item (string) or an array of item=>value pairs 
+     * @param mixed $value value to set for the key, leave this empty if $key is an array
+     * @param bool $toDatabase whether to save the items to the database
+     * @return CmsSettings
+     */
+    public function setWithLang($category='system', $key='', $lang='', $toDatabase=true)
+    {
+        $str_name = 'lang_'.$lang;
+
+        if(is_array($key))
+        {
+            foreach($key AS $k=>$v) {
+
+                if (isset($v[$str_name])) {
+                    if (Yii::app()->language == $lang) {
+                        $this->set($category, $k, $v[$str_name], $toDatabase);
+                    } else {
+                            // get item
+                            $getitem = $this->getItem($category,$k);
+                            // serialized new value
+                            $value = @serialize($v[$str_name]);
+
+                            // Check translate if it isset
+                            $translate = Translates::model()->find(array(
+                                'condition'=>'((reference_id=:refid AND reference_field=:field) AND lang_id=:lang) AND reference_table=:table',
+                                'params'=>
+                                    array(
+                                        ':refid'=>$getitem["id"],
+                                        ':field'=>$k,
+                                        ':lang'=>$lang,
+                                        ':table'=>$this->getTableName(),
+                                    )
+                                )
+                            );
+
+                            if (isset($translate)) {
+                                
+                                // Update the translate for one of site settings key
+                                $translate->original_value=$getitem["value"];
+                                $translate->original_text=$getitem["value"];
+                                $translate->value = $value;
+                                $translate->save();
+
+                            } else {
+
+                                // Create a translate for one of site settings key
+                                if ($value != $getitem["value"]) {
+                                    $add = new Translates;
+                                    $add->lang_id = $lang;
+                                    $add->reference_id = $getitem["id"];
+                                    $add->reference_table = $this->getTableName();
+                                    $add->reference_field = $k;
+                                    $add->value=$value;
+                                    $add->original_value=$getitem["value"];
+                                    $add->original_text=$getitem["value"];
+                                    $add->modified_by=1;
+                                    $add->is_published=1;
+                                    $add->save();
+                                }
+                            }
+                    }
+                }
+            }
+        }
+    }
+
+    public function getItem($category, $key) {
+
+            $connection=$this->getDbComponent();
+            $command=$connection->createCommand('SELECT `id`, `value` FROM '.$this->getTableName().' WHERE `category`=:cat AND `key`=:k');
+            $command->bindParam(':cat', $category);
+            $command->bindParam(':k', $key);
+            $result=$command->queryAll();
+
+            return $result[0];
+    }
+
+    /**
      * CmsSettings::get()
      * 
      * @param string $category name of the category
@@ -82,6 +164,7 @@ class CmsSettings extends CApplicationComponent
      * @param string $default the default value to be returned
      * @return mixed
      */
+    /*
     public function get($category='system', $key='', $default=null)
     {
         if(!isset($this->loaded[$category]))
@@ -93,16 +176,58 @@ class CmsSettings extends CApplicationComponent
         if(!empty($key)&&is_array($key))
         {
             $toReturn=array();
-			foreach($key AS $k=>$v)
+            foreach($key AS $k=>$v)
             {
-				if(is_numeric($k))
-					$toReturn[$v]=$this->get($category, $v);
+                if(is_numeric($k))
+                    $toReturn[$v]=$this->get($category, $v);
                 else
                     $toReturn[$k]=$this->get($category, $k, $v);
-			}
-			return $toReturn;
+            }
+            return $toReturn;
         }
         
+        if(isset($this->items[$category][$key]))
+            return $this->items[$category][$key];
+        return $default;
+    }
+    */
+
+    /**
+     * CmsSettings::getWithLang() as getT
+     * 
+     * @param string $category name of the category
+     * @param mixed $key 
+     * can be either :
+     * empty, returning all items of the selected category
+     * a string, meaning a single key will be returned
+     * an array, returning an array of key=>value pairs  
+     * @param string $lang the lang value
+     * @return mixed
+     */
+    public function get($category='system', $key='', $lang="")
+    {
+        if (isset($lang)) {
+            $lang = Yii::app()->getLanguage();
+        }
+        
+        if(!isset($this->loaded[$category]))
+            $this->loadWithLang($category,$lang);
+
+        if(empty($key)&&empty($default)&&!empty($category))
+            return isset($this->items[$category])?$this->items[$category]:null;
+
+        if(!empty($key)&&is_array($key))
+        {
+            $toReturn=array();
+            foreach($key AS $k=>$v)
+            {
+                if(is_numeric($k))
+                    $toReturn[$v]=$this->get($category, $v);
+                else
+                    $toReturn[$k]=$this->get($category, $k, $v);
+            }
+            return $toReturn;
+        }
         if(isset($this->items[$category][$key]))
             return $this->items[$category][$key];
         return $default;
@@ -225,6 +350,45 @@ class CmsSettings extends CApplicationComponent
     }
 
     /**
+     * delete one/more/all categories from cache
+     * 
+     * @param mixed $category the name of the category 
+     * if $category is empty will delete all cached categories.
+     * if $category is an array, will delete all provided categories
+     * if $category is a string, will delete only that particular category
+     * @return CmsSettings
+     */
+    public function deleteCache2($category='')
+    {
+        Yii::app()->cache->flush();
+        $cacheRegistry=$this->loadCacheRegistry();
+
+        if(empty($category))
+        {
+            $this->deleteFromCacheRegistry=CMap::mergeArray($this->deleteFromCacheRegistry, $cacheRegistry);
+            $cacheRegistry=array();
+        }
+        elseif(is_string($category) && in_array($category, $cacheRegistry))
+        {
+            unset($cacheRegistry[array_search($category, $cacheRegistry)]);
+            $this->deleteFromCacheRegistry[]=$category;
+        }
+        elseif(is_array($category))
+        {
+            foreach($category AS $catName)
+            {
+                if(in_array($catName, $cacheRegistry))
+                {
+                    unset($cacheRegistry[array_search($catName, $cacheRegistry)]);
+                    $this->deleteFromCacheRegistry[]=$catName;
+                }
+            }
+        }
+        $this->cacheRegistry=$cacheRegistry;
+        return $this;
+    }
+
+    /**
      * load from database the items of the specified category
      * 
      * @param string $category
@@ -233,8 +397,8 @@ class CmsSettings extends CApplicationComponent
     public function load($category)
     {        
         $items=$this->getCacheComponent()->get($category.'_'.$this->getCacheId());
-        $this->loaded[$category]=true;
-        $this->addToCacheRegistry($category);
+        $this->loaded[$category]=false;
+        $this->addToCacheRegistry($category.$lang);
         
         if(!$items)
         {
@@ -249,12 +413,72 @@ class CmsSettings extends CApplicationComponent
             $items=array();
             foreach($result AS $row)
                 $items[$row['key']] = @unserialize($row['value']);
+
+
             $this->getCacheComponent()->set($category.'_'.$this->getCacheId(), $items, $this->getCacheTime()); 
         }
 
         if(isset($this->items[$category]))
             $items=CMap::mergeArray($items, $this->items[$category]);
+
+
         
+        $this->set($category, $items, null, false); 
+        return $items;
+    }
+
+    /**
+     * load from database the items of the specified category with language value
+     * 
+     * @param string $category
+     * @return array the items of the category
+     */
+    public function loadWithLang($category, $lang)
+    {
+        $this->deleteCache($category.'_'.$lang);
+        $items=$this->getCacheComponent()->get($category . '_' . $lang.'_'.$this->getCacheId());
+        $this->loaded[$category]=true;
+        $this->addToCacheRegistry($category);
+
+        if(!$items)
+        {
+            $connection=$this->getDbComponent();
+            $command=$connection->createCommand('SELECT `id`, `key`, `value` FROM '.$this->getTableName().' WHERE category=:cat');
+            $command->bindParam(':cat', $category);
+            $result=$command->queryAll();
+            
+            if(empty($result))
+                return;
+
+            $items=array();
+            foreach($result AS $row) {
+
+                // Check translate if it isset
+                $translate = Translates::model()->find(array(
+                    'condition'=>'((reference_id=:refid AND reference_field=:field) AND lang_id=:lang) AND reference_table=:table',
+                    'params'=>
+                        array(
+                            ':refid'=>$row["id"],
+                            ':field'=>$row["key"],
+                            ':lang'=>$lang,
+                            ':table'=>$this->getTableName(),
+                        )
+                    )
+                );
+
+                if (isset($translate)) {
+                    $items[$row['key']] = @unserialize($translate->value);
+                } else {
+                    $items[$row['key']] = @unserialize($row['value']);
+                }
+            }
+
+            $this->getCacheComponent()->set($category.'_'.$lang.'_'.$this->getCacheId(), $items, $this->getCacheTime()); 
+        }
+
+        if(isset($this->items[$category]))
+            $items=CMap::mergeArray($items, $this->items[$category]);
+
         $this->set($category, $items, null, false); 
         return $items;
     }
@@ -264,7 +488,7 @@ class CmsSettings extends CApplicationComponent
         return $this->items;
     }
 
-	/**
+    /**
      * @param int $int the time to cache the keys, defaults to 0
      */
     public function setCacheTime($int)
@@ -272,7 +496,7 @@ class CmsSettings extends CApplicationComponent
         $this->_cacheTime=(int)$int>0?$int:0;
     }
 
-	/**
+    /**
      * @return int the time to cache the keys, defaults to 0
      */
     public function getCacheTime()
@@ -280,7 +504,7 @@ class CmsSettings extends CApplicationComponent
         return $this->_cacheTime;
     }
 
-	/**
+    /**
      * @param string $str the cache key to prepend to all categories, defaults to 'global_website_settings'
      */
     public function setCacheId($str='')
@@ -288,115 +512,115 @@ class CmsSettings extends CApplicationComponent
         $this->_cacheId=!empty($str)?$str:$this->_cacheId;
     }
 
-	/**
+    /**
      * @return string the cache key to prepend to all categories, defaults to 'global_website_settings'
      */
     public function getCacheId()
     {
         return $this->_cacheId;
     }
-	
-	/**
-	 * @param string $name the name of the cache component to use, defaults to 'cache'
-	 */
-	public function setCacheComponentId($name)
-	{
-		$this->_cacheComponentId=$name;
-	}
-	
-	/**
-	 * @return string the name of the cache component to use, defaults to 'cache'
-	 */
-	public function getCacheComponentId()
-	{
-		return $this->_cacheComponentId;
-	}
+    
+    /**
+     * @param string $name the name of the cache component to use, defaults to 'cache'
+     */
+    public function setCacheComponentId($name)
+    {
+        $this->_cacheComponentId=$name;
+    }
+    
+    /**
+     * @return string the name of the cache component to use, defaults to 'cache'
+     */
+    public function getCacheComponentId()
+    {
+        return $this->_cacheComponentId;
+    }
 
-	/**
-	 * @param $name string the name of the settings database table, defaults to '{{settings}}'
-	 */
-	public function setTableName($name)
-	{
-		if($this->getCreateTable()&&(strpos($name, '{{')!=0||strpos($name, '}}')!=(strlen($name)-2)))
-			throw new CException('The table name must be like "{{'.$name.'}}" not just "'.$name.'"');
-		$this->_tableName=$name;
-	}
-	
-	/**
-	 * @return string the name of the settings database table, defaults to '{{settings}}'
-	 */
-	public function getTableName()
-	{
-		return $this->_tableName;
-	}
-	
-	/**
-	 * @param string $name the name of the db component to use, defaults to 'db'
-	 */
-	public function setDbComponentId($name)
-	{
-		$this->_dbComponentId=$name;
-	}
-	
-	/**
-	 * @return string the name of the db component to use, defaults to 'db'
-	 */
-	public function getDbComponentId()
-	{
-		return $this->_dbComponentId;
-	}
-	
-	/**
+    /**
+     * @param $name string the name of the settings database table, defaults to '{{settings}}'
+     */
+    public function setTableName($name)
+    {
+        if($this->getCreateTable()&&(strpos($name, '{{')!=0||strpos($name, '}}')!=(strlen($name)-2)))
+            throw new CException('The table name must be like "{{'.$name.'}}" not just "'.$name.'"');
+        $this->_tableName=$name;
+    }
+    
+    /**
+     * @return string the name of the settings database table, defaults to '{{settings}}'
+     */
+    public function getTableName()
+    {
+        return $this->_tableName;
+    }
+    
+    /**
+     * @param string $name the name of the db component to use, defaults to 'db'
+     */
+    public function setDbComponentId($name)
+    {
+        $this->_dbComponentId=$name;
+    }
+    
+    /**
+     * @return string the name of the db component to use, defaults to 'db'
+     */
+    public function getDbComponentId()
+    {
+        return $this->_dbComponentId;
+    }
+    
+    /**
      * wheter to create the settings table if the table does not exist
      * set this to false in production mode as it will slow down the application
      * defaults to false
-	 * @param boolean $bool
-	 */
-	public function setCreateTable($bool)
-	{
-		$this->_createTable=(bool)$bool;
-	}
-	
-	/**
+     * @param boolean $bool
+     */
+    public function setCreateTable($bool)
+    {
+        $this->_createTable=(bool)$bool;
+    }
+    
+    /**
      * wheter to create the settings table if the table does not exist
      * set this to false in production mode as it will slow down the application
      * defaults to false
-	 * @return boolean
-	 */
-	public function getCreateTable()
-	{
-		return $this->_createTable;
-	}
-	
-	/**
-	 * @param string $name the engine to use when creating a new table, defaults to 'InnoDb'
-	 */
-	public function setDbEngine($name)
-	{
-		$this->_dbEngine=$name;
-	}
-	
-	/**
-	 * @return string the dbEngine to use when creating a new table, defaults to 'InnoDb'
-	 */
-	public function getDbEngine()
-	{
-		return $this->_dbEngine;
-	}
-	
-	/**
-	 * @return CCache the cache component
-	 */
-	protected function getCacheComponent()
+     * @return boolean
+     */
+    public function getCreateTable()
+    {
+        return $this->_createTable;
+    }
+    
+    /**
+     * @param string $name the engine to use when creating a new table, defaults to 'InnoDb'
+     */
+    public function setDbEngine($name)
+    {
+        $this->_dbEngine=$name;
+    }
+    
+    /**
+     * @return string the dbEngine to use when creating a new table, defaults to 'InnoDb'
+     */
+    public function getDbEngine()
+    {
+        return $this->_dbEngine;
+    }
+    
+    /**
+     * @return CCache the cache component
+     */
+    protected function getCacheComponent()
     {
         return Yii::app()->getComponent($this->getCacheComponentId());
     }
-	
-	/**
-	 * @return CDbConnection the db connection component
-	 */
-	protected function getDbComponent()
-	{
+    
+    /**
+     * @return CDbConnection the db connection component
+     */
+    protected function getDbComponent()
+    {
         return Yii::app()->getComponent($this->getDbComponentId());
     }
 
@@ -494,23 +718,23 @@ class CmsSettings extends CApplicationComponent
         }   
     }
 
-	/**
-	 * create the settings table
-	 */
-	protected function createTable()
-	{
-		$connection=$this->getDbComponent();
-		$tableName=$connection->tablePrefix.str_replace(array('{{','}}'), '', $this->getTableName());
-		$sql='CREATE TABLE IF NOT EXISTS `'.$tableName.'` (
-		  `id` int(11) NOT NULL auto_increment,
-		  `category` varchar(64) NOT NULL default \'system\',
-		  `key` varchar(255) NOT NULL,
-		  `value` text NOT NULL,
-		  PRIMARY KEY  (`id`),
-		  KEY `category_key` (`category`,`key`)
-		) '.($this->getDbEngine() ? 'ENGINE='.$this->getDbEngine() : '').'  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ; ';
+    /**
+     * create the settings table
+     */
+    protected function createTable()
+    {
+        $connection=$this->getDbComponent();
+        $tableName=$connection->tablePrefix.str_replace(array('{{','}}'), '', $this->getTableName());
+        $sql='CREATE TABLE IF NOT EXISTS `'.$tableName.'` (
+          `id` int(11) NOT NULL auto_increment,
+          `category` varchar(64) NOT NULL default \'system\',
+          `key` varchar(255) NOT NULL,
+          `value` text NOT NULL,
+          PRIMARY KEY  (`id`),
+          KEY `category_key` (`category`,`key`)
+        ) '.($this->getDbEngine() ? 'ENGINE='.$this->getDbEngine() : '').'  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ; ';
         $command=$connection->createCommand($sql);
         $command->execute();
-	}
+    }
     
 }

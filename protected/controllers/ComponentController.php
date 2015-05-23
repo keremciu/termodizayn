@@ -101,13 +101,14 @@ class ComponentController extends Controller
 	{
         $menuid=Menu::model()->language(Yii::app()->getLanguage())->find(array('condition'=>'alias=:alias OR translates.value=:alias','params'=>array(':alias'=>$alias)),'t.is_published=1');
         $menu = Menu::model()->language(Yii::app()->getLanguage())->findByPk($menuid->id);
+        
         if ($menu->parent == 0) {
         	$childmenus=array();
         } else {
         	$childmenus=Menu::model()->findAll(array('condition'=>'parent = :id','order'=>'t.ordering ASC','params'=>array(':id'=>$menu->parent)));
         }
 
-        if ($menu->type=="content") {	
+        if ($menu->type=="content") {
         	$content=News::model()->language(Yii::app()->getLanguage())->findByAttributes(array('id'=>$menu->types_id),'t.is_published=1');	
         	
         	$this->render('content',array(

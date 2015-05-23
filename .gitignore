@@ -7,3 +7,5 @@ admin/assets
 img/photos
 img/news
 img/products
+protected/views/component
+protected/controllers/ComponentController.php
