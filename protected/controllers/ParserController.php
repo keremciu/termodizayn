@@ -41,20 +41,28 @@ class ParserController extends Controller
 
         // Call the menu type 'page'
         $getFunction = "_parser".ucfirst($this->menu->type);
-        $this->$getFunction();
+
+        if (!method_exists($this,$getFunction)) {
+        	throw new CHttpException(404,Yii::t('main','Aradığınız sayfanın içerik tipi değiştirilmiş veya sayfa sizin erişiminiz dışında olabilir. Anasayfaya giderek sistem üzerinde erişebileceğiniz sayfaları bulabilirsiniz.'));
+			$this->redirect(array('site/error'));
+        } else {
+        	echo $this->$getFunction();
+        }
 	}
 
 	// Contact page: menu type
 	public function _parserContact()
 	{
-		// if the menu type is
+		// if the menu type is "contact" run this page
 		$model=new ContactForm;
 
 		if(isset($_POST['ContactForm'])) {
 			$model->attributes=$_POST['ContactForm'];
 
+			// Validation of contact form inputs
 			if($model->validate())
 			{
+				// Template for contact mail you can find it in views/contact-mail folder
 				$template = $this->renderPartial('contact-mail/_template',array(
 					'name'=>$model->name,
 					'email'=>$model->email,
@@ -62,15 +70,18 @@ class ParserController extends Controller
 					'message'=>$model->body
 				),true,false);
 
+				// Mail settings apply from our cms settings
 				$mail = Yii::app()->mail;
 				$mail->SetFrom(Yii::app()->settings->get("mail","adminEmail"), Yii::app()->settings->get("system","name"));
 				$mail->AddAddress(Yii::app()->settings->get("mail","adminEmail"), Yii::app()->settings->get("system","name"));
 				$mail->AddReplyTo($model->email, $model->name);
 
+				// Get template and subject title, subject title must be in english characters
 				$mail->IsHTML(true);
 				$mail->Subject = 'Iletisim Sayfasi E-Postasi';
 				$mail->MsgHTML($template);
 				
+				// Mail send function
 				if ($mail->Send()) {
 					Yii::app()->user->setFlash('contact',Yii::t("main","E-Postanız için teşekkürler. En kısa sürede sizinle irtibata geçeceğiz."));
 					$this->refresh();
@@ -87,6 +98,7 @@ class ParserController extends Controller
 	// Content page: menu type
 	public function _parserContent()
 	{
+		// if the menu type is "content" run this page
 		$content=News::model()->language(Yii::app()->getLanguage())->findByAttributes(array('id'=>$this->menu->types_id),'t.is_published=1');	
 
 		$this->render('content',array(
