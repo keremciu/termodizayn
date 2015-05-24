@@ -22,15 +22,10 @@ class ParserController extends Controller
 			'params'=>array(':alias'=>$alias)
 		));
 
-		if (!isset($this->menu))
-			$this->redirect("site/error");
-
-		// Check if it has a submenu
-		if ($this->menu->parent == 0) {
-        	$getchilds=array();
-        } else {
-        	$getchilds=Menu::model()->findAll(array('condition'=>'parent = :id','params'=>array(':id'=>$this->menu->parent)));
-        }
+		if (!isset($this->menu->id)) {
+			throw new CHttpException(404,Yii::t('main','Aradığınız Sayfa bulunamadı. Bu sayfa sistemden silinmiş veya değiştirilmiş olabilir, anasayfaya giderek sistem üzerinden alakalı içeriği bulabilirsiniz.'));
+			$this->redirect(array('site/error'));
+		}
 
         // Capitalize menu name
         $menu_title = ucfirst(strtolower($this->menu->name));
@@ -47,6 +42,7 @@ class ParserController extends Controller
         $this->$getFunction();
 	}
 
+	// Contact page: menu type
 	public function _parserContact()
 	{
 		// if the menu type is
@@ -57,7 +53,7 @@ class ParserController extends Controller
 
 			if($model->validate())
 			{
-				$template = $this->renderPartial('contactmail/_template',array(
+				$template = $this->renderPartial('contact-mail/_template',array(
 					'name'=>$model->name,
 					'email'=>$model->email,
 					'subject'=>$model->subject,
@@ -86,5 +82,15 @@ class ParserController extends Controller
 		));
 	}
 
+	// Content page: menu type
+	public function _parserContent()
+	{
+		$content=News::model()->language(Yii::app()->getLanguage())->findByAttributes(array('id'=>$this->menu->types_id),'t.is_published=1');	
+
+		$this->render('content',array(
+			'menu'=>$this->menu,
+			'content'=>$content,
+		));
+	}
 	
 }

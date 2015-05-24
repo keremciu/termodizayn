@@ -13,7 +13,7 @@
 return array (
   'Adınız Soyadınız' => 'Name Surname',
   'E-Posta Adresiniz' => 'E-Mail Address',
-  'E-Posta adresinizi yazın' => '',
+  'E-Posta adresinizi yazın' => 'Enter your e-mail address',
   'E-Postanız için teşekkürler. En kısa sürede sizinle irtibata geçeceğiz.' => 'Thank you for your mail. I\'ll write response to the e-mail in 48 hours.',
   'Giriş Yap' => 'Login',
   'Giriş Yap veya Kaydol' => 'Login or Signup',
@@ -25,7 +25,7 @@ return array (
   'Takip Edin' => 'Follow Us',
   'Telif hakları saklıdır' => 'Copyright rights reserved',
   'Yeni ürünler, gelecek fuarlar ve güncel gelişmelerden haberdar olmak için e-posta listemize kayıt olun.' => '',
-  'Yeniliklerden Haberdar Olun!' => '',
+  'Yeniliklerden Haberdar Olun!' => 'Be aware of our !',
   'İletişim' => 'Contact',
   'Şifremi Unuttum!' => 'Forgot Password!',
 );

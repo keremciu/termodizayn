@@ -1,10 +1,23 @@
-<?php
-$this->pageTitle=Yii::app()->name . ' - Error';
-$this->breadcrumbs=array(
-	'Error',
-);
-?>
-<h2>Error <?php echo $code; ?></h2>
-<div class="error">
-<?php echo CHtml::encode($message); ?>
+<!-- Page Head -->
+<div class="page-head">
+	<h1 class="page-head_title">{{ lang.t('main','Hata') }} {{ code }}</h1>
+</div>
+<div class="page-content">
+	<div class="error news-detail_text">
+		{{ C.Html.encode(message) }}
+		<hr/>
+		<h2>
+			<a href="{{ App.baseUrl }}">Anasayfaya git</a>
+		</h2>
+		<hr/><hr/><hr/>
+		<p>
+			{{lang.t('main','İçeriği bulmak veya websitesi ile alakalı bir probleminiz ise bizimle iletişime geçebilirsiniz.')}}
+		</p>
+		<hr/>
+		<h2>
+			<a href="mail:to{{ App.settings.get("contact","email") }}">
+				{{ App.settings.get("contact","email") }}
+			</a>
+		</h2>
+	</div>
 </div>

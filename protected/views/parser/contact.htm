@@ -26,17 +26,17 @@
 		{% beginwidget 'CActiveForm' as form %}
 		<div class="control-group">
 			{{ form.labelEx(model, 'name') }}
-			{{ form.textField(model, 'name') }}
+			{{ form.textField(model, 'name', {'class':'user-box-form_textbox'}) }}
 			{{ form.error(model, 'name') }}
 		</div>
 		<div class="control-group">
 			{{ form.labelEx(model, 'email') }}
-			{{ form.textField(model, 'email') }}
+			{{ form.textField(model, 'email', {'class':'user-box-form_textbox'}) }}
 			{{ form.error(model, 'email') }}
 		</div>
 		<div class="control-group">
 			{{ form.labelEx(model, 'subject') }}
-			{{ form.textField(model, 'subject') }}
+			{{ form.textField(model, 'subject', {'class':'user-box-form_textbox'}) }}
 			{{ form.error(model, 'subject') }}
 		</div>
 		<div class="control-group">

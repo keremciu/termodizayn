@@ -144,7 +144,9 @@
 			</div>
 		</div>
 	</header>
-	{% block content %}{{ content }}{% endblock %}
+	{% block content %}
+		{{ content }}
+	{% endblock %}
 	<!-- Footer -->
 	<footer class="site-footer">
 		<div class="container">
@@ -181,7 +183,6 @@
 					</li>
 				</ul>
 			</div>
-			
 			<!-- Subscribe & Social Networks -->
 			<div class="col-md-4">
 				<!-- Mail Subscribe -->
@@ -216,7 +217,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<!-- Footer Contact -->
 			<div class="col-md-3">
 				<h4 class="footer-title">{{lang.t ('main', 'İletişim') }}</h4>
