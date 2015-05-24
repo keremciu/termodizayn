@@ -1,9 +1,9 @@
 <?php
 Yii::import('zii.widgets.CMenu');
 /**
- * ETagListWidget
+ * TagListWidget
  */
-class ETagListWidget extends CMenu {
+class Taglist extends CMenu {
 	/**
 	 * Model with ETaggableBehavior attached
 	 */

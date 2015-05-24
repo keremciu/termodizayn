@@ -1,7 +1,7 @@
 <?php
 
 /**
- * JPhpMailer class file.
+ * PhpMailer class file.
  *
  * @version alpha 2 (2010-6-3 16:42)
  * @author jerry2801 <jerry2801@gmail.com>
@@ -25,8 +25,20 @@
  * </pre>
  */
 
-require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'class.phpmailer.php';
+$path = dirname( __FILE__ );
+require_once $path.'/class.phpmailer.php';
 
-class JPhpMailer extends PHPMailer
+class Mailer extends PHPMailer
 {
+    /**
+    * Init method for the application component mode.
+    */
+   public function init() {
+        $this->Mailer = "smtp";
+        $this->Host = Yii::app()->settings->get("mail","server");
+        $this->Username = Yii::app()->settings->get("mail","user");
+        $this->Password = Yii::app()->settings->get("mail","password");
+        $this->Port = Yii::app()->settings->get("mail","port");
+   }
+
 }

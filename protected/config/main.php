@@ -4,7 +4,6 @@ $langs = require_once('_lang.php');
 $langlist = implode("|",array_keys($langs));
 
 return array(
-	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>"Termodizayn",
 	'language'=>'tr',
 	'sourceLanguage'=>'tr',
@@ -21,8 +20,22 @@ return array(
 		),
 	),
 	'components'=>array(
+		'clientScript'=>array(
+            'coreScriptPosition'=>CClientScript::POS_END,
+            'defaultScriptPosition'=>CClientScript::POS_END,
+            'defaultScriptFilePosition'=>CClientScript::POS_END
+        ),
+        'settings'=>array(
+	        'class'             => 'CmsSettings',
+	        'cacheTime'         => 84000,
+	        'tableName'     	=> 'settings',
+	        'dbEngine'      	=> 'InnoDB',
+        ),
+		'mail' => array(
+			'class'=>'application.extensions.phpmail.Mailer',
+        ),
 		'viewRenderer' => array(
-		      'class' => 'ext.ETwigViewRenderer',
+		      'class'=>'application.extensions.twig',
 		      'twigPathAlias' => 'application.vendor.twig.twig.lib.Twig',
 		      'fileExtension' => '.htm',
 		      'options' => array(
@@ -41,12 +54,7 @@ return array(
 		'cache'=>array( 
 	    	'class'=>'system.caching.CFileCache',
 		),
-		'settings'=>array(
-	        'class'             => 'CmsSettings',
-	        'cacheTime'         => 0,
-	        'tableName'     	=> 'settings',
-	        'dbEngine'      	=> 'InnoDB',
-        ),
+		
 		'request'=>array(
 	        'enableCookieValidation'=>true,
 	        'enableCsrfValidation'=>true,

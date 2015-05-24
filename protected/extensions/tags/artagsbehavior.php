@@ -8,7 +8,7 @@
  * @author 5е-1
  * @link http://code.google.com/p/yiiext/
  */
-class EARTaggableBehavior extends ETaggableBehavior {
+class Artagsbehavior extends ETaggableBehavior {
     /**
      * Tag model name
      */

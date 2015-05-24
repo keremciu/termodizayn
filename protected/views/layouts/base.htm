@@ -20,7 +20,7 @@
 					<span>{label}</span>
 				</li>',
 				'separator':'',
-				'links':["Kurumsal","Haberler"],
+				'links':this.breadcrumbs,
 				'homeLink': '<li class="breadcrumbs_item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">\n ' ~ C.Html.link('<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-home"></use></svg>', ['/site/index'])
 			}, true) | raw
 		}}

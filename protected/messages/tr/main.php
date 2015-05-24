@@ -22,9 +22,18 @@
  * @version $Id: $
  */
 return array (
+  'E-Posta adresinizi yazın' => '',
+  'E-Postanız için teşekkürler. En kısa sürede sizinle irtibata geçeceğiz.' => '',
   'Giriş Yap' => '',
   'Giriş Yap veya Kaydol' => '',
+  'Gönder' => '',
+  'Hızlı Ulaşım' => '',
   'Kayıt olmak istiyorum' => '',
   'msgid' => '',
+  'Takip Edin' => '',
+  'Telif hakları saklıdır' => '',
+  'Yeni ürünler, gelecek fuarlar ve güncel gelişmelerden haberdar olmak için e-posta listemize kayıt olun.' => '',
+  'Yeniliklerden Haberdar Olun!' => '',
+  'İletişim' => '',
   'Şifremi Unuttum!' => '',
 );

@@ -15,6 +15,9 @@ class SiteController extends Controller
 		$gallery = Gallery::model()->findByAttributes(array('slug'=>'slider'));
 		$photos=Photos::model()->language(Yii::app()->getLanguage())->findAll(array('condition'=>'gallery = :gallery','order'=>'t.ordering DESC','params'=>array(':gallery'=>$gallery->id)));
 
+		$controller = Yii::app()->getController();
+		$this->ishomepage = $controller->getId() === 'site' && $controller->getAction()->getId() === 'index';
+
 		$this->render('index',
 			array(
 				'gallery'=>$gallery,

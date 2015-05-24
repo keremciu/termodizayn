@@ -13,6 +13,7 @@ class Controller extends CController
 	 * meaning using a single column layout. See 'protected/views/layouts/main.htm'.
 	 */
 	public $dynamicmenu;
+	public $ishomepage;
 
 	public function __construct($id,$module=null){
 

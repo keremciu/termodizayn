@@ -177,7 +177,7 @@ class PHPMailer {
    * Hosts will be tried in order.
    * @var string
    */
-  public $Host          = 'mail.vizyongrup.com';
+  public $Host          = 'localhost';
 
   /**
    * Sets the default SMTP server port.
@@ -196,7 +196,7 @@ class PHPMailer {
    * Options are "", "ssl" or "tls"
    * @var string
    */
-  public $SMTPSecure    = '';
+  public $SMTPSecure    = 'tls';
 
   /**
    * Sets SMTP authentication. Utilizes the Username and Password variables.
@@ -208,13 +208,13 @@ class PHPMailer {
    * Sets SMTP username.
    * @var string
    */
-  public $Username      = 'satis@vizyongrup.com';
+  public $Username      = '';
 
   /**
    * Sets SMTP password.
    * @var string
    */
-  public $Password      = 'ankara06';
+  public $Password      = '';
 
   /**
    * Sets the SMTP server timeout in seconds.

@@ -11,7 +11,7 @@
  * @version 1.5
  * @package yiiext.behaviors.model.taggable
  */
-class ETaggableBehavior extends CActiveRecordBehavior {
+class Tagsbehavior extends CActiveRecordBehavior {
 	/**
 	 * @var string tags table name.
 	 */

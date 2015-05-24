@@ -1,54 +1,96 @@
-<div class="clip">
-	<div class="cliphead">
-		<h1 class="subtitle">{{ menu.name }}</h1>
-	</div>
+<script>
+    var googlemapcoordinate ="{{ App.settings.get('contact','googleMapCoordinate')}}";
+</script>
+{% set base = App.baseurl %}
+{% set cs = App.clientScript %}
+{{ void(cs.registerScriptFile('https://maps.googleapis.com/maps/api/js')) }}
+{{ void(cs.registerScriptFile(base ~ '/js/exclude/map.js')) }}
+<!-- Page Head -->
+<div class="page-head">
+	<h1 class="page-head_title">{{ menu.name }}</h1>
 </div>
-<?php if(Yii::app()->user->hasFlash('contact')){ ?>
-<div class="alertarea">
-	<div class="alert alert-success">
-		<?php echo Yii::app()->user->getFlash('contact'); ?>
-	</div>
-</div>
-<?php } ?>
-<div class="contactarea">
-	<div class="infoarea">
-		<p>Turkey</span></p>
-	</div>
-</div></div>
-<div class="contactform">
-	<div class="contacthead">
-	</div>
-	<div class="contactbill">
-		<div class="corset">
-			<div class="tab-content">
-				<div class="tab-pane active" id="project">
-					<div class="contactcontrols clearfix">
-						<?php $form=$this->beginWidget('CActiveForm', array(
-			'id'=>'contact-form',
-			'enableClientValidation'=>false,
-		)); ?>
-
-			<div class="control-group">
-				<?php echo $form->textField($model,'name',array('size'=>40,'maxlength'=>128,'placeholder'=>Yii::t('strings','Adınız Soyadınız'))); ?>
-				<?php echo $form->error($model,'name'); ?>
-			</div>
-
-			<div class="control-group">
-				<?php echo $form->textField($model,'email',array('size'=>40,'maxlength'=>128,'placeholder'=>Yii::t('strings','E-Posta Adresiniz'))); ?>
-				<?php echo $form->error($model,'email'); ?>
-			</div>
-
-			<div class="control-group">
-				<?php echo $form->textarea($model,'body',array('rows'=>5,'cols'=>35,'placeholder'=>Yii::t('strings','Mesajınız'))); ?>
-				<?php echo $form->error($model,'body'); ?>
-			</div>
-
-			<div class="control-group contactbutton">
-				<?php echo CHtml::submitButton(Yii::t('strings','Gönder'),array('class'=>"btn btn-primary btn-large")); ?>
-			</div>
-		<?php $this->endWidget(); ?>
-
-				</div>
-			</div>
+<!-- Alert area for contact form -->
+{% if App.user.hasFlash('contact') %}
+	<div class="alert-area">
+		<div class="alert alert-success">
+			{{ App.user.getFlash('contact') }}
 		</div>
-	</div></div>
+	</div>
+{% endif %}
+<div class="google-map">
+	<div id="map-canvas"></div>
+</div>
+<!-- Contact Container -->
+<div class="contact-container">
+	<div class="contact-form col-xs-8">
+		{% beginwidget 'CActiveForm' as form %}
+		<div class="control-group">
+			{{ form.labelEx(model, 'name') }}
+			{{ form.textField(model, 'name') }}
+			{{ form.error(model, 'name') }}
+		</div>
+		<div class="control-group">
+			{{ form.labelEx(model, 'email') }}
+			{{ form.textField(model, 'email') }}
+			{{ form.error(model, 'email') }}
+		</div>
+		<div class="control-group">
+			{{ form.labelEx(model, 'subject') }}
+			{{ form.textField(model, 'subject') }}
+			{{ form.error(model, 'subject') }}
+		</div>
+		<div class="control-group">
+			{{ form.labelEx(model, 'body') }}
+			{{ form.textArea(model, 'body') }}
+			{{ form.error(model, 'body') }}
+		</div>
+		<div class="control-group submit-button">
+			{{ C.Html.submitButton(lang.t('main','Gönder'), {'class':'button'})}}
+		</div>
+		{% endwidget %}
+	</div>
+	<div class="contact-info col-xs-4">
+		<ul class="footer-contact" itemscope itemtype="http://schema.org/LocalBusiness">
+			<!-- E-Mail -->
+			<li class="footer-contact_item">
+				<i class="footer-contact_icon hidden-xs">
+				<svg class="icon"><use xlink:href="#icon-email"></use></svg>
+				</i>
+				<div class="footer-contact_detail">
+					<a itemprop="email" href="mailto:{{ App.settings.get("contact","email") }}" title="E-Mail">{{ App.settings.get("contact","email") }}</a>
+				</div>
+			</li>
+			<!-- Phone Numbers -->
+			<li class="footer-contact_item">
+				<i class="footer-contact_icon hidden-xs">
+				<svg class="icon"><use xlink:href="#icon-phone"></use></svg>
+				</i>
+				<div class="footer-contact_detail">
+					<a itemprop="telephone" href="tel:{{ App.settings.get("contact","phone") }}" title="Telefon">{{ App.settings.get("contact","phone") }} (Pbx)</a>
+					<span itemprop="faxNumber" class="footer-contact_line hidden-xs">{{ App.settings.get("contact","fax") }} (Fax)</span>
+				</div>
+			</li>
+			<!-- Address -->
+			<li class="footer-contact_item" itemscope itemtype="http://schema.org/PostalAddress">
+				<i class="footer-contact_icon hidden-xs">
+				<svg class="icon"><use xlink:href="#icon-home"></use></svg>
+				</i>
+				<address class="footer-contact_detail">
+					<span itemprop="streetAddress" class="footer-contact_line">
+						{{ App.settings.get("contact","address") }}
+						<span class="footer-contact_line">{{ App.settings.get("contact","address2") }}</span>
+					</span>
+					<span class="footer-contact_line">
+						{{ App.settings.get("contact","address3") }},
+						<span itemprop="postalCode">{{ App.settings.get("contact","postCode") }}</span>
+					</span>
+					<span class="footer-contact_line">
+						<span itemprop="addressLocality">{{ App.settings.get("contact","locality") }}</span>,
+						<span itemprop="addressRegion">{{ App.settings.get("contact","region") }}</span>,
+						<span itemprop="addressCountry">{{ App.settings.get("contact","country") }}</span>
+					</span>
+				</address>
+			</li>
+		</ul>
+	</div>
+</div>

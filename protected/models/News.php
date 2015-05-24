@@ -20,7 +20,7 @@ class News extends CActiveRecord
 	public function behaviors() {
 	    return array(
 	        'tags' => array(
-	            'class' => 'ext.yiiext.behaviors.model.taggable.ETaggableBehavior',
+	            'class' => 'ext.tags.tagsbehavior',
 	            'tagTable' => 'tag',
 	            'tagBindingTable' => 'news_tags',
 	            'modelTableFk' => 'news_id',

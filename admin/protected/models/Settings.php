@@ -22,7 +22,8 @@ class Settings extends CFormModel
         'port' => '',
         'user' => '',
         'password' => '',
-        'ssl' => '',
+        'smtpsecure' => '',
+        'smtpauth' => '',
     );
     public $contact = array(
         'email'=>'',

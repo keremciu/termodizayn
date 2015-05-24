@@ -9,7 +9,7 @@
  *
  * @version 1.1.15
  */
-class ETwigViewRenderer extends CApplicationComponent implements IViewRenderer
+class twig extends CApplicationComponent implements IViewRenderer
 {
     /**
      * @var string Path alias to Twig
@@ -91,7 +91,11 @@ class ETwigViewRenderer extends CApplicationComponent implements IViewRenderer
             'cache' => $app->getRuntimePath() . '/twig_cache/',
             'charset' => $app->charset,
         );
+
         $this->_twig = new Twig_Environment($loader, array_merge($defaultOptions, $this->options));
+        require_once('twig_tokenparser_widget.php');
+        
+        $this->_twig->addTokenParser(new Twig_TokenParser_Widget);
 
         // Adding Yii::app() object to globals
         $this->_twig->addGlobal('App', $app);
@@ -124,8 +128,8 @@ class ETwigViewRenderer extends CApplicationComponent implements IViewRenderer
             $this->setLexerOptions($this->lexerOptions);
         }
 
-        $Yii = new ETwigViewRendererStaticClassProxy ('Yii');
-        $this->_twig-> addGlobal ('lang', $Yii);
+        $Yii = new ETwigViewRendererStaticClassProxy('Yii');
+        $this->_twig->addGlobal('lang',$Yii);
 
         return parent::init();
     }

@@ -4,9 +4,44 @@ Later additions to main.css
 
 */
 .site-nav_item {
-	border-bottom:4px solid transparent;
+    border-bottom: 4px solid transparent;
 }
 
 .user-box-frame {
-	width: auto;
+    width: auto;
+}
+
+.breadcrumbs {
+    overflow: inherit;
+}
+
+.google-map {
+	margin-bottom:20px;
+}
+
+#map-canvas {
+	width:100%;
+	height:400px;
+}
+
+
+.alertarea {
+    padding-top: 25px;
+    color: darkred;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.alertarea .alert {
+    margin-bottom: 0px;
+}
+
+.errorMessage {
+    font-size: 11px;
+    padding: 9px 13px 10px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    color: darkred;
+    background: #f5f5f5;
+    margin-bottom: 14px;
 }

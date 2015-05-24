@@ -75,11 +75,16 @@
 			<nav class="site-nav hidden-xs">
 				{% set geturl = App.request.getUrl() %}
 				{% for menu in this.dynamicmenu %}
-					{% set link = menu.alias %}
+					{% set getactive = false %}
+					{% set link = App.baseUrl ~ "/" ~ menu.alias %}
 					{% if menu.type == "frontpage" %}
-						{% set link = base %}
+						{# check  #}
+						{% if this.ishomepage %}
+							{% set getactive = true %}
+						{% endif %}
+						{% set link = App.baseUrl %}
 					{% endif %}
-					<a href="{{ link }}" title="{{ menu.name }}" class="site-nav_item {{ menu.alias in geturl ? 'isActive' : '' }}">{{ menu.name }}</a>
+					<a href="{{ link }}" title="{{ menu.name }}" class="site-nav_item {{ ( menu.alias in geturl ) or ( getactive ) ? 'isActive' : '' }}">{{ menu.name }}</a>
 				{% endfor %}
 			</nav>
 			<!-- Mobile Navigation -->
