@@ -14,7 +14,6 @@ $this->breadcrumbs=array(
 		<div class="tabarea">
 			<h3 class="top-lines"><?php echo $category->title; ?></h3>
 			<ul class="exhibithistories">
-				<li class="active"><a href="javascript:;" data-filter="0"><?php echo Yii::t('strings','Tümü'); ?></a></li>
 				<?php
 
 					$cats = Category::model()->findAll(array('condition'=>'parent = :id','params'=>array(':id'=>$menu->types_id)));

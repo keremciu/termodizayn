@@ -38,7 +38,7 @@ class TbSelect2 extends CInputWidget
   public function init()
   {
     if(empty($this->data) && $this->asDropDownList === true)
-      throw new CException(Yii::t('zii', '"data" attribute cannot be blank'));
+      throw new CException('"data" attribute cannot be blank');
   }
 
   /**

@@ -36,7 +36,7 @@ class TbExtendedTooltipAction extends CAction
 		$key = yii::app()->request->getParam('name');
 		$tooltip = Yii::app()->request->getParam('value');
 		if(!$key || !$tooltip)
-			throw new CHttpException(404, Yii::t('zii', 'Unauthorized request') );
+			throw new CHttpException(404, 'Unauthorized request' );
 
 		if(!$this->getDbConnection()
 			->createCommand()
@@ -62,7 +62,7 @@ class TbExtendedTooltipAction extends CAction
 		{
 			$this->_db = Yii::app()->getComponent('db');
 			if (!$this->_db instanceof CDbConnection)
-				throw new CException(Yii::t('zii', 'The "db" application component must be configured to be a CDbConnection object.'));
+				throw new CException('The "db" application component must be configured to be a CDbConnection object.');
 		}
 		return $this->_db;
 	}

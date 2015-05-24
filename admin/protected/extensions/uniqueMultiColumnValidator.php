@@ -31,8 +31,8 @@ class uniqueMultiColumnValidator extends CValidator
 				return;
 			$column=$object->getTableSchema()->getColumn($attribute);
 			if($column===null)
-				throw new CException(Yii::t('yii','{class} does not have attribute "{attribute}".',
-			array('{class}'=>get_class($object), '{attribute}'=>$attribute)));
+				throw new CException('{class} does not have attribute "{attribute}".',
+			array('{class}'=>get_class($object), '{attribute}'=>$attribute));
 			$columnName=$column->rawName;
 			if(''!=$criteria['condition'])
 			{

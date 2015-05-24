@@ -707,22 +707,26 @@ EOD;
 	 * @param	string	translator function, eg. 'Yii::t'
 	 * @return	array	messages to translate, by category (category=>(messages))
 	 */
-	protected function extractMessages($fileName, $translator) {
+	protected function extractMessages($fileName, $translators) {
 		echo 'Extracting messages from ' . str_replace(dirname($this->config('sourcePath')) . DIRECTORY_SEPARATOR, '', realpath($fileName)) . "...\n"; // more readable
 		$subject = file_get_contents($fileName);
-		$n = preg_match_all('/\b' . $translator . '\s*\(\s*(\'.*?(?<!\\\\)\'|".*?(?<!\\\\)")\s*,\s*(\'.*?(?<!\\\\)\'|".*?(?<!\\\\)")\s*[,\)]/s', $subject, $matches, PREG_SET_ORDER);
+
 		$messages = array();
-		for ($i = 0; $i<$n; ++$i) {
-			$category = substr($matches[$i][1], 1, -1);
-			if ($category == 'yii') {
-				continue;
+
+		foreach ($translators as $key => $translator) {
+			$n = preg_match_all('/\b' . $translator . '\s*\(\s*(\'.*?(?<!\\\\)\'|".*?(?<!\\\\)")\s*,\s*(\'.*?(?<!\\\\)\'|".*?(?<!\\\\)")\s*[,\)]/s', $subject, $matches, PREG_SET_ORDER);
+			for ($i = 0; $i<$n; ++$i) {
+				$category = substr($matches[$i][1], 1, -1);
+				if ($category == 'yii') {
+					continue;
+				}
+				$message = $matches[$i][2];
+				$messages[$category][] = eval("return $message;"); // use eval to eliminate quote escape
+				if ($messages[$category][count($messages[$category]) -1] == '0')
+					unset($messages[$category][count($messages[$category]) -1]);
 			}
-			$message = $matches[$i][2];
-			$messages[$category][] = eval("return $message;"); // use eval to eliminate quote escape
-			if ($messages[$category][count($messages[$category]) -1] == '0')
-				unset($messages[$category][count($messages[$category]) -1]);
 		}
-		// extract __('msgid')
+		// extract
 		$translator = '__';
 		$n = preg_match_all('/\b' . $translator . '\s*\(\s*(\'.*?(?<!\\\\)\'|".*?(?<!\\\\)")\s*[,\)]/s', $subject, $matches, PREG_SET_ORDER);
 		$category = 'main';

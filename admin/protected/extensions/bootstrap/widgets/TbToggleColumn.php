@@ -125,7 +125,7 @@ class TbToggleColumn extends CGridColumn
 	public function init()
 	{
 		if ($this->name === null)
-			throw new CException(Yii::t('zii', '"{attribute}" attribute cannot be empty.', array('{attribute}'=>"name")));
+			throw new CException('"{attribute}" attribute cannot be empty.', array('{attribute}'=>"name"));
 
 		$this->initButton();
 
@@ -138,9 +138,9 @@ class TbToggleColumn extends CGridColumn
 	protected function initButton()
 	{
 		if ($this->checkedButtonLabel === null)
-			$this->checkedButtonLabel = Yii::t('zii', 'Pasifleştir');
+			$this->checkedButtonLabel = 'Pasifleştir';
 		if ($this->uncheckedButtonLabel === null)
-			$this->uncheckedButtonLabel = Yii::t('zii', 'Aktifleştir');
+			$this->uncheckedButtonLabel = 'Aktifleştir';
 
 		$this->button = array(
 			'url' => 'Yii::app()->controller->createUrl("' . $this->toggleAction . '",array("id"=>$data->primaryKey,"attribute"=>"' . $this->name . '"))',

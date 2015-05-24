@@ -32,7 +32,7 @@ class TbEditableDetailView extends CDetailView
     public function init()
     {
         if (!$this->data instanceof CModel) {
-            throw new CException(Yii::t('zii','Property "data" should be of CModel class.'));
+            throw new CException('Property "data" should be of CModel class.');
         }
 
         parent::init();
@@ -58,7 +58,7 @@ class TbEditableDetailView extends CDetailView
             $editableOptions = CMap::mergeArray($options['editable'], array(
                 'model'     => $this->data,
                 'attribute' => $options['name'],
-                'emptytext' => ($this->nullDisplay === null) ? Yii::t('zii', 'Not set') : strip_tags($this->nullDisplay),
+                'emptytext' => ($this->nullDisplay === null) ? 'Not set' : strip_tags($this->nullDisplay),
             ));
             
             //if value in detailview options provided, set text directly

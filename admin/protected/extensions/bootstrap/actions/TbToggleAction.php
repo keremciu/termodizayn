@@ -74,7 +74,7 @@ class TbToggleAction extends CAction
 			if ($this->redirectRoute !== null)
 				$this->getController()->redirect($this->redirectRoute);
 		} else
-			throw new CHttpException(Yii::t('zii', 'Invalid request'));
+			throw new CHttpException('Invalid request');
 	}
 
 	/**

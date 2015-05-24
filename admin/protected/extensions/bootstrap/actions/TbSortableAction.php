@@ -28,7 +28,7 @@ class TbSortableAction extends CAction
             /** @var $model CActiveRecord */
             $model = new $this->modelName;
             if (!$model->hasAttribute($sortableAttribute)) {
-                throw new CHttpException(500, Yii::t('yii', '{attribute} "{value}" is invalid.', array('{attribute}' => 'sortableAttribute', '{value}' => $sortableAttribute)));
+                throw new CHttpException(500, '{attribute} "{value}" is invalid.', array('{attribute}' => 'sortableAttribute', '{value}' => $sortableAttribute));
             }
 
             $query = "UPDATE {$model->tableName()} SET {$sortableAttribute} = CASE ";
@@ -42,7 +42,7 @@ class TbSortableAction extends CAction
             $query .= "END WHERE {$model->tableSchema->primaryKey} IN (" . implode(',', $ids) . ');';
             Yii::app()->db->createCommand($query)->execute();
         } else {
-            throw new CHttpException(500, Yii::t('yii', 'Your request is invalid.'));
+            throw new CHttpException(500, 'Your request is invalid.');
         }
     }
 }

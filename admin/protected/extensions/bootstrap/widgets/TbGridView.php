@@ -121,7 +121,7 @@ class TbGridView extends CGridView
 	protected function createDataColumn($text)
 	{
 		if (!preg_match('/^([\w\.]+)(:(\w*))?(:(.*))?$/', $text, $matches))
-			throw new CException(Yii::t('zii', 'The column must be specified in the format of "Name:Type:Label", where "Type" and "Label" are optional.'));
+			throw new CException('The column must be specified in the format of "Name:Type:Label", where "Type" and "Label" are optional.');
 
 		$column = new TbDataColumn($this);
 		$column->name = $matches[1];

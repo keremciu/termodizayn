@@ -8,7 +8,7 @@ return array(
     'launchpad' => true,
     'skipUnused' => true,
     'fileTypes' => array('php'),
-    'translator'=>'lang.t',
+    'translator'=> array('lang.t','Yii::t'),
     'exclude'=>array(
                 '.svn',
                 '.bzr',

@@ -63,9 +63,9 @@ class TbExtendedTooltip extends CWidget
 	public function init()
 	{
 		if ($this->key === null)
-			throw new CException(Yii::t('zii', '"{attribute}" cannnot be null', array('{attribute}' => 'key')));
+			throw new CException('"{attribute}" cannnot be null', array('{attribute}' => 'key'));
 		if ($this->url === null && $this->editable)
-			throw new CException(Yii::t('zii', '"url" cannot be null if tooltip is required to be edited'));
+			throw new CException('"url" cannot be null if tooltip is required to be edited');
 	}
 
 	/**
@@ -157,7 +157,7 @@ class TbExtendedTooltip extends CWidget
 		{
 			$this->_db = Yii::app()->getComponent($this->connectionID);
 			if (!$this->_db instanceof CDbConnection)
-				throw new CException(Yii::t('zii', 'The "db" application component must be configured to be a CDbConnection object.'));
+				throw new CException('The "db" application component must be configured to be a CDbConnection object.');
 		}
 		return $this->_db;
 	}

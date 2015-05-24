@@ -356,11 +356,11 @@ class TbExtendedGridView extends TbGridView
 			return;
 
 		if (!isset($this->chartOptions['data']['series']))
-			throw new CException(Yii::t('zii', 'You need to set the "series" attribute in order to render a chart'));
+			throw new CException('You need to set the "series" attribute in order to render a chart');
 
 		$configSeries = $this->chartOptions['data']['series'];
 		if (!is_array($configSeries))
-			throw new CException(Yii::t('zii', '"chartOptions.series" is expected to be an array.'));
+			throw new CException('"chartOptions.series" is expected to be an array.');
 
 		$chartId = 'exgvwChart' . $this->getId();
 
@@ -372,8 +372,8 @@ class TbExtendedGridView extends TbGridView
 		$buttons = Yii::createComponent(array('class' => 'bootstrap.widgets.TbButtonGroup',
 			'toggle' => 'radio',
 			'buttons' => array(
-				array('label' => Yii::t('zii', 'Grid'), 'url' => '#', 'htmlOptions' => array('class' => 'active ' . $this->getId() . '-grid-control grid')),
-				array('label' => Yii::t('zii', 'Chart'), 'url' => '#', 'htmlOptions' => array('class' => $this->getId() . '-grid-control chart')),
+				array('label' => 'Grid', 'url' => '#', 'htmlOptions' => array('class' => 'active ' . $this->getId() . '-grid-control grid')),
+				array('label' => 'Chart', 'url' => '#', 'htmlOptions' => array('class' => $this->getId() . '-grid-control chart')),
 			),
 			'htmlOptions' => array('style' => 'margin-bottom:5px')
 		));
@@ -657,10 +657,10 @@ class TbExtendedGridView extends TbGridView
 	protected function getSummaryOperationInstance($name, $config)
 	{
 		if (!isset($config['class']))
-			throw new CException(Yii::t('zii', 'Column summary configuration must be an array containing a "type" element.'));
+			throw new CException('Column summary configuration must be an array containing a "type" element.');
 
 		if (!in_array($config['class'], $this->extendedSummaryOperations))
-			throw new CException(Yii::t('zii', '"{operation}" is an unsupported class operation.', array('{operation}' => $config['class'])));
+			throw new CException('"{operation}" is an unsupported class operation.', array('{operation}' => $config['class']));
 
 		// name of the column should be unique
 		if (!isset($this->extendedSummaryTypes[$name]))
@@ -722,7 +722,7 @@ abstract class TbOperation extends CWidget
 	public function init()
 	{
 		if (null == $this->column)
-			throw new CException(Yii::t('zii', '"{attribute}" attribute must be defined', array('{attribute}' => 'column')));
+			throw new CException('"{attribute}" attribute must be defined', array('{attribute}' => 'column'));
 	}
 
 	/**
@@ -776,8 +776,8 @@ class TbSumOperation extends TbOperation
 
 		if (!in_array($this->column->type, $this->supportedTypes))
 		{
-			throw new CException(Yii::t('zii', 'Unsupported column type. Supported column types are: "{types}"', array(
-				'{types}' => implode(', ', $this->supportedTypes))));
+			throw new CException('Unsupported column type. Supported column types are: "{types}"', array(
+				'{types}' => implode(', ', $this->supportedTypes)));
 		}
 	}
 
@@ -854,11 +854,11 @@ class TbCountOfTypeOperation extends TbOperation
 	public function init()
 	{
 		if (empty($this->types))
-			throw new CException(Yii::t('zii', '"{attribute}" attribute must be defined', array('{attribute}' => 'types')));
+			throw new CException('"{attribute}" attribute must be defined', array('{attribute}' => 'types'));
 		foreach ($this->types as $type)
 		{
 			if (!isset($type['label']))
-				throw new CException(Yii::t('zii', 'The "label" of a type must be defined.'));
+				throw new CException('The "label" of a type must be defined.');
 		}
 		parent::init();
 	}

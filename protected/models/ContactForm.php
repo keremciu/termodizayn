@@ -1,9 +1,8 @@
 <?php
-
 /**
  * ContactForm class.
  * ContactForm is the data structure for keeping
- * contact form data. It is used by the 'contact' action of 'SiteController'.
+ * contact form data. It is used by the 'contact' action of 'ParserController'.
  */
 class ContactForm extends CFormModel
 {
@@ -11,8 +10,6 @@ class ContactForm extends CFormModel
 	public $email;
 	public $subject;
 	public $body;
-	public $budget;
-	public $timeline;
 
 	/**
 	 * Declares the validation rules.
@@ -22,6 +19,7 @@ class ContactForm extends CFormModel
 		return array(
 			// name, email, subject and body are required
 			array('name, email, body', 'required'),
+			array('subject', 'length', 'max'=>255),
 			// email has to be a valid email address
 			array('email', 'email'),
 		);
@@ -31,14 +29,16 @@ class ContactForm extends CFormModel
 	 * Declares customized attribute labels.
 	 * If not declared here, an attribute would have a label that is
 	 * the same as its name with the first letter in upper case.
+	 *
+	 * Do not delete above line it has a hack for new twig template language module
 	 */
 	public function attributeLabels()
 	{
 		return array(
-			'name'=>Yii::t('strings','Adınız Soyadınız'),
-			'email'=>Yii::t('strings','E-Posta Adresiniz'),
-			'subject'=>Yii::t('strings','Konu'),
-			'body'=>Yii::t('strings','Mesajınız'),
+			'name'=>Yii::t('main','Adınız Soyadınız'),
+			'email'=>Yii::t('main','E-Posta Adresiniz'),
+			'subject'=>Yii::t('main','Konu'),
+			'body'=>Yii::t('main','Mesajınız'),
 		);
 	}
 }

@@ -28,13 +28,6 @@
 			array_push($items,$new);
 		}
 
-		$hr = Hr::model()->findAll(array('condition'=>'active=0'));
-		if (count($hr) > 0) {
-			$hrsays = " (".count($hr).")";
-		} else {
-			$hrsays = "";
-		}
-
 	 $this->widget('bootstrap.widgets.TbNavbar', array(
 	    'type'=>'inverse',
 	    'brand'=>'TD',

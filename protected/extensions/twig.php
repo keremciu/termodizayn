@@ -255,9 +255,7 @@ class twig extends CApplicationComponent implements IViewRenderer
             if ($twigElement !== null) {
                 $this->_twig->{'add'.$classType}($name, $twigElement);
             } else {
-                throw new CException(Yii::t('yiiext',
-                                             'Incorrect options for "{classType}" [{name}]',
-                                             array('{classType}'=>$classType, '{name}'=>$name)));
+                throw new CException('Incorrect options for "{classType}" [{name}]',array('{classType}'=>$classType, '{name}'=>$name));
             }
         }
     }

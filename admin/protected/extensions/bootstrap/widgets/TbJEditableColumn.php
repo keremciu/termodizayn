@@ -179,8 +179,8 @@ class TbJEditableColumn extends TbDataColumn
 				$cs->registerScriptFile($assetsUrl . '/js/jquery.jeditable.time.js', CClientScript::POS_END);
 				if (!isset($this->jEditableOptions['submit']))
 				{
-					$this->jEditableOptions['submit'] = Yii::t('zii', 'Ok');
-					$this->jEditableOptions['cancel'] = Yii::t('zii', 'Cancel');
+					$this->jEditableOptions['submit'] = 'Ok';
+					$this->jEditableOptions['cancel'] = 'Cancel';
 				}
 				break;
 			case 'masked':
@@ -199,7 +199,7 @@ class TbJEditableColumn extends TbDataColumn
 					->registerScriptFile($assetsUrl . '/js/jquery.jeditable.bdatepicker.js', CClientScript::POS_END);
 				if (!isset($this->jEditableOptions['submit']))
 				{
-					$this->jEditableOptions['submit'] = Yii::t('zii', 'Ok');
+					$this->jEditableOptions['submit'] = 'Ok';
 				}
 				break;
 			case 'bcolorpicker':

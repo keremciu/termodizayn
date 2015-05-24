@@ -67,7 +67,7 @@ class TbEditableSaver extends CComponent
     public function __construct($modelClass)
     {
         if (empty($modelClass)) {
-            throw new CException(Yii::t('zii', 'You should provide modelClass in constructor of TbEditableSaver.'));
+            throw new CException('You should provide modelClass in constructor of TbEditableSaver.');
         }
         $this->modelClass = ucfirst($modelClass);
     }
@@ -85,30 +85,30 @@ class TbEditableSaver extends CComponent
 
         //checking params
         if (empty($this->attribute)) {
-            throw new CException(Yii::t('zii','Property "attribute" should be defined.'));
+            throw new CException('Property "attribute" should be defined.');
         }
         if (empty($this->primaryKey)) {
-            throw new CException(Yii::t('zii','Property "primaryKey" should be defined.'));
+            throw new CException('Property "primaryKey" should be defined.');
         }
 
         //loading model
         $this->model = CActiveRecord::model($this->modelClass)->findByPk($this->primaryKey);
         if (!$this->model) {
-            throw new CException(Yii::t('editable', 'Model {class} not found by primary key "{pk}"', array(
-               '{class}'=>get_class($this->model), '{pk}'=>$this->primaryKey)));
+            throw new CException('Model {class} not found by primary key "{pk}"', array(
+               '{class}'=>get_class($this->model), '{pk}'=>$this->primaryKey));
         }
         $this->model->setScenario($this->scenario);
         
         //is attribute exists
         if (!$this->model->hasAttribute($this->attribute)) {
-            throw new CException(Yii::t('editable', 'Model {class} does not have attribute "{attr}"', array(
-              '{class}'=>get_class($this->model), '{attr}'=>$this->attribute)));            
+            throw new CException('Model {class} does not have attribute "{attr}"', array(
+              '{class}'=>get_class($this->model), '{attr}'=>$this->attribute));            
         }
 
         //is attribute safe
         if (!$this->model->isAttributeSafe($this->attribute)) {
-            throw new CException(Yii::t('zii', 'Model {class} rules do not allow to update attribute "{attr}"', array(
-              '{class}'=>get_class($this->model), '{attr}'=>$this->attribute))); 
+            throw new CException('Model {class} rules do not allow to update attribute "{attr}"', array(
+              '{class}'=>get_class($this->model), '{attr}'=>$this->attribute)); 
         }
 
         //setting new value
@@ -126,7 +126,7 @@ class TbEditableSaver extends CComponent
             if ($this->model->save(false, $this->changedAttributes)) {
                 $this->afterUpdate();
             } else {
-                $this->error(Yii::t('zii', 'Error while saving record!'));
+                $this->error('Error while saving record!');
             }
         } else {
             $firstError = reset($this->model->getErrors());

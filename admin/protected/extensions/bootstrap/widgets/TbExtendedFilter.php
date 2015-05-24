@@ -62,13 +62,13 @@ class TbExtendedFilter extends CWidget
 	public function init()
 	{
 		if (!$this->model instanceof CActiveRecord)
-			throw new CException(Yii::t('zii', '"model" attribute must be an CActiveRecord type of component'));
+			throw new CException('"model" attribute must be an CActiveRecord type of component');
 
 		if (!$this->grid instanceof CGridView)
-			throw new CException(Yii::t('zii', '"grid" attribute must be an CGridView type of component'));
+			throw new CException('"grid" attribute must be an CGridView type of component');
 
 		if (!$this->redirectRoute === null)
-			throw new CException(Yii::t('zii', '"redirectRoute" cannot be empty'));
+			throw new CException('"redirectRoute" cannot be empty');
 
 		$this->registry .= '-'.$this->grid->id;
 
