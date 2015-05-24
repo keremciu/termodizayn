@@ -22,6 +22,7 @@ class ParserController extends Controller
 			'params'=>array(':alias'=>$alias)
 		));
 
+		// If site is not exist, show error page
 		if (!isset($this->menu->id)) {
 			throw new CHttpException(404,Yii::t('main','Aradığınız Sayfa bulunamadı. Bu sayfa sistemden silinmiş veya değiştirilmiş olabilir, anasayfaya giderek sistem üzerinden alakalı içeriği bulabilirsiniz.'));
 			$this->redirect(array('site/error'));
@@ -30,6 +31,7 @@ class ParserController extends Controller
         // Capitalize menu name
         $menu_title = ucfirst(strtolower($this->menu->name));
 
+        // This menu added to Breadcrumbs
         $this->breadcrumbs=array(
 			$this->menu->name,
 		);
