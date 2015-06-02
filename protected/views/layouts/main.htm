@@ -51,8 +51,8 @@
 							<!-- Sign-In -->
 							<div class="user-box_sign-in">
 								<form class="user-box-form" action="#" autocomplete="off">
-									<input type="text" class="user-box-form_textbox" placeholder="E-Posta">
-									<input type="password" class="user-box-form_textbox" placeholder="Parola">
+									<input type="text" name="user-login-email" class="user-box-form_textbox" placeholder="E-Posta">
+									<input type="password" name="user-login-password" class="user-box-form_textbox" placeholder="Parola">
 									<button type="button" class="button">{{lang.t ('main', 'Giriş Yap') }}</button>
 								</form>
 								<a href="forgot-password.php" class="user-box-forgot-password" title="Şifremi Unuttum!">{{lang.t ('main', 'Şifremi Unuttum!') }}</a>
@@ -192,7 +192,7 @@
 					{{lang.t ('main', 'Yeni ürünler, gelecek fuarlar ve güncel gelişmelerden haberdar olmak için e-posta listemize kayıt olun.') }}
 					</span>
 					<form class="footer-subscribe_form" action="#" autocomplete="off">
-						<input class="footer-subscribe-textbox" type="text" placeholder="{{lang.t ('main', 'E-Posta adresinizi yazın') }}">
+						<input type="text" name="subscribe-mail" class="footer-subscribe-textbox" placeholder="{{lang.t ('main', 'E-Posta adresinizi yazın') }}">
 						<button type="button" class="footer-subscribe-button">
 						<svg class="icon"><use xlink:href="#icon-done"></use></svg>
 						</button>
