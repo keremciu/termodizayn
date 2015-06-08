@@ -42,7 +42,7 @@ class Category extends CActiveRecord
 	        'Translatable' => array(
 	            'class'                 => 'ext.Translatable',
 	            'translationAttributes' => array('title','description'),
-	            'translationRelation'   => 'translates',
+	            'translationRelation'   => 'translatecat',
 	            'translationTable'   => $this->tableName(),
 	            'languageColumn'        => 'lang_id',
 	        ),
@@ -57,7 +57,7 @@ class Category extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, slug, description, image, icon, is_published, is_deleted', 'required'),
+			array('title, slug, description, image, icon, parent, is_published, is_deleted', 'required'),
 			array('is_published, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('title, slug, image, icon', 'length', 'max'=>255),
 			// The following rule is used by search().
@@ -75,7 +75,8 @@ class Category extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'news' => array(self::HAS_MANY, 'News', 'category'),
-			'translates' => array(self::HAS_MANY, 'Translates', 'reference_id','index'=>'reference_field'),
+			'translatecat' => array(self::HAS_MANY, 'Translates', 'reference_id','index'=>'reference_field'),
+			'product' => array(self::HAS_MANY, 'Product', 'category'),
 		);
 	}
 

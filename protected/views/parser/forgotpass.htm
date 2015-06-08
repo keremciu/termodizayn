@@ -1,0 +1,30 @@
+<!-- Page Head -->
+<div class="page-head">
+	<h1 class="page-head_title">{{ menu.name }}</h1>
+	<ul class="page-head_description">
+		<li>{{ lang.t('main','Şifrenizi e-posta adresiniz veya kullanıcı adınızı aşağıdaki alana girerek sıfırlayabilirsiniz.') }}</li>
+	</ul>
+</div>
+<div class="page-content">
+	<!-- Alert area for forgot password form -->
+	{% if App.user.hasFlash('alert') %}
+		<div class="alert-area">
+			<div class="alert alert-success">
+				{{ App.user.getFlash('alert') }}
+			</div>
+		</div>
+	{% endif %}
+	<!-- Forgot Password Form -->
+	<div id="forgotpass" class="forgot-password-form">
+	{% beginwidget 'CActiveForm' as form %}
+		<!-- E-Mail -->
+		<div class="forgot-password-form-item">
+			{{ form.labelEx(model, 'recover_email') }}
+			{{ form.textField(model, 'recover_email', {'class':'forgot-password-form_textbox' }) }}
+			{{ form.error(model, 'recover_email') }}
+		</div>
+		<!-- Button -->
+		<button type="submit" class="button">{{ lang.t('main','E-Postayı Gönder') }}</button>
+	{% endwidget %}
+	</div>
+</div>

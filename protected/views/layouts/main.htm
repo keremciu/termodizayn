@@ -39,37 +39,49 @@
 				</div>
 				<!-- Navbar Right -->
 				<div class="pull-right hidden-xs">
+					{% if App.user.isGuest %}
 					<div id="user-box" class="user-box-frame">
 						<div class="site-navbar_item user-box-frame_item">
 							<span>
 								<svg class="icon"><use xlink:href="#icon-login"></use></svg>
-								{{lang.t ('main', 'Giriş Yap veya Kaydol') }}
+								{{ lang.t ('main', 'Giriş Yap veya Kaydol') }}
 								<svg class="icon"><use xlink:href="#icon-arrow-drop-down"></use></svg>
 							</span>
 						</div>
 						<div class="user-box">
 							<!-- Sign-In -->
-							<div class="user-box_sign-in">
-								<form class="user-box-form" action="#" autocomplete="off">
-									<input type="text" class="user-box-form_textbox" placeholder="E-Posta">
-									<input type="password" class="user-box-form_textbox" placeholder="Parola">
-									<button type="button" class="button">{{lang.t ('main', 'Giriş Yap') }}</button>
-								</form>
-								<a href="forgot-password.php" class="user-box-forgot-password" title="Şifremi Unuttum!">{{lang.t ('main', 'Şifremi Unuttum!') }}</a>
+							<div id="login" class="user-box_sign-in">
+								{{ void(this.widget('LoginPortlet')) }}
+								{% set forgotpass = App.baseUrl ~ "/" ~ this.forgotpasslink %}
+                				<a href="{{ forgotpass }}" class="user-box-forgot-password" title="{{lang.t ('main', 'Şifremi Unuttum!') }}">{{lang.t ('main', 'Şifremi Unuttum!') }}</a>
 							</div>
 							<!-- Register Button -->
-							<a href="register.php" class="user-box_register" title="Kayıt olmak istiyorum">
+							{% set signup = App.baseUrl ~ "/" ~ this.registerlink %}
+							<a href="{{ signup }}" class="user-box_register" title="{{lang.t ('main', 'Kayıt olmak istiyorum') }}">
 								<svg class="icon"><use xlink:href="#icon-register"></use></svg> {{lang.t ('main', 'Kayıt olmak istiyorum') }}
 							</a>
 						</div>
 					</div>
+					<!-- User Box -->
+					{% else %}
+					<div id="user-box" class="user-box-frame">
+						<div class="site-navbar_item user-box-frame_item">
+							<span>
+								<a href="{{ App.createUrl('site/logout') }}">
+									<svg class="icon"><use xlink:href="#icon-login"></use></svg>
+									{{ App.user.name }} {{lang.t ('main', 'olarak giriş yaptınız') }}, <strong>{{lang.t ('main', 'çıkış yap') }}</strong>
+								</a>
+							</span>
+						</div>
+					</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>
 		<div class="container">
 			<!-- Logo -->
 			<a href="{{ base }}" class="site-logo" title="Termodizayn">
-				<img src="img/site-logo.png" alt="Termodizayn">
+				<img src="{{ base }}/img/site-logo.png" alt="Termodizayn">
 			</a>
 			<!-- Menu -->
 			<nav class="site-nav hidden-xs">
@@ -144,6 +156,14 @@
 			</div>
 		</div>
 	</header>
+	<!-- Alert area for layout -->
+	{% if App.user.hasFlash('mainalert') %}
+		<div class="alert-area">
+			<div class="alert alert-success">
+				{{ App.user.getFlash('mainalert') }}
+			</div>
+		</div>
+	{% endif %}
 	{% block content %}
 		{{ content }}
 	{% endblock %}
@@ -154,33 +174,21 @@
 			<div class="col-md-3 col-md-offset-1">
 				<h4 class="footer-title">{{lang.t ('main', 'Hızlı Ulaşım') }}</h4>
 				<ul class="footer-nav">
-					<li>
-						<a href="#" title="Buz Makineleri" class="footer-nav_item">Buz Makineleri</a>
-					</li>
-					<li>
-						<a href="#" title="Soğutma Sistemleri" class="footer-nav_item">Soğutma Sistemleri</a>
-					</li>
-					<li>
-						<a href="#" title="Kullanım Alanları" class="footer-nav_item">Kullanım Alanları</a>
-					</li>
-					<li>
-						<a href="#" title="Kataloglar" class="footer-nav_item">Kataloglar</a>
-					</li>
-					<li>
-						<a href="#" title="Fiyat Listesi" class="footer-nav_item">Fiyat Listesi</a>
-					</li>
-					<li>
-						<a href="#" title="Soğutma Hakkında Bilgiler" class="footer-nav_item">Soğutma Hakkında Bilgiler</a>
-					</li>
-					<li>
-						<a href="#" title="Gelecek Fuarlar" class="footer-nav_item">Gelecek Fuarlar</a>
-					</li>
-					<li>
-						<a href="#" title="İnsan Kaynakları" class="footer-nav_item">İnsan Kaynakları</a>
-					</li>
-					<li>
-						<a href="#" title="İletişim" class="footer-nav_item">İletişim</a>
-					</li>
+					{% set geturl = App.request.getUrl() %}
+					{% for menu in this.footermenu %}
+						{% set getactive = false %}
+						{% set link = App.baseUrl ~ "/" ~ menu.alias %}
+						{% if menu.type == "frontpage" %}
+							{# check if is it the homepage #}
+							{% if this.ishomepage %}
+								{% set getactive = true %}
+							{% endif %}
+							{% set link = App.baseUrl %}
+						{% endif %}
+						<li>
+							<a href="{{ link }}" title="{{ menu.name }}" class="footer-nav_item">{{ menu.name }}</a>
+						</li>
+					{% endfor %}
 				</ul>
 			</div>
 			<!-- Subscribe & Social Networks -->

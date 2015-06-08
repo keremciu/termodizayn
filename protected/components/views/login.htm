@@ -1,0 +1,7 @@
+<div class="user-box-form">
+        {% beginwidget 'CActiveForm' as form %}
+                {{ form.textField(model, 'username', {'class':'user-box-form_textbox','placeholder':lang.t('main','E-Posta') }) }}
+                {{ form.passwordField(model, 'password', {'class':'user-box-form_textbox','placeholder':lang.t('main','Parola') }) }}
+                <button type="submit" class="button">{{ lang.t('main','Giriş Yap') }}</button>
+        {% endwidget %}
+</div>

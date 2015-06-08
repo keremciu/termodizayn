@@ -1,89 +1,71 @@
 <!DOCTYPE html>
 <html lang="tr-TR">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="tr-TR" />
-	<!-- blueprint CSS framework -->
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
-	<!--[if lt IE 8]>
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
-	<![endif]-->
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/custom.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
-</head>
-<body>
-<div class="container" id="page">
-	<?php
-	if (!Yii::app()->user->isGuest){
-		$menutypes = Menutypes::model()->findAll();
-		$items = array();
-		foreach ($menutypes as $item) {
-			$new = array();
-			$new["label"]=$item->title;
-			$new["url"]=array('/menu/index','Menu[menutype]'=>$item->menutype);
-			array_push($items,$new);
-		}
-
-	 $this->widget('bootstrap.widgets.TbNavbar', array(
-	    'type'=>'inverse',
-	    'brand'=>'TD',
-	    'brandUrl'=>array('/site/index'),
-	    'collapse'=>true,
-	    'items'=>array(
-	        array(
-	            'class'=>'bootstrap.widgets.TbMenu',
-	            'items'=>array(
-	            	array('label'=>'Slider', 'url'=>array('/photos/index')),
-	            	array('label'=>'Partner', 'url'=>array('/photos/index')),
-	            	array('label'=>'Referans', 'url'=>array('/photos/index')),
-	            	array('label'=>'Haber', 'url'=>array('/news/index')),
-	            	array('label'=>'Katalog', 'url'=>array('/category/index')),
-	            	array('label'=>'Ürün', 'url'=>array('/product/index')),
-	            	array('label'=>'Firma', 'url'=>array('/photos/index')),
-	            	array('label'=>'Sayfa', 'url'=>array('/menu/index'),
-	                	'items'=>$items,
-	                ),
-	            	array('label'=>'Çeviri', 'url'=>array('/translates/index')),
-	            	array('label'=>'Teklif', 'url'=>array('/photos/index')),
-	            	array('label'=>'Üye', 'url'=>array('/user/index')),
-	            	array('label'=>'Bayi', 'url'=>array('/user/index')),
-	            ),
-	        ),
-	        array(
-	            'class'=>'bootstrap.widgets.TbMenu',
-	            'htmlOptions'=>array('class'=>'pull-right'),
-	            'items'=>array(
-	            		array('label'=>'Siteye Git', 'icon'=>'check', 'url'=>Yii::app()->request->baseUrl.'/../','linkOptions' => array('target'=>'_blank')),
-						array('label'=>'Hoşgeldin, '.Yii::app()->user->name, 'url'=>'#', 'items'=>array(
-							array('label'=>'Kullanıcıları Yönet', 'icon'=>'tasks', 'url'=>array('/user/admin')),
-							array('label'=>'Bilgileri Güncelle', 'icon'=>'user', 'url'=>array('/user/updateyourself','id'=>Yii::app()->user->id)),
-							array('label'=>'Şifre Değiştir', 'icon'=>'cog', 'url'=>array('/passwordchange/create')),
-							array('label'=>'Toplu Mail Gönder', 'icon'=>'icon-envelope', 'url'=>array('/mail/create')),
-							'---',
-							array('label'=>'Çıkış', 'icon'=>'icon-off', 'url'=>array('/site/logout')),
-	                ), 'visible'=>!Yii::app()->user->isGuest ),
-	            ),
-	        ),
-	    ),
-));
-}
-?>
-	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
-	<?php if(Yii::app()->user->hasFlash('success')):?>
-    <div class="alert alert-success error info">
-        <?php echo Yii::app()->user->getFlash('success'); ?>
-    </div>
-<?php endif; ?>
-	<?php echo $content; ?>
-	<div class="clear"></div>
-</div><!-- page -->
-</body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="language" content="tr-TR" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Condensed:400,300,700&subset=latin,latin-ext">
+		<!--[if lt IE 8]>
+		<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
+		<![endif]-->
+		<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+		<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/default.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/exclude.css" />
+	</head>
+	<body>
+		<div id="page">
+			<?php $this->renderPartial('/layouts/_svg'); ?>
+			<!-- Header -->
+			<header class="site-header">
+				<!-- Topbar -->
+				<div class="site-topbar">
+					<div class="container">
+						<!-- Logo -->
+						<a href="index.php" class="site-logo" title="Termodizayn">
+							<img src="../img/site-logo.png" width="210" alt="Termodizayn">
+						</a>
+						<!-- Userbox -->
+						<div class="user-box dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<span class="user-box_name">Hoşgeldin, <?php echo Yii::app()->user->name; ?> <svg class="td-icon td-icon-arrow-drop-down"><use xlink:href="#icon-arrow-drop-down"></use></svg></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="<?php echo Yii::app()->createUrl('user/admin'); ?>"><i class="icon-tasks"></i> Üyeleri Yönet</a></li>
+								<li><a href="<?php echo Yii::app()->createUrl('user/admin'); ?>"><i class="icon-user"></i> Bilgileri Güncelle</a></li>
+								<li><a href="<?php echo Yii::app()->createUrl('user/admin'); ?>"><i class="icon-cog"></i> Şifre Yenile</a></li>
+								<li><a href="<?php echo Yii::app()->createUrl('mail/create'); ?>"><i class="icon-envelope"></i> Toplu E-Posta Gönder</a></li>
+								<li class="divider"></li>
+								<li><a href="<?php echo Yii::app()->createUrl('site/logout'); ?>"><i class="icon-off"></i> Çıkış Yap</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- Navbar -->
+				<div class="site-navbar">
+					<div class="container">
+						<!-- Navigation -->
+						<?php $this->renderPartial('/layouts/_menu'); ?>
+					</div>
+				</div>
+			</header>
+			<div class="site-content">
+				<div class="container">
+					<div class="breadandalert">
+						<?php if(Yii::app()->user->hasFlash('success')):?>
+						<div class="alert alert-success error info">
+							<?php echo Yii::app()->user->getFlash('success'); ?>
+						</div>
+						<?php endif; ?>
+					</div>
+					<div class="main-area">
+						<?php echo $content; ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		<!-- page -->
+	</body>
 </html>

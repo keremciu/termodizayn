@@ -1,0 +1,17 @@
+<!-- Page Head -->
+<div class="page-head">
+	<h1 class="page-head_title">{{ content.title }}</h1>
+</div>
+<div class="page-content news-detail">
+	<span class="news-detail_date">{{ App.dateFormatter.format('dd MMMM yyyy',content.date) }}</span>
+	<p class="lead">{{ content.description }}</p>
+	<div class="content-texts">{{ content.content }}</div>
+	<div class="news-detail-gallery">
+		<a href="{{ App.baseUrl }}/{{ App.settings.get("photo","news_path") ~ content.image }}" title="{{ content.title }}" class="news-detail-gallery_item">
+			<img src="{{ App.baseUrl }}/{{ App.settings.get("photo","news_path") ~ content.image }}" alt="{{ content.title }}">
+			<span class="news-detail-gallery_button hidden-xs">
+				<svg class="icon icon-aspect-ratio"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-aspect-ratio"></use></svg>
+			</span>
+		</a>
+	</div>
+</div>

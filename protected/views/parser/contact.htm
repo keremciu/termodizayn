@@ -1,5 +1,5 @@
 <script>
-    var googlemapcoordinate ="{{ App.settings.get('contact','googleMapCoordinate')}}";
+    var googlemapcoordinate = "{{ App.settings.get('contact','googleMapCoordinate')}}";
 </script>
 {% set base = App.baseurl %}
 {% set cs = App.clientScript %}
@@ -10,10 +10,10 @@
 	<h1 class="page-head_title">{{ menu.name }}</h1>
 </div>
 <!-- Alert area for contact form -->
-{% if App.user.hasFlash('contact') %}
+{% if App.user.hasFlash('alert') %}
 	<div class="alert-area">
 		<div class="alert alert-success">
-			{{ App.user.getFlash('contact') }}
+			{{ App.user.getFlash('alert') }}
 		</div>
 	</div>
 {% endif %}
@@ -24,28 +24,28 @@
 <div class="contact-container">
 	<div class="contact-form col-xs-8">
 		{% beginwidget 'CActiveForm' as form %}
-		<div class="control-group">
+		<div class="control-group register-form-item">
 			{{ form.labelEx(model, 'name') }}
-			{{ form.textField(model, 'name', {'class':'user-box-form_textbox'}) }}
+			{{ form.textField(model, 'name', {'class':'register-form_textbox'}) }}
 			{{ form.error(model, 'name') }}
 		</div>
-		<div class="control-group">
+		<div class="control-group register-form-item">
 			{{ form.labelEx(model, 'email') }}
-			{{ form.textField(model, 'email', {'class':'user-box-form_textbox'}) }}
+			{{ form.textField(model, 'email', {'class':'register-form_textbox'}) }}
 			{{ form.error(model, 'email') }}
 		</div>
-		<div class="control-group">
+		<div class="control-group register-form-item">
 			{{ form.labelEx(model, 'subject') }}
-			{{ form.textField(model, 'subject', {'class':'user-box-form_textbox'}) }}
+			{{ form.textField(model, 'subject', {'class':'register-form_textbox'}) }}
 			{{ form.error(model, 'subject') }}
 		</div>
-		<div class="control-group">
+		<div class="control-group register-form-item">
 			{{ form.labelEx(model, 'body') }}
-			{{ form.textArea(model, 'body') }}
+			{{ form.textArea(model, 'body', {'class':'register-form_textbox'}) }}
 			{{ form.error(model, 'body') }}
 		</div>
 		<div class="control-group submit-button">
-			{{ C.Html.submitButton(lang.t('main','Gönder'), {'class':'button'})}}
+			<button type="submit" class="button">{{ lang.t('main','Gönder') }}</button>
 		</div>
 		{% endwidget %}
 	</div>

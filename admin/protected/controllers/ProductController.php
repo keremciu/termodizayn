@@ -85,6 +85,8 @@ class ProductController extends Controller
 			$model->attributes=$_POST['Product'];
 			$model->setTags($_POST['tags']);
 
+			$product_path = Yii::app()->settings->get("photo","product_path");
+
 			$image=CUploadedFile::getInstance($model,'image');
 			if ($image) {
 				$ext = pathinfo($image, PATHINFO_EXTENSION);
@@ -106,7 +108,7 @@ class ProductController extends Controller
 						$eximagedesc = "eximagedesc".($key+1);
 						$newname = rand(0,99999999).'-'.rand(0,99999999).'-'.rand(0,99999999).'.'.$ext;
 
-	                    if ($pic->saveAs(Yii::getPathOfAlias('webroot').'/../images/products/product/extras/'.$newname)) {
+	                    if ($pic->saveAs(Yii::getPathOfAlias('webroot').'/../'.$product_path.'extras/'.$newname)) {
 	                        $img_add = new Pimages;
 	                        if (isset($_POST[$eximagedesc])) {
 	                        	$img_add->name = $_POST[$eximagedesc];
@@ -136,7 +138,7 @@ class ProductController extends Controller
 						$row = Pimages::model()->find($criteria);
 						$exfiledesc = "exfiledesc".($key+1);
 
-	                    if ($file->saveAs(Yii::getPathOfAlias('webroot').'/../images/products/product/documents/'.$file->name)) {
+	                    if ($file->saveAs(Yii::getPathOfAlias('webroot').'/../'.$product_path.'documents/'.$file->name)) {
 	                        $doc_add = new Pimages;
 	                        $doc_add->name = $_POST[$exfiledesc];
 	                        $doc_add->path = $file->name;
@@ -174,9 +176,11 @@ class ProductController extends Controller
 				}
 				
 				if ($image) {
-					$root = Yii::getPathOfAlias('webroot').'/../images/products/product/';
+					$root = Yii::getPathOfAlias('webroot').'/../'.$product_path;
 					$image->saveAs($root.$model->image);
-					$thumb=Yii::app()->phpThumb->create($root.$model->image)->adaptiveResize(150,180)->save($root.'thumbs/min'.$model->image);
+					$mini_product_photo_sizes = Yii::app()->settings->get("photo","product_mini");
+					$photo_size = explode(",", $mini_product_photo_sizes);
+					$thumb=Yii::app()->phpThumb->create($root.$model->image)->adaptiveResize($photo_size[0],$photo_size[1])->save($root.'thumbs/min'.$model->image);
 				}
 				$this->redirect(array('index'));
 			}
@@ -204,6 +208,8 @@ class ProductController extends Controller
 				$model->image = $name;
 			}
 
+			$product_path = Yii::app()->settings->get("photo","product_path");
+
 			// Upload extra images
 			$images = CUploadedFile::getInstancesByName('images');
 
@@ -217,7 +223,7 @@ class ProductController extends Controller
 					$eximagedesc = "eximagedesc".($key+1);
 					$newname = rand(0,99999999).'-'.rand(0,99999999).'-'.rand(0,99999999).'.jpg';
 
-                    if ($pic->saveAs(Yii::getPathOfAlias('webroot').'/../images/products/product/extras/'.$newname)) {
+                    if ($pic->saveAs(Yii::getPathOfAlias('webroot').'/../'.$product_path.'extras/'.$newname)) {
                         $img_add = new Pimages;
                         if (isset($_POST[$eximagedesc])) {
                         	$img_add->name = $_POST[$eximagedesc];
@@ -260,7 +266,7 @@ class ProductController extends Controller
 					$row = Pimages::model()->find($criteria);
 					$exfiledesc = "exfiledesc".($key+1);
 
-                    if ($file->saveAs(Yii::getPathOfAlias('webroot').'/../images/products/product/documents/'.$file->name)) {
+                    if ($file->saveAs(Yii::getPathOfAlias('webroot').'/../'.$product_path.'documents/'.$file->name)) {
                         $doc_add = new Pimages;
                         $doc_add->name = $_POST[$exfiledesc];
                         $doc_add->path = $file->name;
@@ -342,6 +348,8 @@ class ProductController extends Controller
 								)));
 								
 								if ($isset) {
+									$isset->original_value=$model->$lang[0];
+									$isset->original_text=$model->$lang[0];
 									$isset->value=$translate;
 									$isset->save();;
 								} else {
@@ -366,9 +374,11 @@ class ProductController extends Controller
 			if($model->save()) { 
 				if(isset($image)){
 					$webroot = Yii::getPathOfAlias('webroot');
-					$image->saveAs($webroot.'/../images/products/product/'.$model->image);
-					$postimage ='/../images/products/product/';
-					$thumb=Yii::app()->phpThumb->create($webroot.$postimage.$model->image)->adaptiveResize(197,87)->save($webroot.$postimage.'thumbs/min'.$model->image);
+					$image->saveAs($webroot.'/../'.$product_path.$model->image);
+					$postimage ='/../'.$product_path;
+					$mini_product_photo_sizes = Yii::app()->settings->get("photo","product_mini");
+					$photo_size = explode(",", $mini_product_photo_sizes);
+					$thumb=Yii::app()->phpThumb->create($webroot.$postimage.$model->image)->adaptiveResize($photo_size[0],$photo_size[1])->save($webroot.$postimage.'thumbs/min'.$model->image);
 					if (is_file($webroot.$postimage.$name)) {
 						unlink($webroot.$postimage.$name);
 						unlink($webroot.$postimage."thumbs/min".$name);

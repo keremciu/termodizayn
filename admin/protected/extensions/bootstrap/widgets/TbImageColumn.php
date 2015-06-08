@@ -41,7 +41,7 @@ class TbImageColumn extends CGridColumn
 	 * @var bool $userPlaceKitten whether to use bogus image from placekitten.com or not. If true, will render an image
 	 * from placekitten.com according to the size set at $placeKittenSize. Defaults to true (what can I say? I love kitten)
 	 */
-	public $usePlaceKitten = true;
+	public $usePlaceKitten = false;
 
 	/**
 	 * @var string $placeHoldItSize the size of the image to render if $imagePathExpression is null and $userPlaceHoldIt

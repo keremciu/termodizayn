@@ -1,0 +1,74 @@
+<!-- Page Head -->
+<div class="page-head">
+	<h1 class="page-head_title">{{ menu.name }}</h1>
+	<ul class="page-head_description">
+		<li>{{ lang.t('main','Üye olduktan sonra sadece üyelere özel olan bilgilere (Fiyat bilgisi, Teklif isteği vb) ulaşabileceksiniz.') }}</li>
+		<li>{{ lang.t('main','Üyeliğiniz tamamlandığında size eposta ile haber verilecektir.') }}</li>
+	</ul>
+</div>
+<div class="page-content">
+	<!-- Alert area for register form -->
+	{% if App.user.hasFlash('alert') %}
+		<div class="alert-area">
+			<div class="alert alert-success">
+				{{ App.user.getFlash('alert') }}
+			</div>
+		</div>
+	{% endif %}
+	<!-- Register Form -->
+	<div id="register" class="register-form">
+		{% beginwidget 'CActiveForm' as form %}
+		<!-- Name -->
+		<div class="register-form-item">
+			{{ form.labelEx(model, 'name') }}
+			{{ form.textField(model, 'name', {'class':'register-form_textbox' }) }}
+			{{ form.error(model, 'name') }}
+		</div>
+		<!-- Username -->
+		<div class="register-form-item">
+			{{ form.labelEx(model, 'username') }}
+			{{ form.textField(model, 'username', {'class':'register-form_textbox' }) }}
+			{{ form.error(model, 'username') }}
+		</div>
+		<!-- Company -->
+		<div class="register-form-item">
+			{{ form.labelEx(model, 'company') }}
+			{{ form.textField(model, 'company', {'class':'register-form_textbox' }) }}
+			{{ form.error(model, 'company') }}
+		</div>
+		<!-- Country -->
+		<div class="register-form-item">
+			{{ form.labelEx(model, 'country') }}
+			{{ form.dropDownList(model, 'country', model.getCountries(), {'prompt':'Ülke Seç','class':'register-form_selectbox'}) }}
+			{{ form.error(model, 'country') }}
+		</div>
+		<!-- Email -->
+		<div class="register-form-item">
+			{{ form.labelEx(model, 'email') }}
+			{{ form.textField(model, 'email', {'class':'register-form_textbox' }) }}
+			{{ form.error(model, 'email') }}
+		</div>
+		<!-- Phone -->
+		<div class="register-form-item">
+			{{ form.labelEx(model, 'phone') }}
+			{{ form.textField(model, 'phone', {'class':'register-form_textbox' }) }}
+			{{ form.error(model, 'phone') }}
+		</div>
+		<!-- Password -->
+		<div class="register-form-item">
+			{{ form.labelEx(model, 'password') }}
+			{{ form.passwordField(model, 'password', {'class':'register-form_textbox' }) }}
+			{{ form.error(model, 'password') }}
+		</div>
+		<!-- Subscribe -->
+		<div class="register-form-item">
+			{{ form.checkBox(model, 'subscribe') }}
+			{{ form.labelEx(model, 'subscribe') }}
+			{{ form.error(model, 'subscribe') }}
+		</div>
+		<div class="control-group submit-button">
+			<button type="submit" class="button">{{ lang.t('main','Üyeliğimi Tamamla') }}</button>
+		</div>
+		{% endwidget %}
+	</div>
+</div>

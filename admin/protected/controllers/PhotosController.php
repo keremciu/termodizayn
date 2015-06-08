@@ -192,15 +192,23 @@ class PhotosController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
-	public function actionIndex()
+	public function actionIndex($type=NULL)
 	{
 		$model=new Photos('search');
 		$model->unsetAttributes();  // clear any default values
+		if ($type) {
+			// If we had a type variable
+			$type = $gallery = Gallery::model()->findByAttributes(array('slug'=>$type));
+			$model->gallery = $type->id;
+		}
+
+		//  quick add a photo
 		if(isset($_GET['Photos']))
 			$model->attributes=$_GET['Photos'];
 
 		$this->render('admin',array(
 			'model'=>$model,
+			'type'=>$type
 		));
 	}
 

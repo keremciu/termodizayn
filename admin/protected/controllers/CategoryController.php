@@ -81,9 +81,11 @@ class CategoryController extends Controller
 			}
 			if($model->save()) {
 				if ($image) {
-					$root = Yii::getPathOfAlias('webroot').'/../images/products/category/';
+					$root = Yii::getPathOfAlias('webroot').'/../'.Yii::app()->settings->get("photo","category_path");
 					$image->saveAs($root.$model->image);
-					$thumb=Yii::app()->phpThumb->create($root.$model->image)->adaptiveResize(197,87)->save($root.'thumbs/min'.$model->image);
+					$mini_category_photo_sizes = Yii::app()->settings->get("photo","category_mini");
+					$photo_size = explode(",", $mini_category_photo_sizes);
+					$thumb=Yii::app()->phpThumb->create($root.$model->image)->adaptiveResize($photo_size[0],$photo_size[1])->save($root.'thumbs/min'.$model->image);
 				}
 				$this->redirect(array('index'));
 			}
@@ -154,10 +156,13 @@ class CategoryController extends Controller
 
 			if($model->save()) {
 				if(isset($image)){
+					$category_path = Yii::app()->settings->get("photo","category_path");
 					$webroot = Yii::getPathOfAlias('webroot');
-					$image->saveAs($webroot.'/../images/products/category/'.$model->image);
-					$postimage ='/../images/products/category/';
-					$thumb=Yii::app()->phpThumb->create($webroot.$postimage.$model->image)->adaptiveResize(197,87)->save($webroot.$postimage.'thumbs/min'.$model->image);
+					$image->saveAs($webroot.'/../'.$category_path.$model->image);
+					$postimage ='/../'.$category_path;
+					$mini_category_photo_sizes = Yii::app()->settings->get("photo","category_mini");
+					$photo_size = explode(",", $mini_category_photo_sizes);
+					$thumb=Yii::app()->phpThumb->create($webroot.$postimage.$model->image)->adaptiveResize($photo_size[0],$photo_size[1])->save($webroot.$postimage.'thumbs/min'.$model->image);
 					if (is_file($webroot.$postimage.$name)) {
 						unlink($webroot.$postimage.$name);
 						unlink($webroot.$postimage."thumbs/min".$name);

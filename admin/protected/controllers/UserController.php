@@ -44,25 +44,7 @@ class UserController extends Controller
 				$model->password=md5($model->password);
 			}
 			if($model->save()){
-
-				$content= '<h1>Telgrafım ekibine hoşgeldiniz!</h1><br><p>Merhabalar '.$model->name.' '.$model->lastname.',</p>
-				<p>Sizi de yazar ekibimizin arasında görmekten mutluluk duymaktayız. Şimdiden başarılar diliyoruz ve sabırsızlıkla çalışmalarınızı bekliyoruz.</p>
-				<br>
-				<p>Telgrafım dergimizin yönetim panelini kullanmak için aşağıda size ait bilgileriniz tarafımızca oluşturulmuştur.</p>
-				<p style="font-weight:bold">E-Posta : '.$model->email.'</p>
-				<p style="font-weight:bold">Şifre : '.$temp.'<br>
-				</p><p>Haber ekleyebilmek, ekip içi iletişim kurmak ve telgrafımı takip etmek için telgrafım yönetici paneline <a href="http://www.telgrafim.com/admin">buradan</a> ulaşabilirsiniz.<br></p>
-				<hr /><p>Telgrafim.com<br></p><p><br></p>';
-				
-            	    Yii::app()->mailer->From = 'bilgi@telgrafim.com';
-            		Yii::app()->mailer->FromName = 'telgrafim.com';
-            		Yii::app()->mailer->AddReplyTo('bilgi@telgrafim.com', 'telgrafim.com');
-                	Yii::app()->mailer->AddAddress($model->email,$model->name.' '.$model->lastname);
-           			Yii::app()->mailer->Subject = "telgrafim.com'a Hoşgeldiniz!";
-           			Yii::app()->mailer->Body = $content;
-            		Yii::app()->mailer->Send();
-					
-				Yii::app()->user->setFlash('success', '<strong>Başarılı!</strong> Yazar ekleme işlemi başarıyla gerçekleşti.');
+				Yii::app()->user->setFlash('success', '<strong>Başarılı!</strong> Yönetici ekleme işlemi başarıyla gerçekleşti.');
 				$this->redirect(array('admin','id'=>$model->id));
 			}
 		}

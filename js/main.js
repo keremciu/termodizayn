@@ -223,7 +223,7 @@ $('document').ready(function(){
         var $this           = $(this),
             dataPhoto       = $this.data("photo"),
             dataTitle       = $this.attr("title"),
-            dataSource      = 'img/category-photo/',
+            dataSource       = $this.data("sourcepath"),
             $categoryPhoto  = $this.parents('.home-category').find('.home-category_image');
 
         $categoryPhoto.attr({

@@ -1,0 +1,29 @@
+<!-- Page Content -->
+<div class="page-content row">
+    {% for category in categories %}
+        <!-- {{ category.title }} -->
+        <div class="category-container col-md-6">
+            <div class="category-frame category-frame--products">
+                <div class="home-category home-category--{{ category.slug }} home-category-index-{{ loop.index }}">
+                    <!-- Category Image -->
+                    <img src="{{ App.settings.get("photo","category_path") ~ category.image }}" class="home-category_image" width="210" height="188" alt="">
+                    <!-- Category Content -->
+                    <div class="home-category_content" itemscope itemtype="http://schema.org/ItemList">
+                        <h2 class="home-category-title home-category-title--blue" itemprop="name">{{ category.title }}</h2>
+                        <p class="home-category-text" itemprop="description">{{ category.description }}</p>
+                        <!-- Ice Machines - Product List -->
+                        <ul class="product-list show">
+                            {% for product in category.product %}
+                                <li itemprop="itemListElement">
+                                    <a href="{{ menu.alias }}/{{ category.slug }}/{{ product.slug }}" title="{{ product.title }}" class="product-list_item" data-photo="{{ product.image }}" data-sourcepath="{{ App.settings.get('photo','product_path') }}" itemprop="url">
+                                        {{ product.title }} <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

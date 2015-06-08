@@ -116,7 +116,7 @@ class News extends CActiveRecord
 		$criteria->compare('t.description',$this->description,true);
 		$criteria->compare('content',$this->content,true);
 		$criteria->compare('image',$this->image);
-		$criteria->compare('category',$this->category);
+		$criteria->compare('t.category',$this->category);
 		$criteria->compare('t.author_id',$this->author_id);
 		$criteria->compare('date',$this->date,true);
 		$criteria->compare('create_data',$this->create_data);

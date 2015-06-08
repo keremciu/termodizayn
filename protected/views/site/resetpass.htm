@@ -1,0 +1,29 @@
+<!-- Page Head -->
+<div class="page-head">
+	<h1 class="page-head_title">{{ lang.t('main','Şifrenizi Yenileyin') }}</h1>
+</div>
+<div class="page-content">
+	<!-- Alert area for reset password form -->
+	{% if App.user.hasFlash('alert') %}
+		<div class="alert-area">
+			<div class="alert alert-success">
+				{{ App.user.getFlash('alert') }}
+			</div>
+		</div>
+	{% endif %}
+	<!-- Reset Password Form -->
+	<div id="resetpassword" class="forgot-password-form">
+	{% beginwidget 'CActiveForm' as form %}
+		<!-- E-Mail -->
+		<div class="forgot-password-form-item">
+			<div class="forgot-password-form-item">
+				<label for="ForgotpassForm_password" class="required" aria-required="true">{{ lang.t('main','Yeni Şifreniz') }} <span class="required" aria-required="true">*</span></label>
+				<input class="forgot-password-form_textbox" name="Resetpass[password]" id="ForgotpassForm_password" type="text">
+				<input name="Resetpass[hiddentoken]" id="ContactForm_email" type="hidden" value="{{ token }}">
+			</div>
+		</div>
+		<!-- Button -->
+		<button type="submit" class="button">Şifreyi Yenile</button>
+	{% endwidget %}
+	</div>
+</div>

@@ -16,6 +16,7 @@
 class Photos extends CActiveRecord
 {
 	public $gallery_search;
+	public $ordering_search;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -94,6 +95,7 @@ class Photos extends CActiveRecord
 			'ordering' => 'Sıralama',
 			'is_published' => 'Yayında',
 			'gallery_search' => 'Galeri',
+			'ordering_search' => 'Sıra',
 		);
 	}
 
@@ -127,6 +129,10 @@ class Photos extends CActiveRecord
 		            'gallery_search'=>array(
 		                'asc'=>'gallery0.name',
 		                'desc'=>'gallery0.name DESC',
+		            ),
+		            'ordering_search'=>array(
+		                'asc'=>'t.ordering',
+		                'desc'=>'t.ordering DESC',
 		            ),
 		            '*',
 		        ),

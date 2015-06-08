@@ -1,0 +1,11 @@
+<h2>{{ App.settings.get("system","name") }} Şifre Yardımı</h2>
+<h5>{{ lang.t("main","Merhaba") }} {{ name }},<br/>
+{{ lang.t("main","Bu e-postayı almanızın sebebi, birisinin bu adresle bağlantılı olan hesaba giriş yapmaya çalışması ve şifre hatırlatma talebinde bulunmasıdır.") }}</h5>
+<p>{{ lang.t("main","Eğer bunu siz talep ettiyseniz ve şifrenizi sıfırlamak istiyorsanız, lütfen aşağıdaki bağlantı adresine tıklayın.") }}
+<br/>{{ lang.t("main","Eğer tıklanmıyorsa, lütfen adresi kopyalayıp tarayıcınızın adres satırına yapıştırın.") }}</p>
+<p><a href="{{ link }}">{{ link }}</a></p>
+<p>{{ lang.t("main","Hesabınız hakkında sorularınız veya yardıma ihtiyacınız varsa, lütfen") }} {{ app.getBaseUrl(true) }} {{ lang.t("main","adresinden bize ulaşabilirsiniz.") }}</p>
+<p><strong>{{ lang.t("main","İçtenlikle,") }}</strong></p>
+<p><strong>{{ App.settings.get("system","name") }}</strong></p>
+<hr>
+<p><small>{{ App.getBaseUrl(true) }} - Web</small></p>

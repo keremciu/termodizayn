@@ -1,0 +1,19 @@
+<!-- Page Head -->
+<div class="page-head">
+	<h1 class="page-head_title">{{ menu.name }}</h1>
+</div>
+<!-- News Contents -->
+{% for news in newslist %}
+	<!-- News Content #{{ loop.index }} -->
+	<div class="news-content">
+		<h2 class="news-content_title">
+			<a href="{{ menu.alias }}/{{ news.slug }}" title="{{ news.title }}">{{ news.title }}</a>
+		</h2>
+		<span class="news-content_date">{{ App.dateFormatter.format('dd MMMM yyyy',news.date) }}</span>
+		<p class="news-content_text">
+			<img src="{{ App.settings.get("photo","news_path") }}/thumbs/min{{ news.image }}" alt="{{ news.title }}" class="news-content_image">
+			{{ news.description }}
+		</p>
+		<a href="{{ menu.alias }}/{{ news.slug }}" title="{{ lang.t('main','Haberin Detayını Gör') }}" class="news-content_read-more">{{ lang.t('main','Haberin Detayını Gör') }} <span>→</span></a>
+	</div>
+{% endfor %}

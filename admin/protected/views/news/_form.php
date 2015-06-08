@@ -5,10 +5,24 @@ if ($model->isNewRecord) {
 	$model->author_id = Yii::app()->user->id;
 }
 $model->create_data = date("Y-m-d H:i:s");
+$tags = $model->getAllTags();
+
+$criteria=new CDbCriteria;
+$criteria->select='max(ordering) AS ordering';		
+$row = $model->find($criteria); 	
+$lastorder = $row['ordering']+1;
+
+if ($model->isNewRecord) {
+	$model->ordering = $lastorder;
+	$model->date = date("Y-m-d");
+}
+
 $olddate = $model->date;
 $model->date = Yii::app()->dateFormatter->format("y-MM-dd",strtotime($olddate));
 $time = Yii::app()->dateFormatter->format("hh:mm",strtotime($olddate));
-$tags = $model->getAllTags();
+
+$orderdata = CHtml::listData($model->findAll(array('order' => 'ordering')),'ordering','title');
+$orderinglist = CMap::mergeArray(array(0=>'0 İlk sırada'),$orderdata,array($lastorder=>$lastorder.' Son sırada'));
 ?>
 
 	<?php echo $form->errorSummary($model); ?>
@@ -43,6 +57,13 @@ $tags = $model->getAllTags();
 	
 	<label for="time" class="required">Haber Saati <span class="required">*</span></label>
 	<input class="span2" name="time" id="time" type="text" value="<?php echo $time; ?> pm">
+
+	<?php
+	if ($model->isNewRecord)
+		echo $form->dropDownListRow($model, 'ordering', $orderinglist, array('empty'=>'Lütfen bir sıralama seçiniz', 'class'=>'span5'));
+	else 
+		echo $form->dropDownListRow($model, 'ordering', $orderinglist, array('empty'=>'Lütfen bir sıralama seçiniz', 'class'=>'span5'));
+	?>
 
 	<?php if (Yii::app()->user->role == "admin") { ?>
 		<?php echo $form->toggleButtonRow($model, 'is_published'); ?>

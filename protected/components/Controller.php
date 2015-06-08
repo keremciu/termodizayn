@@ -13,6 +13,9 @@ class Controller extends CController
 	 * meaning using a single column layout. See 'protected/views/layouts/main.htm'.
 	 */
 	public $dynamicmenu;
+	public $footermenu;
+	public $registerlink;
+	public $forgotpasslink;
 	public $ishomepage;
 
 	public function __construct($id,$module=null){
@@ -41,7 +44,10 @@ class Controller extends CController
 
 	    Yii::app()->name = Yii::app()->settings->get("seo","mainTitle");
 
+	    $this->forgotpasslink = Menu::model()->language(Yii::app()->getLanguage())->findByAttributes(array('type'=>'forgotpass'))->alias;
+	    $this->registerlink = Menu::model()->language(Yii::app()->getLanguage())->findByAttributes(array('type'=>'register'))->alias;
 	    $this->dynamicmenu = Menu::model()->language(Yii::app()->getLanguage())->findAll(array('condition'=>'(t.parent=0 AND t.menutype="navigasyon") AND t.is_published=1','order'=>'t.ordering ASC'));
+	    $this->footermenu = Menu::model()->language(Yii::app()->getLanguage())->findAll(array('condition'=>'(t.parent=0 AND t.menutype="footer") AND t.is_published=1','order'=>'t.ordering ASC'));
 	}
 
 	/*
@@ -93,12 +99,14 @@ class Controller extends CController
 	        			$arr['alias'] = $item->alias;
 	        		}
 	        	} else { 
-	        		$arr['alias'] = $item->translates["alias"]->original_value;
-		        	$solution = Menu::model()->language($lang)->findByPk($item->id);
-			        foreach ($solution->translates as $key => $translate) {
-				   		if ($key == "alias" AND $lang==$translate->lang_id) {
-				   			$arr['alias'] = $translate->value;
-				        }
+	        		if (isset($item->translates["alias"])) {
+	        			$arr['alias'] = $item->translates["alias"]->original_value;
+		        		$solution = Menu::model()->language($lang)->findByPk($item->id);
+			        	foreach ($solution->translates as $key => $translate) {
+				   			if ($key == "alias" AND $lang==$translate->lang_id) {
+					   			$arr['alias'] = $translate->value;
+				        	}
+						}
 					}
 				}
 		        
@@ -115,7 +123,9 @@ class Controller extends CController
 			        			$arr['slug'] = $menu->slug;
 			        		}
 			        	} else { 
-			        		$arr['slug'] = $menu->translates["slug"]->original_value;
+			        		if (isset($menu->translates["slug"])) {
+			        			$arr['slug'] = $menu->translates["slug"]->original_value;
+			        		}
 				        	$solution = News::model()->language($lang)->findByPk($menu->id);
 					        foreach ($solution->translates as $key => $translate) {
 						   		if ($key == "slug" AND $lang==$translate->lang_id) {
@@ -151,7 +161,6 @@ class Controller extends CController
 		        }
 		    }
 
-	        $arr["q"] =NULL;
 	        $arr['language']= $lang;
 
 	    } else {
@@ -166,7 +175,7 @@ class Controller extends CController
 	/**
 	 * @var array context menu items. This property will be assigned to {@link CMenu::items}.
 	 */
-	public $menu="naber";
+	public $menu=array();
 
 	/**
 	 * @var array the breadcrumbs of the current page. The value of this property will

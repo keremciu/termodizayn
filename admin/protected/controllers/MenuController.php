@@ -54,48 +54,32 @@ class MenuController extends Controller
 	public function actionFixtypeid()
     {
       	$menutype = (!empty($_GET['menutype'])) ? $_GET['menutype']: '0';
-      	if ($menutype == "gallery") {
-	        $data=Gallery::model()->findAll();
-			$data=CHtml::listData($data,'id','name');
-			echo "<option value=''>Lütfen menünüze bir galeri tanımlayın</option>";
-			foreach($data as $value=>$name)
-			   echo CHtml::tag('option', array('value'=>$value),CHtml::encode($name),true);
-		} else if ($menutype == "hr") {
-			echo CHtml::tag('option', array('value'=>1),'İnsan Kaynakları Formu',true);
-		} else if ($menutype == "totelephone") {
-			echo CHtml::tag('option', array('value'=>1),'Biz sizi arayalım Formu',true);
-		} else if ($menutype == "contact") {
+      	if ($menutype == "contact") {
 			echo CHtml::tag('option', array('value'=>1),'İletişim Formu',true);
-		} else if ($menutype == "allgallery") {
-			echo CHtml::tag('option', array('value'=>1),'Tüm galerileri göster',true);
-		} else if ($menutype == "taglist") {
-			$data=ProductTags::model()->findAll();
-			$data=CHtml::listData($data,'tag_id','fullName');
-			echo "<option value=''>Lütfen projeleri getirebilmek için bir etiket tanımlayın</option>";
-			foreach($data as $value=>$title)
-			   echo CHtml::tag('option', array('value'=>$value),CHtml::encode($title),true);
-		} else if ($menutype == "categorylist" OR $menutype == "subcatlist") {
-			$Criteria = new CDbCriteria();
-            $Criteria->condition = "type = 'product'";
-			$data=Category::model()->findAll($Criteria);
-			$data=CHtml::listData($data,'id','title');
-			echo "<option value=''>Lütfen menünüze bir haber kategorisi tanımlayın</option>";
-			foreach($data as $value=>$title)
-			   echo CHtml::tag('option', array('value'=>$value),CHtml::encode($title),true);
-		} else if ($menutype == "blog" OR $menutype == "project") {
+		} else if ($menutype == "blog") {
 			$Criteria = new CDbCriteria();
             $Criteria->condition = "type = 'content'";
 			$data=Category::model()->findAll($Criteria);
 			$data=CHtml::listData($data,'id','title');
-			echo "<option value=''>Lütfen menünüze bir haber kategorisi tanımlayın</option>";
+			echo "<option value=''>Lütfen menünüze bir kategori tanımlayın</option>";
 			foreach($data as $value=>$title)
 			   echo CHtml::tag('option', array('value'=>$value),CHtml::encode($title),true);
-		} else {
+		} else if ($menutype == "categories") {
+			$Criteria = new CDbCriteria();
+            $Criteria->condition = "type = 'product'";
+			$data=Category::model()->findAll($Criteria);
+			$data=CHtml::listData($data,'id','title');
+			echo "<option value=''>Lütfen menünüze bir kategori tanımlayın</option>";
+			foreach($data as $value=>$title)
+			   echo CHtml::tag('option', array('value'=>$value),CHtml::encode($title),true);
+		} else if ($menutype == "content") {
 			$data=News::model()->findAll();
 			$data=CHtml::listData($data,'id','title');
 			echo "<option value=''>Lütfen menünüze bir haber tanımlayın</option>";
 			foreach($data as $value=>$title)
 			   echo CHtml::tag('option', array('value'=>$value),CHtml::encode($title),true);
+		} else {
+			echo CHtml::tag('option', array('value'=>1),'Seçilebilecek tek içerik var',true);
 		}
    }       
 
@@ -171,6 +155,8 @@ class MenuController extends Controller
 								)));
 
 								if ($isset) {
+									$isset->original_value=$model->$lang[0];
+									$isset->original_text=$model->$lang[0];
 									$isset->value=$translate;
 									$isset->save();;
 								} else {

@@ -69,9 +69,12 @@ class NewsController extends Controller
 			
 			if($model->save()) {
 				if ($image) {
-					$root = Yii::getPathOfAlias('webroot').'/../images/news/';
+					$root = Yii::getPathOfAlias('webroot').'/../img/news/';
 					$image->saveAs($root.$model->image);
-					$thumb=Yii::app()->phpThumb->create($root.$model->image)->adaptiveResize(360,150)->save($root.'thumbs/min'.$model->image);
+					
+					$mini_news_photo_sizes = Yii::app()->settings->get("photo","news_mini");
+					$photo_size = explode(",", $mini_news_photo_sizes);
+					$thumb=Yii::app()->phpThumb->create($root.$model->image)->adaptiveResize($photo_size[0],$photo_size[1])->save($root.'thumbs/min'.$model->image);
 				}
 				$this->redirect(array('index'));
 			}
@@ -95,6 +98,8 @@ class NewsController extends Controller
 			$model->setTags($_POST['tags']);
 			$time = $_POST['time'];
 			$model->date = $model->date . ' ' . $time;
+
+			$news_path = Yii::app()->settings->get("photo","news_path");
 
 			$image=CUploadedFile::getInstance($model,'image');
 			if(isset($image)){
@@ -147,10 +152,12 @@ class NewsController extends Controller
 
 			if($model->save()){
 				if(isset($image)){
-					$image->saveAs(Yii::getPathOfAlias('webroot').'/../images/news/'.$model->image);
+					$image->saveAs(Yii::getPathOfAlias('webroot').'/../'.$news_path.$model->image);
 					$webroot = Yii::getPathOfAlias('webroot');
-					$postimage ='/../images/news/'.$name;
-					$thumb=Yii::app()->phpThumb->create($webroot.$postimage)->adaptiveResize(360,150)->save($webroot.'/../images/news/thumbs/min'.$model->image);
+					$postimage ='/../'.$news_path.$name;
+					$mini_news_photo_sizes = Yii::app()->settings->get("photo","news_mini");
+					$photo_size = explode(",", $mini_news_photo_sizes);
+					$thumb=Yii::app()->phpThumb->create($webroot.$postimage)->adaptiveResize($photo_size[0],$photo_size[1])->save($webroot.'/../'.$news_path.'thumbs/min'.$model->image);
 					
 					if ((file_exists($webroot.$postimage)) AND ((is_dir($webroot.$postimage))==false)) {
 						unlink($webroot.$postimage);

@@ -31,4 +31,3 @@ class UserIdentity extends CUserIdentity
         return $this->id;
     }
 }
-

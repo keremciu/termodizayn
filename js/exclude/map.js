@@ -1,5 +1,5 @@
 function initialize() {
-  var myLatlng = new google.maps.LatLng(googlemapcoordinate);
+  var myLatlng = new google.maps.LatLng(41.088743,28.639738);
   var mapCanvas = document.getElementById("map-canvas");
   var mapOptions = {
     scrollwheel: false,

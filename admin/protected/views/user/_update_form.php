@@ -14,7 +14,7 @@
 
 	<?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>75)); ?>
 
-	<?php echo $form->dropDownListRow($model,'role', array('admin'=>'Baş Yönetici','staff'=>'Editör'),array('class'=>'span5','empty'=>'Lütfen yönetici seviyesini seçiniz')); ?>
+	<?php echo $form->dropDownListRow($model,'role', array('admin'=>'Baş Yönetici','dealer'=>'Bayi','normal'=>'Standart'),array('class'=>'span5','empty'=>'Lütfen üyelik seviyesini seçiniz')); ?>
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

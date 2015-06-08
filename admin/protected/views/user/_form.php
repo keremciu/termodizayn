@@ -16,7 +16,7 @@
 
 	<?php echo $form->passwordFieldRow($model,'password',array('class'=>'span5','maxlength'=>40)); ?>
 
-	<?php echo $form->dropDownListRow($model,'role', array('admin'=>'Baş Yönetici','staff'=>'Editör'),array('class'=>'span5','empty'=>'Lütfen yönetici seviyesini seçiniz')); ?>
+	<?php echo $form->dropDownListRow($model,'role', array('admin'=>'Baş Yönetici','dealer'=>'Bayi','normal'=>'Standart'),array('class'=>'span5','empty'=>'Lütfen üyelik seviyesini seçiniz')); ?>
 
 	<?php echo $form->toggleButtonRow($model, 'active'); ?>
 	<div class="form-actions">

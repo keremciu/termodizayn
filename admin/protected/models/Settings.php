@@ -39,6 +39,15 @@ class Settings extends CFormModel
         'postCode'=>'',
         'additionalInfo'=>'',
     );
+    public $photo = array(
+        'news_path' => '',
+        'product_path' => '',
+        'category_path' => '',
+        'photo_path' => '',
+        'news_mini' => '',
+        'product_mini' => '',
+        'category_mini' => '',
+    );
     public $social = array(
         'facebook'=>'',
         'twitter'=>'',
@@ -61,6 +70,13 @@ class Settings extends CFormModel
             'mainTitle' => 'Sayfa Başlığı',
             'mainKwrds' => 'Varsayılan Anahtar Kelimeler (Meta Keywords)',
             'mainDescr' => 'Varsayılan Site Açıklaması (Meta Description)',
+            'news_path' => 'Haber fotoğrafı serverda nereye kaydedilsin',
+            'product_path' => 'Ürün fotoğrafı serverda nereye kaydedilsin',
+            'category_path' => 'Kategori fotoğrafı serverda nereye kaydedilsin',
+            'photo_path' => 'Galeri fotoğrafı serverda nereye kaydedilsin',
+            'news_mini' => 'Haber fotoğrafının küçük hali boyutları',
+            'product_mini' => 'Ürün fotoğrafının küçük hali boyutları',
+            'category_mini' => 'Kategori fotoğrafının küçük hali boyutları',
         );
  
         if(array_key_exists($key, $keys))

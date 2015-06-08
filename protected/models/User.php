@@ -1,4 +1,5 @@
 <?php
+
 class User extends CActiveRecord
 {
 	/**
@@ -19,21 +20,20 @@ class User extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('username, name, lastname, email, password, role, active', 'required'),
-			array('active', 'numerical', 'integerOnly'=>true),
+			array('username, name, company, country, email, password, role, active', 'required'),
+			array('active, subscribe', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>30),
 			array('name, lastname, password', 'length', 'max'=>50),
 			array('email', 'length', 'max'=>75),
 			array('role', 'length', 'max'=>10),
-			array('id, username, name, lastname, email, password, role, active', 'safe', 'on'=>'search'),
+			array('phone', 'length', 'max'=>14),
+			array('id, username, name, lastname, company, country, email, phone, password, role, subscribe, active', 'safe', 'on'=>'search'),
 		);
 	}
 
-	public function relations()
+	public function getCountries()
 	{
-		return array(
-			'news' => array(self::HAS_MANY, 'News', 'author_id'),
-		);
+		return require_once('_countries.php');
 	}
 
 	/**
@@ -43,12 +43,16 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Kullanıcı Adı',
-			'name' => 'Ad',
+			'username' => Yii::t('main','Kullanıcı Adı'),
+			'name' => Yii::t('main','Ad Soyad'),
 			'lastname' => 'Soyad',
-			'email' => 'E-Posta',
-			'password' => 'Şifre',
-			'role' => 'Rol',
+			'email' => Yii::t('main','E-Posta'),
+			'password' => Yii::t('main','Parola'),
+			'role' => Yii::t('main','Rol'),
+			'country' => Yii::t('main','Ülke'),
+			'company' => Yii::t('main','Firma Adı'),
+			'phone' => Yii::t('main','Telefon'),
+			'subscribe' => Yii::t('main',"Ücretsiz e-bülten'e abone olmak istiyorum."),
 			'active' => 'Aktif',
 		);
 	}

@@ -1,0 +1,176 @@
+<!-- Product Head -->
+<div class="page-head">
+    <h1 class="page-head_title hidden-xs">{{ product.title }}</h1>
+    <select id="products-selectbox" name="products-selectbox" class="page-head-selectbox visible-xs">
+        <optgroup label="Buz Makineleri">
+            <option value="1">Yaprak Buz Makinaları (Tatlı su)</option>
+            <option value="2">Yaprak buz makineleri (Deniz suyu)</option>
+            <option value="3">Blok buz makineleri</option>
+            <option value="4">Mobil tip blok buz makineleri</option>
+            <option value="5">Kristal Tüp Buz Makineleri</option>
+            <option value="6">Jel buz makineleri</option>
+            <option value="7">Kalıp buz presleyici</option>
+            <option value="8">Buz siloları</option>
+            <option value="9">Yaprak Buz Evaporatörleri</option>
+        </optgroup>
+        <optgroup label="Soğutma Sistemleri">
+            <option value="10">Endüstriyel Tip Soğuk Depolar</option>
+            <option value="11">Konteyner Tip Soğuk Depolar</option>
+            <option value="12">Konteyner Tip Şoklama Üniteleri</option>
+            <option value="13">Seyyar Kasap ve Balıkçı Dükkanları</option>
+            <option value="14">Klimatik Test Kabinleri</option>
+            <option value="15">Soğuk Depo Kapıları</option>
+            <option value="16">Sandviç Paneller</option>
+            <option value="17">PVC Şerit Perdeler</option>
+        </optgroup>
+    </select>
+    <p class="page-head_description">{{ product.description }}</p>
+</div>
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Filter -->
+    <div class="filter hidden-xs">
+        <div class="filter-head">
+            <h3 class="filter-head_title">Size uygun makineyı bulmak için filtreyi kullanabilirsiniz.</h3>
+            <a id="clear-filters" class="filter-head_clear-all" title="Filteyi Temizle">
+                <svg class="icon icon-cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cancel"></use></svg> Filtreyi Temizle
+            </a>
+        </div>
+        <div class="filter-content">
+            <!-- Ice Amount -->
+            <div class="filter-content_item">
+                <div class="filter-content_item-name">
+                    <span>Ice Amount:</span>
+                </div>
+                <div class="filter-content_item-frame">
+                    <input type="text" id="filter-textbox" class="filter-textbox" placeholder="5000">
+                    <select id="filter-selectbox" name="language-select" class="filter-selectbox">
+                        <option value="24">kg/24h</option>
+                        <option value="12">kg/12h</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Water in Temperature -->
+            <div class="filter-content_item">
+                <div class="filter-content_item-name">
+                    <span>Water in Temperature:</span>
+                </div>
+                <div class="filter-content_item-frame">
+                    <div id="range-water" class="range range--water noUi-target noUi-ltr noUi-horizontal noUi-background"><div class="noUi-base"><div class="noUi-origin noUi-stacking" style="left: 65.7142857%;"><div class="noUi-handle noUi-handle-lower"><div class="tooltip"><span>23℃</span></div></div></div></div><div class="noUi-pips noUi-pips-horizontal"><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 0.00000%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 8.57143%"></div><div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 8.57143%">3℃</div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 14.48980%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 20.40816%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 26.32653%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 32.24490%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 38.16327%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 44.08163%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 50.00000%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 55.91837%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 61.83673%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 67.75510%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 73.67347%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 79.59184%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 85.51020%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 91.42857%"></div><div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 91.42857%">32℃</div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 100.00000%"></div></div></div>
+                </div>
+            </div>
+            <!-- Ambient Temperature -->
+            <div class="filter-content_item">
+                <div class="filter-content_item-name">
+                    <span>Ambient Temperature:</span>
+                </div>
+                <div class="filter-content_item-frame">
+                    <div id="range-ambient" class="range range--ambient noUi-target noUi-ltr noUi-horizontal noUi-background"><div class="noUi-base"><div class="noUi-origin noUi-stacking" style="left: 76.9230769%;"><div class="noUi-handle noUi-handle-lower"><div class="tooltip"><span>32℃</span></div></div></div></div><div class="noUi-pips noUi-pips-horizontal"><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 0.00000%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 4.61538%"></div><div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 4.61538%">-15℃</div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 9.65812%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 14.70085%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 19.74359%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 24.78632%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 29.82906%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 34.87179%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 39.91453%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 44.95726%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 50.00000%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 55.04274%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 60.08547%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 65.12821%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 70.17094%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 75.21368%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 80.25641%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 85.29915%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 90.34188%"></div><div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 95.38462%"></div><div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 95.38462%">44℃</div><div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 100.00000%"></div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Filter List -->
+    <div class="filter-list hidden-xs">
+        <!-- Product #1 -->
+        <div class="product product--filter" itemscope="" itemtype="http://schema.org/Product">
+            <div class="product_image">
+                <img src="img/product-image.png" alt="" itemprop="image">
+            </div>
+            <div class="product_detail">
+                <div class="product-info">
+                    <span class="product-info_category hidden-xs" itemprop="model">{{ product.title }}</span>
+                    <span class="product-info_title" itemprop="name">TD-T1</span>
+                    <span class="product-info_price visible-xs" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                        <span itemprop="priceCurrency">$</span>
+                        <span itemprop="price" content="12,550">12,550</span>
+                    </span>
+                </div>
+                <div class="product-content" itemprop="description">
+                    <dl class="product-content_item">
+                        <dt>Buz kapasitesi</dt>
+                        <dd>1000 kg / 24h</dd>
+                    </dl>
+                    <dl class="product-content_item">
+                        <dt>Kompresör</dt>
+                        <dd>5 Hp</dd>
+                    </dl>
+                    <dl class="product-content_item">
+                        <dt>Toplam Güç</dt>
+                        <dd>5 Kw</dd>
+                    </dl>
+                    <dl class="product-content_item">
+                        <dt>Enerji</dt>
+                        <dd>380 V / 50Hz</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="product_nav">
+                <span class="product-info_sign-in-text hidden-xs">
+                    <b>Fiyatı görmek</b> ve <b>Teklif Almak</b> için lütfen <a href="#" title="giriş yapın">giriş yapın</a>.
+                </span>
+                <a href="product-detail.php" class="product-button" itemprop="url">Ürünü İncele <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chevron-right"></use></svg></a>
+            </div>
+        </div>
+    </div>
+    <!-- Product Models - Sub Title -->
+    <h2 class="products-subtitle">Diğer Ürünler</h2>
+    <!-- Product Models -->
+    <div class="products-page-list">
+        <!-- Product #1 -->
+        {% for model in product.productModels %}
+        {% set modelurl = App.baseUrl ~ '/' ~ menu.alias ~ '/' ~ category.slug ~ '/' ~ product.slug ~ '/' ~ model.slug %}
+        <!-- Product #{{ loop.index }} -->
+        <div class="product" itemscope="" itemtype="http://schema.org/Product">
+            <div class="product_image">
+                <a href="{{ modelurl }}">
+                    <img src="img/product-image.png" alt="" itemprop="image">
+                </a>
+            </div> 
+            <div class="product_detail">
+                <div class="product-info">
+                    <a href="{{ modelurl }}">
+                        <span class="product-info_category hidden-xs" itemprop="model">{{ product.title }}</span>
+                        <span class="product-info_title" itemprop="name">{{ model.name }}</span>
+                        <span class="product-info_price visible-xs" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                            <span itemprop="priceCurrency">₺</span>
+                            <span itemprop="price" content="12,550">12,550</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="product-content" itemprop="description">
+                    <dl class="product-content_item">
+                        <dt>Buz kapasitesi</dt>
+                        <dd>1000 kg / 24h</dd>
+                    </dl>
+                    <dl class="product-content_item">
+                        <dt>Kompresör</dt>
+                        <dd>5 Hp</dd>
+                    </dl>
+                    <dl class="product-content_item">
+                        <dt>Toplam Güç</dt>
+                        <dd>5 Kw</dd>
+                    </dl>
+                    <dl class="product-content_item">
+                        <dt>Enerji</dt>
+                        <dd>380 V / 50Hz</dd>
+                    </dl>
+                </div>
+            </div>    
+            <div class="product_nav">
+                <span class="product-info_price-title hidden-xs">Fiyat:</span>
+                <span class="product-info_price hidden-xs">
+                    ₺{{model.price}}
+                    <svg class="icon icon-convert"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-convert"></use></svg>
+                </span>
+                <span class="currency">
+                    <span class="currency-usd">$4.672</span>
+                    <span class="currency-eur">€4.144</span>
+                </span>
+                <a href="#" class="product-button product-button--get-offer">Hızlı Teklif Al</a>
+                <a href="{{ modelurl }}" class="product-button" itemprop="url">Ürünü İncele <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chevron-right"></use></svg></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

@@ -58,6 +58,7 @@ class Product extends CActiveRecord
 			'translates' => array(self::HAS_MANY, 'Translates', 'reference_id','index'=>'reference_field'),
 			'category0' => array(self::BELONGS_TO, 'Category', 'category'),
 			'tags0' => array(self::HAS_MANY, 'ProductTags', 'product_id'),
+			'productModels' => array(self::HAS_MANY, 'ProductModel', 'product'),
 		);
 	}
 

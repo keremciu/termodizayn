@@ -24,15 +24,18 @@ Later additions to main.css
 	height:400px;
 }
 
+.content-texts p {
+    margin:1.4em 0px;
+}
 
-.alertarea {
+.alert-area {
     padding-top: 25px;
     color: darkred;
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
 }
 
-.alertarea .alert {
+.alert-area .alert {
     margin-bottom: 0px;
 }
 
@@ -44,4 +47,60 @@ Later additions to main.css
     color: darkred;
     background: #f5f5f5;
     margin-bottom: 14px;
+}
+
+.site-navbar_item a {
+    color: white;
+}
+
+.home-category {
+    background: #E5EEF5; }
+  .home-category-index-2 {
+    background: #F5E5E5; }
+
+.home-category-index-2 .home-category-title {
+    color: #C62828;
+}
+
+.home-category-index-2 .home-category-button--link {
+    color: #C62828;
+}
+
+.home-category-index-2 .home-category-button--link:hover, .home-category-index-2 .home-category-button--link:hover:after {
+    background: #FFF5F5;
+}
+
+.home-category-index-2 .home-category-button--link {
+    color: #C62828;
+}
+
+.home-category-index-2 .home-category-button--link:hover, .home-category-index-2 .home-category-button--link:hover:after {
+    background: #FFF5F5;
+}
+
+.home-category-index-2 .home-category-button--all {
+    background: #C62828;
+}
+
+.home-category-index-2 .home-category-button--all:before {
+    background: inherit;
+}
+
+.home-category-index-2 .home-category-button--all:hover, .home-category-index-2 .home-category-button--all:hover:before,
+.home-category-index-2 .home-category-button--all.isActive,
+.home-category-index-2 .home-category-button--all.isActive:before {
+    background: #C01919;
+}
+
+.home-category-index-2 .product-list_item {
+    color: #C62828;
+    border-bottom: 1px solid rgba(198, 40, 40, 0.1);
+}
+
+.home-category-index-2 .product-list_item svg {
+    color: rgba(198, 40, 40, 0.7); 
+}
+
+.home-category-index-2 .product-list_item:hover svg {
+    color: inherit;
 }

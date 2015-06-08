@@ -53,7 +53,7 @@ class News extends CActiveRecord
 		return array(
 			array('title, slug, description, content, category, author_id, date, create_data, is_published, is_deleted', 'required'),
 			array('category, author_id, ordering, hits, featured, is_published, is_deleted', 'numerical', 'integerOnly'=>true),
-			array('title, slug, image', 'length', 'max'=>255),
+			array('title, slug, image, date', 'length', 'max'=>255),
 			array('id, title, slug, description, content, ordering, hits, featured, image, category, author_id, date, create_data, is_published, is_deleted, author_search, category_search', 'safe'),
 		);
 	}

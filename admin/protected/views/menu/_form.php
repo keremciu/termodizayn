@@ -10,29 +10,28 @@ $lastorder = $row['ordering']+1;
 $orderdata = CHtml::listData($model->findAll(array('order' => 'ordering')),'ordering','name');
 $menulist = CMap::mergeArray(array(0=>'Alt menü değil'),$list);
 
-$typesid = array($model->types_id=>"Daha önce tanımlanmış özel içerik");
+$typesid = array($model->types_id=>"Daha önce tanımlanmış özel sayfa içeriği");
+
 if ($model->isNewRecord) {
 	$model->is_home = 0;
 	$model->browsernav = 1;
 	$model->ordering = $lastorder;
 	$typesid=array();
 }
+
 $orderinglist = CMap::mergeArray(array(0=>'0 İlk sırada'),$orderdata,array($lastorder=>$lastorder.' Son sırada'));
-$menutypes = 
+
+$menutypes =
 	array(
-		'frontpage'=>'Anasayfa',
-		'link'=>'Bağlantı',
-		'content'=>'Tek Yazı',
-		'blog'=>'Yazı Listesi - Blog',
-		'project'=>'Yazı Listesi - Proje',
-		'subcatlist'=>'Alt Kategoriler altındaki projeler',
-		'categorylist'=>'Proje listesi',
-		'taglist'=>'Etikete gore projeler',
-		'gallery'=>'Tek Galeri',
-		'allgallery'=>'Galeri Listesi',
-		'hr'=>'İnsan Kaynakları Formu',
-		'totelephone'=>'Biz Sizi Arayalım Formu',
-		'contact'=>'İletişim'
+		'frontpage'		=> 'Anasayfa',
+		'link'			=> 'Bağlantı',
+		'content'		=> 'Tek Yazı Sayfası',
+		'blog'			=> 'Yazı Listesi - Blog',
+		'categories'	=> 'Ürün Kategorileri',
+		'productlist'	=> 'Ürün Listesi',
+		'forgotpass'	=> 'Şifremi Unuttum',
+		'register'		=> 'Üye Kayıt Sayfası',
+		'contact'		=> 'İletişim Sayfası'
 	);
 ?>
 
@@ -68,17 +67,14 @@ $menutypes =
 
 <?php
 
-Yii::app()->clientScript->registerScript('typechange','
-	
-	$(".typearea").change(function() {
-		if ($(this).val() == "link") {
-			$(".linkarea").show();
-			$(".typeidarea").hide();
-		} else {
-			$(".linkarea").hide();
-			$(".typeidarea").show();
-		}
-
-	});
-	',CClientScript::POS_END);
+	Yii::app()->clientScript->registerScript('typechange','	
+		$(".typearea").change(function() {
+			if ($(this).val() == "link") {
+				$(".linkarea").show();
+				$(".typeidarea").hide();
+			} else {
+				$(".linkarea").hide();
+				$(".typeidarea").show();
+			}
+		});',CClientScript::POS_END);
 ?>

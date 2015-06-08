@@ -28,182 +28,39 @@
 			<div class="overlay"></div>
 			<!-- Machines Category -->
 			<div class="row">
-				<!-- Ice Machines -->
+				{% for category in categories %}
+				<!-- {{ category.title }} -->
 				<div class="category-container col-md-6">
 					<div class="category-frame">
-						<div class="home-category home-category--ice">
+						<div class="home-category home-category--{{ category.slug }} home-category-index-{{ loop.index }}">
 							<!-- Category Image -->
-							<img src="img/category-photo/blok-buz-makineleri.png" class="home-category_image" width="210" height="188" alt="">
+							<img src="{{ App.settings.get("photo","category_path") ~ category.image }}" class="home-category_image" width="210" height="188" alt="">
 							<!-- Category Content -->
 							<div class="home-category_content" itemscope itemtype="http://schema.org/ItemList">
-								<h2 class="home-category-title home-category-title--blue" itemprop="name">Buz Makineleri</h2>
-								<p class="home-category-text" itemprop="description">
-									İhtiyacınıza uygun yüksek performans ve kaliteli çeşitli buz üretim makineleri.
-								</p>
+								<h2 class="home-category-title home-category-title--blue" itemprop="name">{{ category.title }}</h2>
+								<p class="home-category-text" itemprop="description">{{ category.description }}</p>
 								<a href="#" title="Kullanım Alanları" class="home-category-button home-category-button--link">
-									Kullanım Alanları
+									{{ lang.t ('main', 'Kullanım Alanları') }}
 								</a>
 								<button type="button" id="ice-view-all" class="home-category-button home-category-button--all">
-								Tüm Ürünler <svg class="icon"><use xlink:href="#icon-expand-more"></use></svg>
+									{{ lang.t ('main', 'Tüm Ürünler') }} <svg class="icon"><use xlink:href="#icon-expand-more"></use></svg>
 								</button>
 								<!-- Ice Machines - Product List -->
 								<ul class="product-list">
+									{% for product in category.product %}
 									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Yaprak buz makineleri (Tatlı su)" class="product-list_item" data-photo="yaprak-buz-makineleri-tatli-su.png" itemprop="url">
-											Yaprak buz makineleri (Tatlı su) <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
+										<a href="{{ base_category.slug }}/{{ category.slug }}/{{ product.slug }}" title="Yaprak buz makineleri (Tatlı su)" class="product-list_item" data-photo="{{ product.image }}" data-sourcepath="{{ App.settings.get('photo','product_path') }}" itemprop="url">
+											{{ product.title }} <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
 										</a>
 									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Yaprak buz makineleri (Deniz suyu)" class="product-list_item" data-photo="yaprak-buz-makineleri-deniz-suyu.png" itemprop="url">
-											Yaprak buz makineleri (Deniz suyu) <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Konteyner tip yaprak buz makineleri" class="product-list_item" data-photo="konteyner-tip-buz-makineleri.png" itemprop="url">
-											Konteyner tip yaprak buz makineleri <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Blok buz makineleri" class="product-list_item" data-photo="blok-buz-makineleri.png" itemprop="url">
-											Blok buz makineleri <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Mobil tip blok buz makineleri" class="product-list_item" data-photo="mobil-buz-makineleri.png" itemprop="url">
-											Mobil tip blok buz makineleri <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Kristal tüp buz makineleri" class="product-list_item" data-photo="kristal-tup-buz-makineleri.png" itemprop="url">
-											Kristal tüp buz makineleri <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Jel buz makineleri" class="product-list_item" data-photo="jel-buz-makineleri.png" itemprop="url">
-											Jel buz makineleri <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Kalıp buz presleyici" class="product-list_item" data-photo="kalip-buz-presleyici.png" itemprop="url">
-											Kalıp buz presleyici <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Buz siloları" class="product-list_item" data-photo="buz-silolari.png" itemprop="url">
-											Buz siloları <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
+									{% endfor %}
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- Cold Storage Depot Machines -->
-				<div class="category-container col-md-6">
-					<div class="category-frame">
-						<div class="home-category home-category--cold-storage">
-							<!-- Category Image -->
-							<img src="img/category-photo/konteyner-tip-soguk-depolar.png" class="home-category_image" width="210" height="188" alt="">
-							<!-- Category Content -->
-							<div class="home-category_content" itemscope itemtype="http://schema.org/ItemList">
-								<h2 class="home-category-title home-category-title--red" itemprop="name">
-								Soğutma Sistemleri
-								</h2>
-								<p class="home-category-text" itemprop="description">
-									Çeşitli boyut ve kapasitede soğuk hava depoları ve soğutma üniteleri.
-								</p>
-								<a href="#" title="Kullanım Alanları" class="home-category-button home-category-button--link home-category-button--link-red">
-									Kullanım Alanları
-								</a>
-								<button type="button" id="cold-view-all" class="home-category-button home-category-button--all home-category-button--all-red">
-								Tüm Ürünler <svg class="icon"><use xlink:href="#icon-expand-more"></use></svg>
-								</button>
-								<!-- Cold Storage Depot - Product List -->
-								<ul class="product-list">
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Endüstriyel Tip Soğuk Depolar" class="product-list_item product-list_item--red" data-photo="endustriyel-tip-soguk-depolar.png" itemprop="url">
-											Endüstriyel Tip Soğuk Depolar <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Konteyner Tip Soğuk Depolar" class="product-list_item product-list_item--red" data-photo="konteyner-tip-soguk-depolar.png" itemprop="url">
-											Konteyner Tip Soğuk Depolar <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Konteyner Tip Şoklama Üniteleri" class="product-list_item product-list_item--red" data-photo="konteyner-tip-soklama-uniteleri.png" itemprop="url">
-											Konteyner Tip Şoklama Üniteleri <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Seyyar Kasap ve Balıkçı Dükkanları" class="product-list_item product-list_item--red" data-photo="seyyar-kasap-ve-balikci-dukkanlari.png" itemprop="url">
-											Seyyar Kasap ve Balıkçı Dükkanları <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Klimatik Test Kabinleri" class="product-list_item product-list_item--red" data-photo="klimatik-test-kabinleri.png" itemprop="url">
-											Klimatik Test Kabinleri <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Soğuk Depo Kapıları" class="product-list_item product-list_item--red" data-photo="soguk-depo-kapilari.png" itemprop="url">
-											Soğuk Depo Kapıları <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="Sandviç Paneller" class="product-list_item product-list_item--red" data-photo="sandvic-paneller.png" itemprop="url">
-											Sandviç Paneller <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-									<li itemprop="itemListElement">
-										<a href="product-category.php" title="PVC Şerit Perdeler" class="product-list_item product-list_item--red" data-photo="pcv-serit-perdeler.png" itemprop="url">
-											PVC Şerit Perdeler <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
+				{% endfor %}
 			</div>
-			<!--             <div class="row">
-				<div class="col-md-12">
-					<div class="home-catalog-frame">
-						<div class="title-group">
-							<h1 class="title">KATALOGLAR</h1>
-							<span class="title-description">Kurumsal kataloglarımız ve Ürünlerimize ait kataloglar</span>
-						</div>
-						<div class="home-catalog">
-							<div class="home-catalog_item">
-								<img src="img/catalog-thumb/catalog-thumb-1.png" alt="">
-								<h3>
-								<a href="#" title="Termodizayn Kurumsal Kataloğu">Termodizayn Kurumsal Kataloğu</a>
-								</h3>
-							</div>
-							<div class="home-catalog_item">
-								<img src="img/catalog-thumb/catalog-thumb-2.png" alt="">
-								<h3>
-								<a href="#" title="Yaprak Buz Makinaları">Yaprak Buz Makinaları</a>
-								</h3>
-							</div>
-							<div class="home-catalog_item">
-								<img src="img/catalog-thumb/catalog-thumb-3.png" alt="">
-								<h3>
-								<a href="#" title="Termodizayn Blok Buz Makinaları ve Özellikleri">Termodizayn Blok Buz Makinaları ve Özellikleri</a>
-								</h3>
-							</div>
-							<div class="home-catalog_item">
-								<img src="img/catalog-thumb/catalog-thumb-4.png" alt="">
-								<h3>
-								<a href="#" title="Jel Buz Makinesi">Jel Buz Makinesi</a>
-								</h3>
-							</div>
-						</div>
-						<a href="#" title="Tüm Kataloglar" class="button button--gray">Tüm Kataloglar</a>
-					</div>
-				</div>
-			</div> -->
-			
 		</div>
 		<div class="home-news-cover">
 			<div class="container">
@@ -215,61 +72,20 @@
 					<div class="col-md-12">
 						<div class="home-news-frame">
 							<ul class="news-slider">
+							{% for news in newslist %}
 								<li>
-									<!-- News - #1 -->
-									<a href="news-detail.php" title="#" class="home-news">
-										<img src="img/news-placeholder-image-1.png" alt="#" class="home-news_img">
-										<h2 class="home-news_title">İstanbul Tuskon Fuarı'na Katıldık</h2>
-										<p class="home-news_text">
-											7 Kıtadan, 130 Ülkeden gelen bir çok firma sahibi ve
-											yöneticisi ile tanıştık. Termodizayn Standımız oldukça
-											yoğun ilgi ile karşılandı.
-										</p>
-										<span class="home-news_date">12 Ocak 2014</span>
+									<!-- News - #{{ loop.index }} -->
+									<a href="{{ newsmenu.alias }}/{{ news.slug }}" title="{{ news.title }}" class="home-news">
+										<img src="{{ App.settings.get("photo","news_path") }}/thumbs/min{{ news.image }}" alt="{{ news.title }}" class="home-news_img">
+										<h2 class="home-news_title">{{ news.title }}</h2>
+										<p class="home-news_text">{{ news.description }}</p>
+										<span class="home-news_date">{{ App.dateFormatter.format('dd MMMM yyyy',news.date) }}</span>
 									</a>
 								</li>
-								<li>
-									<!-- News - #2 -->
-									<a href="news-detail.php" title="#" class="home-news">
-										<img src="img/news-placeholder-image-1.png" alt="#" class="home-news_img">
-										<h2 class="home-news_title">İstanbul Tuskon Fuarı'na Katıldık</h2>
-										<p class="home-news_text">
-											7 Kıtadan, 130 Ülkeden gelen bir çok firma sahibi ve
-											yöneticisi ile tanıştık. Termodizayn Standımız oldukça
-											yoğun ilgi ile karşılandı.
-										</p>
-										<span class="home-news_date">12 Ocak 2014</span>
-									</a>
-								</li>
-								<li>
-									<!-- News - #3 -->
-									<a href="news-detail.php" title="#" class="home-news">
-										<img src="img/news-placeholder-image-1.png" alt="#" class="home-news_img">
-										<h2 class="home-news_title">İstanbul Tuskon Fuarı'na Katıldık</h2>
-										<p class="home-news_text">
-											7 Kıtadan, 130 Ülkeden gelen bir çok firma sahibi ve
-											yöneticisi ile tanıştık. Termodizayn Standımız oldukça
-											yoğun ilgi ile karşılandı.
-										</p>
-										<span class="home-news_date">12 Ocak 2014</span>
-									</a>
-								</li>
-								<li>
-									<!-- News - #4 -->
-									<a href="news-detail.php" title="#" class="home-news">
-										<img src="img/news-placeholder-image-1.png" alt="#" class="home-news_img">
-										<h2 class="home-news_title">İstanbul Tuskon Fuarı'na Katıldık</h2>
-										<p class="home-news_text">
-											7 Kıtadan, 130 Ülkeden gelen bir çok firma sahibi ve
-											yöneticisi ile tanıştık. Termodizayn Standımız oldukça
-											yoğun ilgi ile karşılandı.
-										</p>
-										<span class="home-news_date">12 Ocak 2014</span>
-									</a>
-								</li>
+							{% endfor %}
 							</ul>
 						</div>
-						<a href="news.php" title="Tüm Haberler" class="button button--gray">Tüm Haberler</a>
+						<a href="{{ newsmenu.alias }}" title="Tüm Haberler" class="button button--gray">Tüm Haberler</a>
 					</div>
 				</div>
 			</div>
@@ -280,38 +96,16 @@
 				<div class="col-md-12">
 					<div class="references references--partner">
 						<div class="title-group">
-							<h1 class="title">ÇÖZÜM ORTAKLARIMIZ</h1>
-							<span class="title-description">Beraber çalıştığımız firmalardan bazıları</span>
+							<h1 class="title">{{ partner_gallery.name }}</h1>
+							<span class="title-description">{{ partner_gallery.desc }}</span>
 						</div>
 						<div class="references_frame">
 							<ul class="references-slider">
+							{% for photo in partners %}
 								<li>
-									<img src="img/references/reference-1.png" alt="" class="references-icon">
+									<img src="img/photos/{{ photo.photo }}" alt="{{ photo.name }}" class="references-icon">
 								</li>
-								<li>
-									<img src="img/references/reference-2.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-3.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-4.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-5.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-6.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-7.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-8.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-9.png" alt="" class="references-icon">
-								</li>
+							{% endfor %}
 							</ul>
 						</div>
 					</div>
@@ -319,38 +113,16 @@
 				<div class="col-md-12">
 					<div class="references">
 						<div class="title-group">
-							<h1 class="title">REFERANSLAR</h1>
-							<span class="title-description">Beraber çalıştığımız firmalardan bazıları</span>
+							<h1 class="title">{{ reference_gallery.name }}</h1>
+							<span class="title-description">{{ reference_gallery.desc }}</span>
 						</div>
 						<div class="references_frame">
 							<ul class="references-slider">
+							{% for photo in references %}
 								<li>
-									<img src="img/references/reference-1.png" alt="" class="references-icon">
+									<img src="img/photos/{{ photo.photo }}" alt="{{ photo.name }}" class="references-icon">
 								</li>
-								<li>
-									<img src="img/references/reference-2.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-3.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-4.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-5.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-6.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-7.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-8.png" alt="" class="references-icon">
-								</li>
-								<li>
-									<img src="img/references/reference-9.png" alt="" class="references-icon">
-								</li>
+							{% endfor %}
 							</ul>
 						</div>
 					</div>

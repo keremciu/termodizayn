@@ -68,16 +68,14 @@ return array(
 	        'showScriptName'=>false,
 			'caseSensitive'=>false,
 			'rules'=>array(
-				//'http://<language:('.$langlist.')>.localhost:8080/termodizayn/' => 'site/index',
+				// Language Subdomain router
+				// 'http://<language:('.$langlist.')>.localhost:8080/termodizayn/' => 'site/index',
 				'<language:('.$langlist.')>/'=>'site/index',
 				'site/<action:\w+>'=>'site/<action>',
 				'<alias:[a-z0-9-]+>'=>'parser/router',
-				/*
-				'<alias:[a-z0-9-]+>/<slug:[a-z0-9-]+>'=>'component/cliper',
-				'<controller:\w+>/<title:.*?>/<id:\d+>'=>'<controller>/view',
-				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-				*/
+				'<alias:[a-z0-9-]+>/<slug:[a-z0-9-]+>'=>'childparser/router',
+				'<alias:[a-z0-9-]+>/<category:[a-z0-9-]+>/<slug:[a-z0-9-]+>'=>'childparser/router',
+				'<alias:[a-z0-9-]+>/<category:[a-z0-9-]+>/<slug:[a-z0-9-]+>/<model:[a-z0-9-]+>'=>'childparser/router',
 			),
 		),
 		'db'=>require_once('_db.php'),

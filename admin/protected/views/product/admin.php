@@ -1,7 +1,7 @@
 <?php
-$this->breadcrumbs=array('Projeler'=>array('index'),'Proje Listesi');
+$this->breadcrumbs=array('Ürünler'=>array('index'),'Ürün Listesi');
 
-$this->pageTitle = "Proje Listesi - " . Yii::app()->name;
+$this->pageTitle = "Ürün Listesi - " . Yii::app()->name;
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -9,8 +9,8 @@ $('.search-button').click(function(){
 	return false;
 });");
 ?>
-<h1>Proje Listesi</h1>
-<a href="<?php echo Yii::app()->createUrl('/product/create'); ?>" class="btn btn-primary">Yeni Proje Ekle</a>
+<h1>Ürün Listesi</h1>
+<a href="<?php echo Yii::app()->createUrl('/product/create'); ?>" class="btn btn-primary">Yeni Ürün Ekle</a>
 
 <?php echo CHtml::link('Detaylı Arama','#',array('class'=>'search-button')); ?>
 <?php

@@ -16,7 +16,7 @@ class ComponentController extends Controller
 		$menu=Menu::model()->language(Yii::app()->getLanguage())->find(array('condition'=>'t.alias=:alias OR translates.value=:alias','params'=>array(':alias'=>$alias)),'t.is_published=1');
 
 		if (isset($menu->parent)) {
-        $childmenus=Menu::model()->findAll(array('condition'=>'parent = :id','params'=>array(':id'=>$menu->parent)));
+        	$childmenus=Menu::model()->findAll(array('condition'=>'parent = :id','params'=>array(':id'=>$menu->parent)));
        	}
 		
 		if ($menu->type == "blog" OR $menu->type == "project") {
