@@ -51,9 +51,15 @@ class PhotosController extends Controller
 		));
 	}
 
-	public function actionCreate()
+	public function actionCreate($type)
 	{
+		$this->layout = '//layouts/column2';
 		$model=new Photos;
+		if (isset($type)) {
+			// If we had a type variable
+			$type = $gallery = Gallery::model()->findByAttributes(array('slug'=>$type));
+			$model->gallery = $type->id;
+		}
 
 		if(isset($_POST['Photos']))
 		{

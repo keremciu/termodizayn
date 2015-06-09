@@ -107,7 +107,6 @@ class Category extends CActiveRecord
 		$criteria->compare('ordering',$this->ordering);
 		$criteria->compare('is_published',$this->is_published);
 		$criteria->compare('is_deleted',$this->is_deleted);
-		$criteria->order = 't.ordering ASC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

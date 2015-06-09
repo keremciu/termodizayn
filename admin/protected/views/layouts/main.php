@@ -59,9 +59,7 @@
 						</div>
 						<?php endif; ?>
 					</div>
-					<div class="main-area">
-						<?php echo $content; ?>
-					</div>
+					<?php echo $content; ?>
 					<div class="clear"></div>
 				</div>
 			</div>

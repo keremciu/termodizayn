@@ -8,16 +8,14 @@ $('.search-button').click(function(){
 	return false;
 });");
 ?>
-<h1>İçerik Listesi</h1>
-<a href="<?php echo Yii::app()->createUrl('/news/create'); ?>" class="btn btn-primary">İçerik Ekle</a>
-
-<?php echo CHtml::link('Detaylı Arama','#',array('class'=>'search-button')); ?>
 <?php
 
+	echo CHtml::link('<div class="icon icon-search icon-white"></div> Detaylı Arama','#',array('class'=>'search-button btn btn-info')); 
+
 	$this->widget('bootstrap.widgets.TbExtendedGridView', array(
-		'type'=>'striped bordered',
 		'dataProvider' => $model->search(),
 		'filter' => $model,
+		'htmlOptions'=>array('class'=>'dataTable table table-hover no-footer'),
 		'sortableRows'=>true,
 		'sortableAttribute'=>'ordering',	
 		'sortableAjaxSave'=>true,
@@ -25,17 +23,28 @@ $('.search-button').click(function(){
 	    'afterSortableUpdate' => 'js:function(id, position){window.location.reload()}',
 		'columns'=>array(
 			array(
-			    'header' => 'Sıralama',
-			    'value' => '$data->ordering',
-			    'id' => 'ordering_id',
-			),
-			array(
-			    'header' => 'Kimlik',
-			    'value' => '$data->id',
-			    'id' => 'news_id',
+				// column title
+				'name'=>'ordering_search',
+				// column html encode
+				'type'=>'raw',
+				// column value
+				'value'=>
+				function($data) {
+					return '<div class="sortable-button sortable-button_drag">
+					<div class="sortable-count badge">'.$data->ordering.'</div>
+					<svg class="td-icon td-icon-swap-vert">
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-swap-vert"></use>
+					</svg>
+					</div>';
+				},
+				// column id
+				'id'=>'ordering_id'
 			),
 			'title',
-			'description',
+			array(
+				'name'=>'description',
+				'htmlOptions'=>array('class'=>'tabledesc')
+			),
 			array( 'name'=>'category_search', 'value'=>'$data->category0->title'),
         	array(
             	'class'=>'bootstrap.widgets.TbToggleColumn',
@@ -45,7 +54,9 @@ $('.search-button').click(function(){
         	),
 			array(
 				'class'=>'bootstrap.widgets.TbButtonColumn',
+				'updateButtonUrl' => 'Yii::app()->controller->createUrl("update",array("category"=>$data->category0->slug,"id"=>$data->primaryKey))',
 			),
+			
 		),
 	));	
 ?>

@@ -3,6 +3,7 @@ class News extends CActiveRecord
 {
 	public $author_search;
 	public $category_search;
+	public $ordering_search;
 
 	public static function model($className=__CLASS__)
 	{
@@ -95,6 +96,7 @@ class News extends CActiveRecord
 			'is_deleted' => 'Silindi',
 			'author_search' => 'Yazar',
 			'category_search' => 'Kategori',
+			'ordering_search' => 'Sıra',
 		);
 	}
 
@@ -126,7 +128,6 @@ class News extends CActiveRecord
 		$criteria->compare('is_deleted',$this->is_deleted);
 		$criteria->compare('author.username', $this->author_search,true);
 		$criteria->compare('category0.title', $this->category_search,true);
-		$criteria->order = 't.ordering DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -140,6 +141,10 @@ class News extends CActiveRecord
 		            'category_search'=>array(
 		                'asc'=>'category0.title',
 		                'desc'=>'category0.title DESC',
+		            ),
+		            'ordering_search'=>array(
+		                'asc'=>'t.ordering',
+		                'desc'=>'t.ordering DESC',
 		            ),
 		            '*',
 		        ),

@@ -50,10 +50,16 @@ class NewsController extends Controller
 		));
 	}
 
-	public function actionCreate()
+	public function actionCreate($category)
 	{
 		$model=new News;
 		$uploadform = "";
+
+		if (isset($category)) {
+			// If we had a category variable
+			$category = $item = Category::model()->findByAttributes(array('slug'=>$category));
+			$model->category = $item->id;
+		}
 
 		if(isset($_POST['News']))
 		{
@@ -185,15 +191,22 @@ class NewsController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
-	public function actionIndex()
+	public function actionIndex($category)
 	{
 		$model=new News('search');
 		$model->unsetAttributes();
+		if ($category) {
+			// If we had a type variable
+			$category = $item = Category::model()->findByAttributes(array('slug'=>$category));
+			$model->category = $item->id;
+		}
+
 		if(isset($_GET['News']))
 			$model->attributes=$_GET['News'];
 
 		$this->render('admin',array(
 			'model'=>$model,
+			'category'=>$category
 		));
 	}
 

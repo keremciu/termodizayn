@@ -120,11 +120,12 @@ class Photos extends CActiveRecord
 		$criteria->compare('ordering',$this->ordering);
 		$criteria->compare('is_published',$this->is_published);
 		$criteria->compare('gallery0.name', $this->gallery_search,true);
+		$criteria->order = 't.ordering DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'sort'=>array(
-				'defaultOrder'=>'ordering DESC',
+				'defaultOrder'=>'t.ordering DESC',
 		        'attributes'=>array(
 		            'gallery_search'=>array(
 		                'asc'=>'gallery0.name',

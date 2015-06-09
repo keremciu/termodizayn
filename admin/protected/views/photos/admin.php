@@ -1,14 +1,13 @@
 <?php
-$this->breadcrumbs=array('Fotoğraflar'=>array('index'),'Fotoğraf Listesi');
-$gallerydata = CHtml::listData(Gallery::model()->findAll(array('order' => 'id')),'id','name');
-$criteria=new CDbCriteria;
-		$criteria->select='max(ordering) AS ordering';
+
+	$this->breadcrumbs=array('Fotoğraflar'=>array('index'),'Fotoğraf Listesi');
+	$gallerydata = CHtml::listData(Gallery::model()->findAll(array('order' => 'id')),'id','name');
+	$criteria=new CDbCriteria;
+
+	$criteria->select='max(ordering) AS ordering';
 	$row = $model->find($criteria);
-$lastorder = $row['ordering']+1;
-?>
-<div class="col-md-12 main-content main-content--full">
-	<div class="main-content--body">
-		<?php 
+	$lastorder = $row['ordering']+1;
+
 			// quick photo add form
 			$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',
 				array(
@@ -19,10 +18,10 @@ $lastorder = $row['ordering']+1;
 				)
 			);
 			// quick photo head
-			// echo '<div class="well-head"><h3 class="panel-title">Hızlı fotoğraf ekleme</h3></div>';
+				/* echo '<div class="well-head"><h3 class="panel-title">Hızlı fotoğraf ekleme</h3></div>'; */
 			// name -text input
 			echo $form->textFieldRow($model,'name',array('class'=>'span2','maxlength'=>255));
-			// image -file input 
+			// image -file input
 			echo $form->fileFieldRow($model,'image',array('class'=>'span2','maxlength'=>255));
 			// gallery -select
 			echo $form->dropDownListRow($model, 'gallery', $gallerydata, array('empty'=>'Lütfen bir galeri seçiniz', 'class'=>'span3'));
@@ -33,7 +32,7 @@ $lastorder = $row['ordering']+1;
 			// photo -hidden input
 			echo $form->hiddenField($model,'photo',array('value'=>0));
 			// submit -button
-			$this->widget('bootstrap.widgets.TbButton', 
+			$this->widget('bootstrap.widgets.TbButton',
 				array(
 					'buttonType'=>'submit',
 					'type'=>'success',
@@ -43,7 +42,6 @@ $lastorder = $row['ordering']+1;
 			);
 			// end quick photo add form
 			$this->endWidget();
-
 			// Quick photo gallery filter
 			/*
 			$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',
@@ -53,11 +51,10 @@ $lastorder = $row['ordering']+1;
 					'htmlOptions'=>array('class'=>'quickadd', 'enctype'=>'multipart/form-data'),
 				)
 			);
-
 			// gallery -select
 			echo $form->dropDownListRow($model, 'gallery', $gallerydata, array('empty'=>'Lütfen bir galeri seçiniz', 'class'=>'span3'));
 			// submit -button
-			$this->widget('bootstrap.widgets.TbButton', 
+			$this->widget('bootstrap.widgets.TbButton',
 				array(
 					'buttonType' => 'submit',
 					'type'=>'primary',
@@ -65,18 +62,15 @@ $lastorder = $row['ordering']+1;
 					'label'=>'Filtrele',
 				)
 			);
-
 			// end photo gallery filter form
 			$this->endWidget();
 			*/
-
 			// photo list
 			$this->widget('bootstrap.widgets.TbExtendedGridView',
 				array(
 					'id'=>'photos-grid',
 					'dataProvider'=>$model->search(),
-					'htmlOptions'=>
-						array('class'=>'dataTable table table-hover no-footer'),
+					'htmlOptions'=>array('class'=>'dataTable table table-hover no-footer'),
 					'sortableRows'=>true,
 					'sortableAttribute'=>'ordering',
 					'sortableAjaxSave'=>true,
@@ -112,11 +106,11 @@ $lastorder = $row['ordering']+1;
 									// column value
 									'value'=>
 										function($data) {
-  											return '<div class="sortable-button sortable-button_drag">
-  												<div class="sortable-count badge">'.$data->ordering.'</div>
-												<svg class="td-icon td-icon-swap-vert">
-													<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-swap-vert"></use>
-												</svg>
+											return '<div class="sortable-button sortable-button_drag">
+													<div class="sortable-count badge">'.$data->ordering.'</div>
+													<svg class="td-icon td-icon-swap-vert">
+															<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-swap-vert"></use>
+													</svg>
 											</div>';
 										},
 									// column id
@@ -131,12 +125,10 @@ $lastorder = $row['ordering']+1;
 								'url',
 							array(
 								'class'=>'bootstrap.widgets.TbButtonColumn',
+								'updateButtonUrl' => 'Yii::app()->controller->createUrl("update",array("type"=>$data->gallery0->slug,"id"=>$data->primaryKey))',
 							),
 						)),
-			)); 
-
+			));
 			// page end
 ?>
-	</div>
-</div
 <!-- Main Content -->

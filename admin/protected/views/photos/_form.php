@@ -13,25 +13,43 @@ $orderinglist = CMap::mergeArray(array(0=>'0 İlk sırada'),$orderdata,array($la
 ?>
 
 	<?php echo $form->errorSummary($model); ?>
-	<p class="help-block"><span class="required">*</span> işaretli alanlar boş bırakılamaz.</p>
-	<?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>255)); ?>
-	
-	<?php echo $form->textFieldRow($model,'url',array('class'=>'span5','maxlength'=>255)); ?>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+			<?php 
+				echo $form->textFieldRow($model,'name',array('class'=>'form-control','maxlength'=>255));
+				echo "</div><div>".$form->textFieldRow($model,'url',array('class'=>'form-control','maxlength'=>255));
+			?>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div style="width:100%;overflow:hidden">
+				<?php echo $form->redactorRow($model, 'desc', array('class'=>'form-control', 'rows'=>5)); ?><br/><br/>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				<?php
+					echo $form->hiddenField($model,'min_photo');
+					echo $form->fileFieldRow($model,'image',array('class'=>'form-control','maxlength'=>255));
+					echo "</div><div>".$form->dropDownListRow($model, 'gallery', $gallerydata, array('empty'=>'Lütfen bir galeri seçiniz', 'class'=>'form-control'))
+				?>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+			<?php 
+				if ($model->isNewRecord)
+					echo $form->dropDownListRow($model, 'ordering', $orderinglist, array('empty'=>'Lütfen bir sıralama seçiniz', 'class'=>'form-control'));
+				else 
+					echo $form->dropDownListRow($model, 'ordering', $orderinglist, array('empty'=>'Lütfen bir sıralama seçiniz', 'class'=>'form-control'));
 
-	<div style="width:100%;overflow:hidden">
-	<?php echo $form->redactorRow($model, 'desc', array('class'=>'span8', 'rows'=>5)); ?><br/><br/>
+				echo "</div><div>". $form->toggleButtonRow($model, 'is_published', array('class'=>'form-control'));
+			?>
+			</div>
+		</div>
 	</div>
 
-	<?php echo $form->fileFieldRow($model,'image',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->hiddenField($model,'min_photo',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->dropDownListRow($model, 'gallery', $gallerydata, array('empty'=>'Lütfen bir galeri seçiniz', 'class'=>'span5')); ?>
-
-	<?php if ($model->isNewRecord)
-		echo $form->dropDownListRow($model, 'ordering', $orderinglist, array('empty'=>'Lütfen bir sıralama seçiniz', 'class'=>'span5'));
-	else 
-		echo $form->dropDownListRow($model, 'ordering', $orderinglist, array('empty'=>'Lütfen bir sıralama seçiniz', 'class'=>'span5'));
-	?>
-
-	<?php echo $form->toggleButtonRow($model, 'is_published'); ?>
+<p class="help-block"><span class="required">*</span> işaretli alanlar boş bırakılamaz.</p>

@@ -8,17 +8,16 @@ $this->breadcrumbs=array(
 function roleFixer($id){
 	if($id=='admin')
 		return 'Baş Yönetici';
+	else if ($id == 'dealer') 
+		return 'Bayi';
 	else
-		return 'Editör';
+		return "Kullanıcı";
 }
-?>
 
-<h1>Yönetici Listesi</h1><a href="<?php echo Yii::app()->createUrl('/user/create'); ?>" class="btn btn-primary">Yönetici Ekle</a>
-
-<?php 
 $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'user-grid',
-	'type'=>'striped bordered condensed',
+	'type'=>'',
+	'htmlOptions'=>array('class'=>'dataTable table table-hover no-footer'),
 	'dataProvider'=>$model->search(),
 	'columns'=>array(
 		'username',

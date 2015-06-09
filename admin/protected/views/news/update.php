@@ -1,18 +1,15 @@
+<div class="form-section">
 <?php
 $this->breadcrumbs=array(
 	'İçerikler'=>array('index'),
 	$model->title=>array('view','id'=>$model->id),
 	'Güncelle',
 );
-?>
 
-<h1>İçerik Güncelle</h1>
-
-<?php
 $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'news-form',
 	'enableAjaxValidation'=>false,
-	'htmlOptions'=>array('class'=>'well', 'enctype'=>'multipart/form-data'),
+	'htmlOptions'=>array('class'=>'form-section_content', 'enctype'=>'multipart/form-data'),
 ));
 
 $tabs = array(
@@ -35,3 +32,4 @@ $this->widget('bootstrap.widgets.TbTabs', array(
 <?php
 $this->endWidget();
 ?>
+</div>

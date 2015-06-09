@@ -85,7 +85,7 @@ foreach($languages as $key=>$lang) {
 				$this->widget('bootstrap.widgets.TbRedactorJs',['name' => 'translate['.$attr.'_'.$key.']','value' => $value]);
 			} else {
 				echo '<label for="translate_'.$attr.'_'.$key.'" class="required">'.$clip->getAttributeLabel($attr).'</label>';
-				echo Chtml::textField('translate['.$attr.'_'.$key.']', $diff[$key.'_'.$attr],array('placeholder'=>$model->$attr."'ı ". $lang ." diline çevirin"));
+				echo Chtml::textField('translate['.$attr.'_'.$key.']', $diff[$key.'_'.$attr],array('class'=>'form-control','placeholder'=>$model->$attr."'ı ". $lang ." diline çevirin"));
 			}
 		}
 		?>
