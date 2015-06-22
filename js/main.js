@@ -19,6 +19,10 @@ $('document').ready(function(){
         convertLocation: "./convert.php"
     });
 
+    $(".select-redirect").on("change", function() {
+        window.location = $(this).val();
+    });
+
     // Form Validations
     $(".forgot-password-form").validate({
         // submitHandler: function(form) {

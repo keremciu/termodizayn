@@ -31,7 +31,7 @@
     <!-- Filter -->
     <div class="filter hidden-xs">
         <div class="filter-head">
-            <h3 class="filter-head_title">Size uygun makineyı bulmak için filtreyi kullanabilirsiniz.</h3>
+            <h3 class="filter-head_title">{{ lang.t ('main', 'Size uygun makineyı bulmak için filtreyi kullanabilirsiniz.') }}</h3>
             <a id="clear-filters" class="filter-head_clear-all" title="Filteyi Temizle">
                 <svg class="icon icon-cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cancel"></use></svg> Filtreyi Temizle
             </a>
@@ -124,7 +124,7 @@
         <div class="product" itemscope="" itemtype="http://schema.org/Product">
             <div class="product_image">
                 <a href="{{ modelurl }}">
-                    <img src="img/product-image.png" alt="" itemprop="image">
+                    <img src="{{ App.baseUrl ~ '/' ~ App.settings.get("photo","model_path") ~ model.image }}" alt="" itemprop="image">
                 </a>
             </div> 
             <div class="product_detail">
@@ -139,22 +139,12 @@
                     </a>
                 </div>
                 <div class="product-content" itemprop="description">
-                    <dl class="product-content_item">
-                        <dt>Buz kapasitesi</dt>
-                        <dd>1000 kg / 24h</dd>
+                    {% for attr in model.modelattrib if attr.on_list == 1 %}
+                    <dl class="product-content_item">   
+                        <dt>{{ attr.attrib.title }}</dt>
+                        <dd>{{ attr.value }}</dd>
                     </dl>
-                    <dl class="product-content_item">
-                        <dt>Kompresör</dt>
-                        <dd>5 Hp</dd>
-                    </dl>
-                    <dl class="product-content_item">
-                        <dt>Toplam Güç</dt>
-                        <dd>5 Kw</dd>
-                    </dl>
-                    <dl class="product-content_item">
-                        <dt>Enerji</dt>
-                        <dd>380 V / 50Hz</dd>
-                    </dl>
+                    {% endfor %}
                 </div>
             </div>    
             <div class="product_nav">

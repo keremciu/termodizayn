@@ -40,40 +40,40 @@
 				<!-- Navbar Right -->
 				<div class="pull-right hidden-xs">
 					{% if App.user.isGuest %}
-					<div id="user-box" class="user-box-frame">
-						<div class="site-navbar_item user-box-frame_item">
-							<span>
-								<svg class="icon"><use xlink:href="#icon-login"></use></svg>
-								{{ lang.t ('main', 'Giriş Yap veya Kaydol') }}
-								<svg class="icon"><use xlink:href="#icon-arrow-drop-down"></use></svg>
-							</span>
-						</div>
-						<div class="user-box">
-							<!-- Sign-In -->
-							<div id="login" class="user-box_sign-in">
-								{{ void(this.widget('LoginPortlet')) }}
-								{% set forgotpass = App.baseUrl ~ "/" ~ this.forgotpasslink %}
-                				<a href="{{ forgotpass }}" class="user-box-forgot-password" title="{{lang.t ('main', 'Şifremi Unuttum!') }}">{{lang.t ('main', 'Şifremi Unuttum!') }}</a>
-							</div>
-							<!-- Register Button -->
-							{% set signup = App.baseUrl ~ "/" ~ this.registerlink %}
-							<a href="{{ signup }}" class="user-box_register" title="{{lang.t ('main', 'Kayıt olmak istiyorum') }}">
-								<svg class="icon"><use xlink:href="#icon-register"></use></svg> {{lang.t ('main', 'Kayıt olmak istiyorum') }}
-							</a>
-						</div>
-					</div>
-					<!-- User Box -->
-					{% else %}
-					<div id="user-box" class="user-box-frame">
-						<div class="site-navbar_item user-box-frame_item">
-							<span>
-								<a href="{{ App.createUrl('site/logout') }}">
+						<div id="user-box" class="user-box-frame">
+							<div class="site-navbar_item user-box-frame_item">
+								<span>
 									<svg class="icon"><use xlink:href="#icon-login"></use></svg>
-									{{ App.user.name }} {{lang.t ('main', 'olarak giriş yaptınız') }}, <strong>{{lang.t ('main', 'çıkış yap') }}</strong>
+									{{ lang.t ('main', 'Giriş Yap veya Kaydol') }}
+									<svg class="icon"><use xlink:href="#icon-arrow-drop-down"></use></svg>
+								</span>
+							</div>
+							<div class="user-box">
+								<!-- Sign-In -->
+								<div id="login" class="user-box_sign-in">
+									{{ void(this.widget('LoginPortlet')) }}
+									{% set forgotpass = App.baseUrl ~ "/" ~ this.forgotpasslink %}
+									<a href="{{ forgotpass }}" class="user-box-forgot-password" title="{{lang.t ('main', 'Şifremi Unuttum!') }}">{{lang.t ('main', 'Şifremi Unuttum!') }}</a>
+								</div>
+								<!-- Register Button -->
+								{% set signup = App.baseUrl ~ "/" ~ this.registerlink %}
+								<a href="{{ signup }}" class="user-box_register" title="{{lang.t ('main', 'Kayıt olmak istiyorum') }}">
+									<svg class="icon"><use xlink:href="#icon-register"></use></svg> {{lang.t ('main', 'Kayıt olmak istiyorum') }}
 								</a>
-							</span>
+							</div>
 						</div>
-					</div>
+						<!-- User Box -->
+					{% else %}
+						<div id="user-box" class="user-box-frame">
+							<div class="site-navbar_item user-box-frame_item">
+								<span>
+									<a href="{{ App.createUrl('site/logout') }}">
+										<svg class="icon"><use xlink:href="#icon-login"></use></svg>
+										{{ App.user.name }} {{lang.t ('main', 'olarak giriş yaptınız') }}, <strong>{{lang.t ('main', 'çıkış yap') }}</strong>
+									</a>
+								</span>
+							</div>
+						</div>
 					{% endif %}
 				</div>
 			</div>
@@ -118,11 +118,7 @@
 					</ul>
 					<div class="mobile-navbar">
 						<div class="mobile-navbar_item">
-							<select id="mobile-language-selectbox" name="language-select" class="mobile-navbar-selectbox needsclick">
-								<option value="tr">Türkçe</option>
-								<option value="en">English</option>
-								<option value="fr">French</option>
-							</select>
+							{{ void(this.widget('application.components.widgets.LanguageSelect',{'layout':'mobile'})) }}
 						</div>
 						<div class="mobile-navbar_item">
 							<a href="tel:{{ App.settings.get("contact","phone") }}" title="Telefon" class="mobile-navbar-link">{{ App.settings.get("contact","phone") }} <svg class="icon"><use xlink:href="#icon-phone"></use></svg></a>
@@ -138,142 +134,153 @@
 				<div class="mobile-sign-in-button">
 					<svg class="icon"><use xlink:href="#icon-login"></use></svg>
 				</div>
-				<div class="user-box user-box--mobile">
-					<!-- Sign-In -->
-					<div class="user-box_sign-in">
-						<form class="user-box-form" action="#" autocomplete="off">
-							<input type="email" class="user-box-form_textbox" placeholder="E-Posta">
-							<input type="password" class="user-box-form_textbox" placeholder="Parola">
-							<button type="button" class="button">Giriş Yap</button>
-						</form>
-						<a href="forgot-password.php" class="user-box-forgot-password" title="Şifremi Unuttum!">Şifremi Unuttum!</a>
+				{% if App.user.isGuest %}
+					<div class="user-box user-box--mobile">
+						<!-- Sign-In -->
+						<div class="user-box_sign-in">
+							{{ void(this.widget('LoginPortlet')) }}
+							{% set forgotpass = App.baseUrl ~ "/" ~ this.forgotpasslink %}
+							<a href="{{ forgotpass }}" class="user-box-forgot-password" title="{{lang.t ('main', 'Şifremi Unuttum!') }}">{{lang.t ('main', 'Şifremi Unuttum!') }}</a>
+						</div>
+						<!-- Register Button -->
+						{% set signup = App.baseUrl ~ "/" ~ this.registerlink %}
+						<a href="{{ signup }}" class="user-box_register" title="{{lang.t ('main', 'Kayıt olmak istiyorum') }}">
+							<svg class="icon"><use xlink:href="#icon-register"></use></svg> {{lang.t ('main', 'Kayıt olmak istiyorum') }}
+						</a>
 					</div>
-					<!-- Register Button -->
-					<a href="register.php" class="user-box_register" title="Kayıt olmak istiyorum">
-						<svg class="icon"><use xlink:href="#icon-login"></use></svg> Kayıt olmak istiyorum
-					</a>
+				{% else %}
+					<div id="user-box" class="user-box user-box--mobile">
+						<div class="site-navbar_item user-box-frame_item">
+							<span>
+								<a href="{{ App.createUrl('site/logout') }}">
+									<svg class="icon"><use xlink:href="#icon-login"></use></svg>
+									{{ App.user.name }} {{lang.t ('main', 'olarak giriş yaptınız') }}, <strong>{{lang.t ('main', 'çıkış yap') }}</strong>
+								</a>
+							</span>
+						</div>
+					</div>
+				{% endif %}
 				</div>
 			</div>
-		</div>
-	</header>
-	<!-- Alert area for layout -->
-	{% if App.user.hasFlash('mainalert') %}
-		<div class="alert-area">
-			<div class="alert alert-success">
-				{{ App.user.getFlash('mainalert') }}
+		</header>
+		<!-- Alert area for layout -->
+		{% if App.user.hasFlash('mainalert') %}
+			<div class="alert-area">
+				<div class="alert alert-success">
+					{{ App.user.getFlash('mainalert') }}
+				</div>
 			</div>
-		</div>
-	{% endif %}
-	{% block content %}
-		{{ content }}
-	{% endblock %}
-	<!-- Footer -->
-	<footer class="site-footer">
-		<div class="container">
-			<!-- Footer Menu -->
-			<div class="col-md-3 col-md-offset-1">
-				<h4 class="footer-title">{{lang.t ('main', 'Hızlı Ulaşım') }}</h4>
-				<ul class="footer-nav">
-					{% set geturl = App.request.getUrl() %}
-					{% for menu in this.footermenu %}
-						{% set getactive = false %}
-						{% set link = App.baseUrl ~ "/" ~ menu.alias %}
-						{% if menu.type == "frontpage" %}
-							{# check if is it the homepage #}
-							{% if this.ishomepage %}
-								{% set getactive = true %}
+		{% endif %}
+		{% block content %}
+			{{ content }}
+		{% endblock %}
+		<!-- Footer -->
+		<footer class="site-footer">
+			<div class="container">
+				<!-- Footer Menu -->
+				<div class="col-md-3 col-md-offset-1">
+					<h4 class="footer-title">{{lang.t ('main', 'Hızlı Ulaşım') }}</h4>
+					<ul class="footer-nav">
+						{% set geturl = App.request.getUrl() %}
+						{% for menu in this.footermenu %}
+							{% set getactive = false %}
+							{% set link = App.baseUrl ~ "/" ~ menu.alias %}
+							{% if menu.type == "frontpage" %}
+								{# check if is it the homepage #}
+								{% if this.ishomepage %}
+									{% set getactive = true %}
+								{% endif %}
+								{% set link = App.baseUrl %}
 							{% endif %}
-							{% set link = App.baseUrl %}
-						{% endif %}
-						<li>
-							<a href="{{ link }}" title="{{ menu.name }}" class="footer-nav_item">{{ menu.name }}</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-			<!-- Subscribe & Social Networks -->
-			<div class="col-md-4">
-				<!-- Mail Subscribe -->
-				<div class="footer-subscribe hidden-xs">
-					<h4 class="footer-title">{{lang.t ('main', 'Yeniliklerden Haberdar Olun!') }}</h4>
-					<span class="footer-subscribe_description">
-					{{lang.t ('main', 'Yeni ürünler, gelecek fuarlar ve güncel gelişmelerden haberdar olmak için e-posta listemize kayıt olun.') }}
-					</span>
-					<form class="footer-subscribe_form" action="#" autocomplete="off">
-						<input type="text" name="subscribe-mail" class="footer-subscribe-textbox" placeholder="{{lang.t ('main', 'E-Posta adresinizi yazın') }}">
-						<button type="button" class="footer-subscribe-button">
-						<svg class="icon"><use xlink:href="#icon-done"></use></svg>
-						</button>
-					</form>
+							<li>
+								<a href="{{ link }}" title="{{ menu.name }}" class="footer-nav_item">{{ menu.name }}</a>
+							</li>
+						{% endfor %}
+					</ul>
 				</div>
-				<!-- Social Networks -->
-				<div class="footer-social-frame">
-					<h4 class="footer-title">{{lang.t ('main', 'Takip Edin') }}</h4>
-					<div class="footer-social">
-						<a href="{{ App.settings.get('social','facebook') }}" title="Facebook" target="_blank" class="footer-social_item">
-							<svg class="icon"><use xlink:href="#icon-facebook"></use></svg>
-						</a>
-						<a href="{{ App.settings.get('social','twitter') }}" title="Twitter" target="_blank" class="footer-social_item">
-							<svg class="icon"><use xlink:href="#icon-twitter"></use></svg>
-						</a>
-						<a href="{{ App.settings.get('social','googleplus') }}" title="Google+" target="_blank" class="footer-social_item">
-							<svg class="icon"><use xlink:href="#icon-google-plus-square"></use></svg>
-						</a>
-						<a href="{{ App.settings.get('social','youtube') }}" title="Youtube" target="_blank" class="footer-social_item">
-							<svg class="icon icon-youtube"><use xlink:href="#icon-youtube"></use></svg>
-						</a>
+				<!-- Subscribe & Social Networks -->
+				<div class="col-md-4">
+					<!-- Mail Subscribe -->
+					<div class="footer-subscribe hidden-xs">
+						<h4 class="footer-title">{{lang.t ('main', 'Yeniliklerden Haberdar Olun!') }}</h4>
+						<span class="footer-subscribe_description">
+							{{lang.t ('main', 'Yeni ürünler, gelecek fuarlar ve güncel gelişmelerden haberdar olmak için e-posta listemize kayıt olun.') }}
+						</span>
+						<form class="footer-subscribe_form" action="#" autocomplete="off">
+							<input type="text" name="subscribe-mail" class="footer-subscribe-textbox" placeholder="{{lang.t ('main', 'E-Posta adresinizi yazın') }}">
+							<button type="button" class="footer-subscribe-button">
+							<svg class="icon"><use xlink:href="#icon-done"></use></svg>
+							</button>
+						</form>
+					</div>
+					<!-- Social Networks -->
+					<div class="footer-social-frame">
+						<h4 class="footer-title">{{lang.t ('main', 'Takip Edin') }}</h4>
+						<div class="footer-social">
+							<a href="{{ App.settings.get('social','facebook') }}" title="Facebook" target="_blank" class="footer-social_item">
+								<svg class="icon"><use xlink:href="#icon-facebook"></use></svg>
+							</a>
+							<a href="{{ App.settings.get('social','twitter') }}" title="Twitter" target="_blank" class="footer-social_item">
+								<svg class="icon"><use xlink:href="#icon-twitter"></use></svg>
+							</a>
+							<a href="{{ App.settings.get('social','googleplus') }}" title="Google+" target="_blank" class="footer-social_item">
+								<svg class="icon"><use xlink:href="#icon-google-plus-square"></use></svg>
+							</a>
+							<a href="{{ App.settings.get('social','youtube') }}" title="Youtube" target="_blank" class="footer-social_item">
+								<svg class="icon icon-youtube"><use xlink:href="#icon-youtube"></use></svg>
+							</a>
+						</div>
 					</div>
 				</div>
+				<!-- Footer Contact -->
+				<div class="col-md-3">
+					<h4 class="footer-title">{{lang.t ('main', 'İletişim') }}</h4>
+					<ul class="footer-contact" itemscope itemtype="http://schema.org/LocalBusiness">
+						<!-- E-Mail -->
+						<li class="footer-contact_item">
+							<i class="footer-contact_icon hidden-xs">
+							<svg class="icon"><use xlink:href="#icon-email"></use></svg>
+							</i>
+							<div class="footer-contact_detail">
+								<a itemprop="email" href="mailto:{{ App.settings.get("contact","email") }}" title="E-Mail">{{ App.settings.get("contact","email") }}</a>
+							</div>
+						</li>
+						<!-- Phone Numbers -->
+						<li class="footer-contact_item">
+							<i class="footer-contact_icon hidden-xs">
+							<svg class="icon"><use xlink:href="#icon-phone"></use></svg>
+							</i>
+							<div class="footer-contact_detail">
+								<a itemprop="telephone" href="tel:{{ App.settings.get("contact","phone") }}" title="Telefon">{{ App.settings.get("contact","phone") }} (Pbx)</a>
+								<span itemprop="faxNumber" class="footer-contact_line hidden-xs">{{ App.settings.get("contact","fax") }} (Fax)</span>
+							</div>
+						</li>
+						<!-- Address -->
+						<li class="footer-contact_item" itemscope itemtype="http://schema.org/PostalAddress">
+							<i class="footer-contact_icon hidden-xs">
+							<svg class="icon"><use xlink:href="#icon-home"></use></svg>
+							</i>
+							<address class="footer-contact_detail">
+								<span itemprop="streetAddress" class="footer-contact_line">
+									{{ App.settings.get("contact","address") }}
+									<span class="footer-contact_line">{{ App.settings.get("contact","address2") }}</span>
+								</span>
+								<span class="footer-contact_line">
+									{{ App.settings.get("contact","address3") }},
+									<span itemprop="postalCode">{{ App.settings.get("contact","postCode") }}</span>
+								</span>
+								<span class="footer-contact_line">
+									<span itemprop="addressLocality">{{ App.settings.get("contact","locality") }}</span>,
+									<span itemprop="addressRegion">{{ App.settings.get("contact","region") }}</span>,
+									<span itemprop="addressCountry">{{ App.settings.get("contact","country") }}</span>
+								</span>
+							</address>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<!-- Footer Contact -->
-			<div class="col-md-3">
-				<h4 class="footer-title">{{lang.t ('main', 'İletişim') }}</h4>
-				<ul class="footer-contact" itemscope itemtype="http://schema.org/LocalBusiness">
-					<!-- E-Mail -->
-					<li class="footer-contact_item">
-						<i class="footer-contact_icon hidden-xs">
-						<svg class="icon"><use xlink:href="#icon-email"></use></svg>
-						</i>
-						<div class="footer-contact_detail">
-							<a itemprop="email" href="mailto:{{ App.settings.get("contact","email") }}" title="E-Mail">{{ App.settings.get("contact","email") }}</a>
-						</div>
-					</li>
-					<!-- Phone Numbers -->
-					<li class="footer-contact_item">
-						<i class="footer-contact_icon hidden-xs">
-						<svg class="icon"><use xlink:href="#icon-phone"></use></svg>
-						</i>
-						<div class="footer-contact_detail">
-							<a itemprop="telephone" href="tel:{{ App.settings.get("contact","phone") }}" title="Telefon">{{ App.settings.get("contact","phone") }} (Pbx)</a>
-							<span itemprop="faxNumber" class="footer-contact_line hidden-xs">{{ App.settings.get("contact","fax") }} (Fax)</span>
-						</div>
-					</li>
-					<!-- Address -->
-					<li class="footer-contact_item" itemscope itemtype="http://schema.org/PostalAddress">
-						<i class="footer-contact_icon hidden-xs">
-						<svg class="icon"><use xlink:href="#icon-home"></use></svg>
-						</i>
-						<address class="footer-contact_detail">
-							<span itemprop="streetAddress" class="footer-contact_line">
-								{{ App.settings.get("contact","address") }}
-								<span class="footer-contact_line">{{ App.settings.get("contact","address2") }}</span>
-							</span>
-							<span class="footer-contact_line">
-								{{ App.settings.get("contact","address3") }},
-								<span itemprop="postalCode">{{ App.settings.get("contact","postCode") }}</span>
-							</span>
-							<span class="footer-contact_line">
-								<span itemprop="addressLocality">{{ App.settings.get("contact","locality") }}</span>,
-								<span itemprop="addressRegion">{{ App.settings.get("contact","region") }}</span>,
-								<span itemprop="addressCountry">{{ App.settings.get("contact","country") }}</span>
-							</span>
-						</address>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<!-- Copyright -->
-		<div class="footer-copyright">{{lang.t ('main', 'Telif hakları saklıdır') }}. © 2015 Termodizayn</div>
-	</footer>
-</body>
+			<!-- Copyright -->
+			<div class="footer-copyright">{{lang.t ('main', 'Telif hakları saklıdır') }}. © 2015 Termodizayn</div>
+		</footer>
+	</body>
 </html>

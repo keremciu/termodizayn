@@ -13,7 +13,7 @@ $this->pageTitle=Yii::app()->name . ' - Giriş Yap';
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),
-	'htmlOptions'=>array('class'=>'well'),
+	'htmlOptions'=>array('class'=>''),
 )); ?>
 
 	<?php echo $form->textFieldRow($model, 'username', array('class'=>'span3')); ?>

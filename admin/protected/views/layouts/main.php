@@ -15,8 +15,10 @@
 		<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/exclude.css" />
 	</head>
 	<body>
+	<?php $this->renderPartial('/layouts/_svg_icons'); ?>
 		<div id="page">
-			<?php $this->renderPartial('/layouts/_svg'); ?>
+			<?php if (!Yii::app()->user->isGuest){ ?>
+		
 			<!-- Header -->
 			<header class="site-header">
 				<!-- Topbar -->
@@ -33,8 +35,8 @@
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?php echo Yii::app()->createUrl('user/admin'); ?>"><i class="icon-tasks"></i> Üyeleri Yönet</a></li>
-								<li><a href="<?php echo Yii::app()->createUrl('user/admin'); ?>"><i class="icon-user"></i> Bilgileri Güncelle</a></li>
-								<li><a href="<?php echo Yii::app()->createUrl('user/admin'); ?>"><i class="icon-cog"></i> Şifre Yenile</a></li>
+								<li><a href="<?php echo Yii::app()->createUrl('user/updateyourself'); ?>"><i class="icon-user"></i> Bilgileri Güncelle</a></li>
+								<li><a href="<?php echo Yii::app()->createUrl('passwordchange/create'); ?>"><i class="icon-cog"></i> Şifre Yenile</a></li>
 								<li><a href="<?php echo Yii::app()->createUrl('mail/create'); ?>"><i class="icon-envelope"></i> Toplu E-Posta Gönder</a></li>
 								<li class="divider"></li>
 								<li><a href="<?php echo Yii::app()->createUrl('site/logout'); ?>"><i class="icon-off"></i> Çıkış Yap</a></li>
@@ -50,6 +52,7 @@
 					</div>
 				</div>
 			</header>
+		<?php } ?>
 			<div class="site-content">
 				<div class="container">
 					<div class="breadandalert">

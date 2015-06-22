@@ -17,6 +17,7 @@ class Controller extends CController
 	public $registerlink;
 	public $forgotpasslink;
 	public $ishomepage;
+	public $sidebar;
 
 	public function __construct($id,$module=null){
 
@@ -48,6 +49,57 @@ class Controller extends CController
 	    $this->registerlink = Menu::model()->language(Yii::app()->getLanguage())->findByAttributes(array('type'=>'register'))->alias;
 	    $this->dynamicmenu = Menu::model()->language(Yii::app()->getLanguage())->findAll(array('condition'=>'(t.parent=0 AND t.menutype="navigasyon") AND t.is_published=1','order'=>'t.ordering ASC'));
 	    $this->footermenu = Menu::model()->language(Yii::app()->getLanguage())->findAll(array('condition'=>'(t.parent=0 AND t.menutype="footer") AND t.is_published=1','order'=>'t.ordering ASC'));
+	}
+
+	public function getSidebar($context = "productlist") {
+		$this->sidebar = $this->$context();
+	}
+
+	public function contentlist() {
+
+		$news_menu = Menu::model()->findByAttributes(array('type'=>"blog"));
+
+		// news list
+		$news_menu = Menu::model()->findByAttributes(array('type'=>"blog"));
+		$news_url = Yii::app()->baseUrl . '/' . $news_menu->alias;
+		
+		$return = '<a href="'.$news_url.'" class="sidebar-link" title="'.$news_menu->name.'">'.$news_menu->name.'</a>';
+		$return .= '<a href="#" class="sidebar-link" title="Hakkımızda">Hakkımızda</a>';
+
+		return $return;
+	}
+
+	public function productlist() {
+		$menu = Menu::model()->findByAttributes(array('type'=>"categories"));
+		$base_category = Category::model()->language(Yii::app()->getLanguage())->findByAttributes(array('id'=>$menu->types_id),'t.is_published=1');	
+		$categories = Category::model()->with("product")->findAll(array('condition' => 't.parent = :parent AND t.type = "product"','params'=>array(':parent'=>$base_category->id)));
+		
+		$baseurl = Yii::app()->baseUrl . '/' . $menu->alias;
+		$return = '<a href="'.$baseurl.'" class="sidebar-link" title="'.Yii::t('main','Tüm Ürünler').'">'.Yii::t('main','Tüm Ürünler').'</a>';
+
+		foreach ($categories as $key => $category) {
+
+			$return .= '<h2 class="sidebar-title">'.$category->title.' <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-expand-more"></use></svg></h2>';
+			$return .= '<ul class="sidebar-nav isActive"';
+
+			foreach ($category->product as $pid => $product) {
+				$link = $baseurl.'/'.$category->slug.'/'.$product->slug;
+
+				$url = rawurldecode($_SERVER['REQUEST_URI']);
+
+				if ($link == $url OR (strpos($url,$link) !== false)) {
+					$class = " isActive";
+				} else {
+					$class = "";
+				}
+
+                $return .= '<li><a href="'.$link.'" title="'.$product->title.'" class="sidebar-nav_item'.$class.'">'.$product->title.'</a></li>';
+			}
+
+			$return .= '</ul>';
+		}
+
+		return $return;
 	}
 
 	/*

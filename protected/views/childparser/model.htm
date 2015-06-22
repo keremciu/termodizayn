@@ -13,154 +13,87 @@
                 <div class="detail-photo">
                     <!-- Image -->
                     <div class="detail-photo_image">
-                        <div class="bx-wrapper" style="max-width: 100%;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 434px;"><ul class="detail-slider" itemscope="" itemtype="http://schema.org/ImageGallery" style="width: 615%; position: relative; -webkit-transition-duration: 0s; transition-duration: 0s; -webkit-transform: translate3d(-555px, 0px, 0px);"><li data-href="http://dummyimage.com/277x355/a8a8a8/000000.png&amp;text=dummyImage4" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject" style="float: left; list-style: none; position: relative; width: 555px;" class="bx-clone">
-                            <img src="{{ App.baseUrl }}/img/product-image-normal.png?4" alt="" itemprop="contentUrl">
-                        </li>
-                        <li data-href="http://dummyimage.com/277x355/a8a8a8/000000.png&amp;text=dummyImage1" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject" style="float: left; list-style: none; position: relative; width: 555px;" class="active-slide">
-                            <img src="img/product-image-normal.png?1" alt="" itemprop="contentUrl">
-                        </li>
-                        <li data-href="http://dummyimage.com/277x355/a8a8a8/000000.png&amp;text=dummyImage2" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject" style="float: left; list-style: none; position: relative; width: 555px;">
-                            <img src="img/product-image-normal.png?2" alt="" itemprop="contentUrl">
-                        </li>
-                        <li data-href="http://dummyimage.com/277x355/a8a8a8/000000.png&amp;text=dummyImage3" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject" style="float: left; list-style: none; position: relative; width: 555px;">
-                            <img src="img/product-image-normal.png?3" alt="" itemprop="contentUrl">
-                        </li>
-                        <li data-href="http://dummyimage.com/277x355/a8a8a8/000000.png&amp;text=dummyImage4" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject" style="float: left; list-style: none; position: relative; width: 555px;">
-                            <img src="img/product-image-normal.png?4" alt="" itemprop="contentUrl">
-                        </li>
-                        <li data-href="http://dummyimage.com/277x355/a8a8a8/000000.png&amp;text=dummyImage1" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject" style="float: left; list-style: none; position: relative; width: 555px;" class="bx-clone">
-                            <img src="img/product-image-normal.png?1" alt="" itemprop="contentUrl">
-                            </li></ul></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev" href="">Prev</a><a class="bx-next" href="">Next</a></div></div></div>
-                            <a href="img/product-image-normal.png?zoom" class="detail-photo-zoom">
-                                <svg class="icon icon-loupe"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-loupe"></use></svg>
-                            </a>
+                        <ul class="detail-slider" itemscope itemtype="http://schema.org/ImageGallery">
+                            {% for image in model.modelextras if image.type == 'image' %}
+                            <li data-href="{{ App.baseUrl ~ '/' ~ App.settings.get("photo","model_path") ~ 'extras/' ~ image.path }}" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                                <img src="{{ App.baseUrl ~ '/' ~ App.settings.get("photo","model_path") ~ 'extras/' ~ image.path }}" alt="{{ model.name }}" itemprop="contentUrl">
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <a href="img/product-image-normal.png?zoom" class="detail-photo-zoom">
+                            <svg class="icon icon-loupe"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-loupe"></use></svg>
+                        </a>
                         </div>
                         <div class="hidden-xs">
                             <!-- Thumbnails -->
-                            <h3 class="detail-photo_title">GÖRSELLER</h3>
+                            <h3 class="detail-photo_title">{{ lang.t ('main', 'GÖRSELLER') }}</h3>
                             <div id="detail-pager" class="detail-photo-thumbnail" itemscope="" itemtype="http://schema.org/ImageGallery">
-                                <a href="#" data-slide-index="0" class="detail-photo-thumbnail_item active" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                                    <img src="{{ App.baseUrl }}/img/dummy-thumbnail.png?0" itemprop="thumbnail">
+                                {% for image in model.modelextras if image.type == 'image' %}
+                                <a href="#" data-slide-index="{{ loop.index0 }}" class="detail-photo-thumbnail_item" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                                    <img src="{{ App.baseUrl ~ '/' ~ App.settings.get("photo","model_path") ~ 'extras/thumbs/min' ~ image.path }}" width="90" alt="{{ model.name }}" itemprop="thumbnail">
                                 </a>
-                                <a href="#" data-slide-index="1" class="detail-photo-thumbnail_item" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                                    <img src="{{ App.baseUrl }}/img/dummy-thumbnail.png?1" itemprop="thumbnail">
-                                </a>
-                                <a href="#" data-slide-index="2" class="detail-photo-thumbnail_item" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                                    <img src="{{ App.baseUrl }}/img/dummy-thumbnail.png?2" itemprop="thumbnail">
-                                </a>
-                                <a href="#" data-slide-index="3" class="detail-photo-thumbnail_item" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                                    <img src="{{ App.baseUrl }}/img/dummy-thumbnail.png?3" itemprop="thumbnail">
-                                </a>
+                                {% endfor %}
                             </div>
                             <!-- Videos -->
-                            <h3 class="detail-photo_title">VİDEOLAR</h3>
+                            <h3 class="detail-photo_title">{{ lang.t ('main', 'VİDEOLAR') }}</h3>
                             <div class="detail-photo-thumbnail" itemscope="" itemtype="http://schema.org/videoGallery">
-                                <a href="https://www.youtube.com/watch?v=vXQKCBfRn3I" title="#" class="detail-photo-thumbnail_item detail-video" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/VideoObject">
-                                    <img src="http://img.youtube.com/vi/vXQKCBfRn3I/0.jpg" itemprop="thumbnail" width="80">
+                            {% for video in model.modelextras if video.type == 'video' %}
+                                <a href="https://www.youtube.com/watch?v={{ video.path }}" title="#" class="detail-photo-thumbnail_item detail-video" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/VideoObject">
+                                    <img src="http://img.youtube.com/vi/{{ video.path }}/0.jpg" itemprop="thumbnail" width="80">
                                     <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play-circle-outline"></use></svg>
                                 </a>
-                                <a href="https://www.youtube.com/watch?v=-INCxg1tkwA" title="#" class="detail-photo-thumbnail_item detail-video" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/VideoObject">
-                                    <img src="http://img.youtube.com/vi/-INCxg1tkwA/0.jpg" itemprop="thumbnail" width="76">
-                                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play-circle-outline"></use></svg>
-                                </a>
+                            {% endfor %}
                             </div>
                         </div>
                         <!-- Documents -->
-                        <h3 class="detail-photo_title hidden-xs">DÖKÜMANLAR</h3>
+                        <h3 class="detail-photo_title hidden-xs">{{ lang.t ('main', 'DÖKÜMANLAR') }}</h3>
+                        {% for file in model.modelextras if file.type == 'file' %}
                         <div class="detail-photo-documents-frame">
-                            <a href="#" title="#" class="detail-photo-documents">
-                                <svg class="icon icon-pdf-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-pdf-icon"></use></svg>Kullanım Kılavuzu
+                            <a href="{{ App.baseUrl ~ '/' ~ App.settings.get("photo","model_path") ~ 'documents/' ~ file.path }}" title="#" class="detail-photo-documents">
+                                <svg class="icon icon-pdf-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-pdf-icon"></use></svg> {{ file.path }}
                             </a>
                         </div>
-                        <div class="detail-photo-documents-frame">
-                            <a href="#" title="#" class="detail-photo-documents">
-                                <svg class="icon icon-pdf-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-pdf-icon"></use></svg>Ürün Kataloğu
-                            </a>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
             <div class="detail-info">
-                <h3 class="detail-title visible-xs">ÜRÜN HAKKINDA</h3>
+                <h3 class="detail-title visible-xs">{{ lang.t ('main', 'ÜRÜN HAKKINDA') }}</h3>
                 <div class="detail-info_summary">
                     <p id="product-summary" itemprop="description" data-readmore="" aria-expanded="false" style="max-height: none; height: 85px;">
                         {{ model.content}}
                     </p>
-                    <a href="" class="detail-info_readmore" data-readmore-toggle="" aria-controls="product-summary">Devamını Gör</a>
+                    <a href="" class="detail-info_readmore" data-readmore-toggle="" aria-controls="product-summary">{{ lang.t ('main', 'Devamını Gör') }}</a>
                 </div>
                 <div class="detail-info_price">
-                    <h3 class="detail-title">ÜRÜN FİYATI</h3>
+                    <h3 class="detail-title">{{ lang.t ('main', 'ÜRÜN FİYATI') }}</h3>
                     <div class="detail-info_price-frame">
                         <span class="detail-info_price-value" itemscope="" itemtype="http://schema.org/Offer">
                             <span itemprop="priceCurrency">€</span>
                             <span itemprop="price" content="{{ model.price }}">{{model.price }}</span>
                         </span>
-                        <button class="detail-info_price-button">Teklif Al</button>
+                        <button class="detail-info_price-button">{{ lang.t ('main', 'Teklif Al') }}</button>
                     </div>
                 </div>
                 <!-- Product Specification -->
                 <div class="detail-info_data">
-                    <h3 class="detail-title">TEKNİK BİLGİLER</h3>
+                    <h3 class="detail-title">{{ lang.t ('main', 'TEKNİK BİLGİLER') }}</h3>
+                    {% for attr in model.modelattrib %}
                     <dl class="detail-info_data_item">
-                        <dt>Tip</dt>
-                        <dd>TD-T3</dd>
+                        <dt>{{ attr.attrib.title }}</dt>
+                        <dd>{{ attr.value }}</dd>
                     </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Buz Kapasitesi (kg/gün)</dt>
-                        <dd>3000 kg</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Evaporasyon</dt>
-                        <dd>15 ℃</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Soğutma Kapasitesi</dt>
-                        <dd>21,6 kW</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Nominal Kompresör Gücü</dt>
-                        <dd>9</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Kompresör</dt>
-                        <dd>4PCS-15.2Y</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Silindir Hacmi</dt>
-                        <dd>48,5 m3/h</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Enerji</dt>
-                        <dd>380 V / 50 Hz</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Ağırlık</dt>
-                        <dd>1300 kg</dd>
-                    </dl>
+                    {% endfor %}
                 </div>
                 <!-- Product Specification - Standart -->
                 <div class="detail-info_data">
-                    <h3 class="detail-title">ÇALIŞMA ŞARTLARI</h3>
+                    <h3 class="detail-title">{{ lang.t ('main', 'ÇALIŞMA ŞARTLARI') }}</h3>
+                    {% for main_attr in model.product0.productattrib %}
                     <dl class="detail-info_data_item">
-                        <dt>Buz Çıkış Sıcaklığı</dt>
-                        <dd>-2 °C</dd>
+                        <dt>{{ main_attr.attrib.title }}</dt>
+                        <dd>{{ main_attr.value }}</dd>
                     </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Dış Hava Sıcaklığı</dt>
-                        <dd>+33 °C</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Soğutucu Gaz</dt>
-                        <dd>R404</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Kompresör Tipi</dt>
-                        <dd>Hermetic &amp; Semi Hermetic</dd>
-                    </dl>
-                    <dl class="detail-info_data_item">
-                        <dt>Standart Çalışma Rejimi</dt>
-                        <dd>Water in: +25 °C, Ambient: +33 °C</dd>
-                    </dl>
+                    {% endfor %}
                 </div>
             </div>
         </div>

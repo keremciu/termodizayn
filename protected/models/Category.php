@@ -75,8 +75,8 @@ class Category extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'news' => array(self::HAS_MANY, 'News', 'category'),
-			'translatecat' => array(self::HAS_MANY, 'Translates', 'reference_id','index'=>'reference_field'),
-			'product' => array(self::HAS_MANY, 'Product', 'category'),
+			'translatecat' => array(self::HAS_MANY, 'Translates', 'reference_id', 'index'=>'reference_field'),
+			'product' => array(self::HAS_MANY, 'Product', 'category', 'order'=>'t.ordering ASC, product.ordering ASC'),
 		);
 	}
 
@@ -119,6 +119,16 @@ class Category extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>array(
+				'defaultOrder'=>'t.ordering DESC',
+		        'attributes'=>array(
+		            'parentname'=>array(
+		                'asc'=>'t.title',
+		                'desc'=>'t.title DESC',
+		            ),
+		            '*',
+		        ),
+  			),
 		));
 	}
 }

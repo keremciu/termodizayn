@@ -84,6 +84,8 @@ class ChildParserController extends Controller
 					// model breadcrumb step
 					$this->fourthstep = $this->model->name;
 				} else {
+					// get product list sidebar
+					$this->getSidebar("productlist");
 					// if it hasn't a model, do not set a url
 					array_push($this->breadcrumbs, $this->thirdstep);
 				}
@@ -110,6 +112,9 @@ class ChildParserController extends Controller
 	{
 		// if the menu type is "content" run this page
 		// blog page has a content view.
+		
+		// get product list sidebar
+		$this->getSidebar("contentlist");
 
 		$this->render('news',array(
 			'menu'=>$this->menu,

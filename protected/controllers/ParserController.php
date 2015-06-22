@@ -54,6 +54,9 @@ class ParserController extends Controller
 	// Blog page: menu type
 	public function _parserBlog()
 	{
+		// get product list sidebar
+		$this->getSidebar("contentlist");
+		
 		// if the menu type is "blog" run this page
 		$base_category = Category::model()->language(Yii::app()->getLanguage())->findByAttributes(array('id'=>$this->menu->types_id));	
 		$newslist = News::model()->findAll(array('condition' => 't.category = :parent','params'=>array(':parent'=>$base_category->id)));
@@ -93,6 +96,9 @@ class ParserController extends Controller
 	// Content page: menu type
 	public function _parserContent()
 	{
+		// get product list sidebar
+		$this->getSidebar("contentlist");
+
 		// if the menu type is "content" run this page
 		$content=News::model()->language(Yii::app()->getLanguage())->findByAttributes(array('id'=>$this->menu->types_id),'t.is_published=1');	
 

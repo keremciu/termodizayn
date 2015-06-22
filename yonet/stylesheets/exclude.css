@@ -1,0 +1,227 @@
+.site-nav_item {
+    line-height: 24px;
+}
+
+.icon-large {
+    font-size: 24px;
+}
+
+.label-padding {
+  padding-top: 26px;
+}
+
+label.menu-tabs_item {
+  margin-bottom: 0px;
+  cursor: pointer;
+}
+
+textarea.form-control.auto-height {
+  height: auto;
+}
+
+table.dataTable > thead > tr > th {
+  display: table-cell !important;
+}
+
+.grid-view table.items th:hover a.sort-link:after {
+  display: none;
+}
+
+.files-template-preview {
+  overflow: hidden;
+}
+
+.summary {
+  height: 38px;
+  line-height:38px;
+}
+
+.files-template-progress {
+  margin-left: 3px;
+  margin-top: 3px;
+}
+
+small {
+  font-size: 90%;
+}
+
+.margin-reset {
+  margin: 0px;
+}
+
+.sortable-button:focus,
+.sortable-button:hover {
+    cursor: move;
+    cursor: row-resize;
+    cursor: hand;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.sortable-button:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.dataTable table {
+    margin-bottom: 0px;
+}
+
+table.dataTable td {
+    vertical-align: middle;
+}
+
+.dataTable td .sortable-button {
+    float: none;
+    margin-top: 0px;
+}
+
+.dataTable table.items th {
+    padding: 10px 18px;
+}
+
+.dataTable.items th a {
+    display: block;
+    position: relative;
+}
+
+.dataTable.items th a .caret {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: 7px;
+}
+
+.dataTable.items th a.asc .caret {
+    display: block;
+}
+
+.dataTable.items .sort-link.desc,
+.dataTable.items .sort-link.asc {
+  
+}
+
+.dataTable.items th a.desc .caret {
+    border-bottom: 4px solid currentColor;
+    border-top: none;
+    display: block;
+}
+
+.dropdown-menu .divider {
+    height: 2px;
+}
+
+.dataTable table.items.table td.tabledesc,
+.tabledesc {
+    max-width: 200px;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.filter-container {
+    margin-top: 5px;
+}
+
+.filter-container input {
+    margin-bottom: 5px;
+    max-width: 150px;
+}
+
+input[type="text"] {
+    height: 38px;
+}
+
+.no-bg {
+    background: none;
+    background: none !important;
+}
+
+.form-section .toggle-button {
+    display: block;
+}
+
+.hiddenfromnav {
+    display: none;
+}
+
+.hiddenfromnav.isActive {
+    display: block;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input,
+.select2 {
+    height: 38px;
+}
+
+.homepage .site-logo {
+    float: none;
+    margin: 0 auto;
+    width: 220px;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.errorMessage {
+    color: #a94442;
+}
+
+.dataTable table.items.table td.button-column {
+  padding:0px;
+}
+.button-column .td-icon{
+  width:16px;
+  height:16px;
+  margin-right:5px;
+}
+
+table.dataTable > thead > tr > th{
+  padding: 10px 18px;
+}
+
+.sortable-button {
+  margin-top: 0px;
+}
+
+.menu-tabs_item .td-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.alert p {
+  font-weight:bold;
+}

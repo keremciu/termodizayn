@@ -4,6 +4,10 @@ Later additions to main.css
 
 */
 
+.detail-info {
+    min-height: 640px;
+}
+
 .user-box-frame {
     width: auto;
 }

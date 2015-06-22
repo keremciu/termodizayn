@@ -9,12 +9,12 @@
 							<h1 class="site-slogan_title">
 							{{ photo.name }}
 							</h1>
-							<p class="site-slogan_text">
+							<div class="site-slogan_text">
 							{{ photo.desc}}
-							</p>
-							<a href="#" title="Hakkımızda" class="site-slogan_button hidden-xs">
-								Hakkımızda <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
-							</a>
+							</div>
+							<a href="{{ photo.url }}" title="Hakkımızda" class="site-slogan_button hidden-xs">
+                                Hakkımızda <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chevron-right"></use></svg> 
+                            </a>
 						</div>
 					</div>
 				</div>

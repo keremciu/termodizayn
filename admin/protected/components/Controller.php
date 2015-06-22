@@ -40,9 +40,6 @@ class Controller extends CController
 			if (($data->childs[$i]["chlink"] == $_SERVER['REQUEST_URI']) OR (strpos($_SERVER['REQUEST_URI'],$data->childs[$i]["chlink"]) !== false))
 				return true;
 		}
-
-		
-
 	}
 
 	public function arrayto($d) {

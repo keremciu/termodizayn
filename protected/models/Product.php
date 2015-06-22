@@ -43,6 +43,7 @@ class Product extends CActiveRecord
 			'translates' => array(self::HAS_MANY, 'Translates', 'reference_id','index'=>'reference_field'),
 			'category0' => array(self::BELONGS_TO, 'Category', 'category'),
 			'productModels' => array(self::HAS_MANY, 'ProductModel', 'product'),
+			'productattrib' => array(self::HAS_MANY, 'ProductAttribMap', 'product_id'),
 		);
 	}
 
@@ -91,12 +92,11 @@ class Product extends CActiveRecord
 		$criteria->compare('t.is_published',$this->is_published);
 		$criteria->compare('t.is_deleted',$this->is_deleted);
 		$criteria->compare('category0.title', $this->category_search,true);
-		$criteria->order = 't.ordering DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'sort'=>array(
-				'defaultOrder'=>'t.ordering DESC',
+				'defaultOrder'=>'t.ordering ASC',
 		        'attributes'=>array(
 		            'category_search'=>array(
 		                'asc'=>'category0.title',

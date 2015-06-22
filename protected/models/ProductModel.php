@@ -75,6 +75,8 @@ class ProductModel extends CActiveRecord
 		return array(
 			'translatemodel' => array(self::HAS_MANY, 'Translates', 'reference_id','index'=>'reference_field'),
 			'product0' => array(self::BELONGS_TO, 'Product', 'product'),
+			'modelattrib' => array(self::HAS_MANY, 'ModelAttribMap', 'model_id'),
+			'modelextras' => array(self::HAS_MANY, 'Mimages', 'mid'),
 		);
 	}
 

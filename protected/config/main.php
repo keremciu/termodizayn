@@ -54,7 +54,6 @@ return array(
 		'cache'=>array( 
 	    	'class'=>'system.caching.CFileCache',
 		),
-		
 		'request'=>array(
 	        'enableCookieValidation'=>true,
 	        'enableCsrfValidation'=>true,

@@ -30,7 +30,20 @@
 <!-- Site Content -->
 <section class="site-content">
 	<div class="container">
-		{{ content }}
+		{% if this.sidebar %}
+			<div class="row">
+				<div class="col-md-3 hidden-xs">
+					<aside class="sidebar">
+						{{ this.sidebar }}
+					</aside>
+				</div>
+				<div class="col-md-9">
+					{{ content }}
+				</div>
+			</div>
+		{% else %}
+			{{ content }}
+		{% endif %}
 	</div>
 </section>
 {% endblock %}
