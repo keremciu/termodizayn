@@ -61,6 +61,7 @@
 						'url',
 					array(
 						'class'=>'booster.widgets.TbButtonColumn',
+						'template'=>'{update}{delete}',
 						'updateButtonUrl' => 'Yii::app()->controller->createUrl("update",array("type"=>$data->gallery0->slug,"id"=>$data->primaryKey))',
 					),
 				))

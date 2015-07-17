@@ -161,7 +161,7 @@ class CategoryController extends Controller
 
 		$this->render('admin',array(
 			'model'=>$model,
-			'$type'=>$type
+			'type'=>$type
 		));
 	}
 

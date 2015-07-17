@@ -46,11 +46,18 @@ class ProductmodelController extends Controller
 						else
 							$listinput = 0;
 
+						$onthetable = 'show-on-table-'.$split_key[1];
+						if (isset($_POST[$onthetable]))
+							$list_table = $_POST[$onthetable];
+						else
+							$list_table = 0;
+
 						$map = New ModelAttribMap;
 						$map->model_id = $model->id;
 						$map->attrib_id = $attr;
 						$map->value = $input;
 						$map->ordering = $orderinput;
+						$map->on_table = $list_table;
 						$map->on_list = $listinput;
 						if (!$map->save()) {
 							print_r($map->getErrors());
@@ -147,6 +154,7 @@ class ProductmodelController extends Controller
 				       	$input = $_POST[$getinput];
 				       	$ordering = 'specification-ordering-'.$split_key[1];
 				       	$orderinput = $_POST[$ordering];
+				       	$onthetable = 'show-on-table-'.$split_key[1];
 						$onthelist = 'show-on-list-'.$split_key[1];
 						
 						if (isset($_POST[$onthelist])) {
@@ -155,15 +163,23 @@ class ProductmodelController extends Controller
 							$listinput = 0;
 						}
 
+						if (isset($_POST[$onthetable])) {
+							$list_table = $_POST[$onthetable];
+						} else {
+							$list_table = 0;
+						}
+
 						$map = New ModelAttribMap;
 						$map->model_id = $model->id;
 						$map->attrib_id = $attr;
 						$map->value = $input;
+						$map->on_table = $list_table;
 						$map->on_list = $listinput;
 						$map->ordering = $orderinput;
 						
 						if (!$map->save()) {
-
+							print_r($map->getErrors());
+							exit();
 						}
 					}
 				}
@@ -178,7 +194,13 @@ class ProductmodelController extends Controller
 						$input = $_POST[$getinput];
 						$ordering = 'update-specification-ordering-'.$key;
 				       	$orderinput = $_POST[$ordering];
+				       	$onthetable = 'update-show-on-table-'.$key;
 						$onthelist = 'update-show-on-list-'.$key;
+
+						if (isset($_POST[$onthetable]))
+							$list_table = $_POST[$onthetable];
+						else
+							$list_table = 0;
 
 						if (isset($_POST[$onthelist]))
 							$listinput = $_POST[$onthelist];
@@ -189,9 +211,22 @@ class ProductmodelController extends Controller
 						$updateattrib->attrib_id = $attr;
 						$updateattrib->value = $input;
 						$updateattrib->ordering = $orderinput;
+						$updateattrib->on_table = $list_table;
 						$updateattrib->on_list = $listinput;
 						$updateattrib->save();
 
+					}
+				}
+
+				// Update extra image descs
+				if (isset($_POST['Eximagedescs'])) {
+					$eximagedesc = $_POST['Eximagedescs'];
+
+					foreach ($eximagedesc as $key => $eximage) {
+						$id = str_replace("eximagedesc","",$key);
+						$expil = Pimages::model()->findByPk($id);
+						$expil->name = $eximage;
+						$expil->save();
 					}
 				}
 
@@ -199,8 +234,13 @@ class ProductmodelController extends Controller
 				if (isset($_POST['images'])) {
 					$images = $_POST['images'];
 						foreach ($images as $key => $pic) {
+							$imagedesc = "imagedesc";
 							$img_add = new Mimages;
-	                        $img_add->name = '';
+	                        if (isset($_POST[$imagedesc][$key])) {
+	                        	$img_add->name = $_POST[$imagedesc][$key];
+	                        } else {
+	                        	$img_add->name = "";
+	                        }
 	                        $img_add->path = $pic;
 	                        $img_add->type = "image";
 	                        $img_add->size = "0";
@@ -211,12 +251,29 @@ class ProductmodelController extends Controller
 						}
 				}
 
+				// Update extra document descs
+				if (isset($_POST['Exfiledescs'])) {
+					$exfiledescs = $_POST['Exfiledescs'];
+
+					foreach ($exfiledescs as $key => $exfile) {
+						$id = str_replace("exfiledesc","",$key);
+						$exdoc = Pimages::model()->findByPk($id);
+						$exdoc->name = $exfile;
+						$exdoc->save();
+					}
+				}
+
 				// Get uploaded doo images
 				if (isset($_POST['files'])) {
 					$files = $_POST['files'];
 						foreach ($files as $key => $file) {
+							$filedesc = "filedesc";
 							$doc_add = new Mimages;
-	                        $doc_add->name = '';
+							if (isset($_POST[$filedesc][$key])) {
+	                        	$doc_add->name = $_POST[$filedesc][$key];
+	                        } else {
+	                        	$doc_add->name = "";
+	                        }
 	                        $doc_add->path = $file;
 	                        $doc_add->type = "file";
 	                        $doc_add->size = "0";

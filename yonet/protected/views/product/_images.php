@@ -12,9 +12,9 @@
 				if (strlen($model->image) > 0) {
 					$product_path = Yii::app()->settings->get("photo","product_path");
 					echo '<div class="files-container has-image" data-id="'.$model->id.'" data-input="Product_image" data-delete-url="'.Yii::app()->createUrl("product/imagedelete").'" data-img="'.Yii::app()->baseUrl.'/../'.$product_path.$model->image.'">';
-					} else {
-						echo '<div class="files-container">';
-						}
+							} else {
+								echo '<div class="files-container">';
+										}
 					?>
 					<!-- File Upload - List -->
 					<div class="files-list">
@@ -58,9 +58,16 @@
 						// get model image
 						foreach ($images as $key => $img) {
 							$product_path = Yii::app()->settings->get("photo","product_path");
-							echo '<div class="old-images" data-id="'.$img->id.'" data-delete-url="'.Yii::app()->createUrl("product/extraitemdelete").'"
-							data-img="'.Yii::app()->baseUrl.'/../'.$product_path.'extras/'.$img->path.'"></div>';
-						}
+							echo '<div class="old-images old-data" data-id="'.$img->id.'" data-delete-url="'.Yii::app()->createUrl("product/extraitemdelete").'"
+									data-img="'.Yii::app()->baseUrl.'/../'.$product_path.'extras/'.$img->path.'">';
+						?>
+						<div class="files-template-input">
+							<label for="eximagedesc<?php echo $img->id;?>">#<?php echo $key;?> Açıklaması</label>
+							<input maxlength="255" name="Eximagedescs[eximagedesc<?php echo $img->id; ?>]" value="<?php echo $img->name; ?>" id="eximagedesc<?php echo $img->id;?>" />
+						</div>
+						<?php
+					echo '</div>';
+					}
 					?>
 					<!-- File Upload - List -->
 					<div class="files-list sortable-gallery">
@@ -103,8 +110,15 @@
 							foreach ($files as $key => $file) {
 								$product_path = Yii::app()->settings->get("photo","product_path");
 								echo '<div class="old-files" data-id="'.$file->id.'" data-delete-url="'.Yii::app()->createUrl("product/extraitemdelete").'"
-								data-file="'.$file->path.'"></div>';
-							}
+									data-file="'.$file->path.'">';
+						?>
+						<div class="files-template-input">
+							<label for="exfiledesc<?php echo $file->id;?>">#<?php echo $file->ordering;?> açıklaması</label>
+							<input maxlength="255" name="Exfiledescs[exfiledesc<?php echo $file->id; ?>]" value="<?php echo $file->name; ?>" id="exfiledesc<?php echo $file->id;?>" type="text">
+						</div>
+						<?php
+							echo '</div>';
+						}
 					?>
 					<!-- File Upload - List -->
 					<div class="files-list sortable-gallery">
@@ -118,7 +132,6 @@
 							<div class="files-template-preview">
 								<div class="files-template-preview_doc">
 									<div class="files-template-preview_doc-name"><%-name%></div>
-									<div class="files-template-preview_doc-size"><%-sizeText%></div>
 								</div>
 							</div>
 						</div>
@@ -180,41 +193,41 @@
 						</div>
 					</div>
 				</div>
-			<?php
-					}
-			?>
-			<!-- Template - Videos -->
-			<script id="template-videos" type="text/x-handlebars-template">
-			<div class="form-group bordered new-video">
-						<div class="row">
-									<div class="col-md-6">
-												<input type="text" name="videos[]" class="form-control">
+				<?php
+						}
+				?>
+				<!-- Template - Videos -->
+				<script id="template-videos" type="text/x-handlebars-template">
+				<div class="form-group bordered new-video">
+									<div class="row">
+														<div class="col-md-6">
+																			<input type="text" name="videos[]" class="form-control">
+														</div>
+														<div class="col-md-6">
+																			<div class="row">
+																								<div class="col-md-9">
+																													<input type="text" name="exvideodesc{{key}}" class="form-control">
+																								</div>
+																								<div class="col-md-1">
+																													<div class="sortable-button sortable-button_drag">
+																																		<svg class="td-icon td-icon-swap-vert"><use xlink:href="#icon-swap-vert"></use></svg>
+																													</div>
+																								</div>
+																								<div class="col-md-1">
+																													<div class="sortable-button sortable-button_remove">
+																																		<svg class="td-icon td-icon-cancel"><use xlink:href="#icon-cancel"></use></svg>
+																													</div>
+																								</div>
+																			</div>
+														</div>
 									</div>
-									<div class="col-md-6">
-												<div class="row">
-															<div class="col-md-9">
-																		<input type="text" name="exvideodesc{{key}}" class="form-control">
-															</div>
-															<div class="col-md-1">
-																		<div class="sortable-button sortable-button_drag">
-																					<svg class="td-icon td-icon-swap-vert"><use xlink:href="#icon-swap-vert"></use></svg>
-																		</div>
-															</div>
-															<div class="col-md-1">
-																		<div class="sortable-button sortable-button_remove">
-																					<svg class="td-icon td-icon-cancel"><use xlink:href="#icon-cancel"></use></svg>
-																		</div>
-															</div>
-												</div>
-									</div>
-						</div>
+				</div>
+				</script>
 			</div>
-			</script>
-		</div>
-		<div class="form-group bordered button">
-			<button type="button" class="btn btn-default" data-template="videos">
-			<svg class="td-icon td-icon-control-point-duplicate"><use xlink:href="#icon-control-point-duplicate"></use></svg>
-			</button>
+			<div class="form-group bordered button">
+				<button type="button" class="btn btn-default" data-template="videos">
+				<svg class="td-icon td-icon-control-point-duplicate"><use xlink:href="#icon-control-point-duplicate"></use></svg>
+				</button>
+			</div>
 		</div>
 	</div>
-</div>

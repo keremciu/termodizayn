@@ -4,15 +4,15 @@
 <div class="form-section">
     <h1 class="form-section_title">TEKNİK BİLGİLER</h1>
     <div class="form-section_content">
-        <div class="alert alert-warning">
-            Bu ürünün tüm modellerinde aynı olan teknik özellikleri ekleyiniz. Model eklerken bu özellikler otomatik tanımlanacaktır.
-        </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="">Özellik</label>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="">Değer</label>
+            </div>
+            <div class="col-md-2">
+                <label for="">Tabloda Göster</label>
             </div>
             <div class="col-md-2">
                 <label for="">Listede Göster</label>
@@ -34,7 +34,7 @@
                             ?>
             <div class="aspecification form-group bordered">
                 <div class="row old-specification">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select name="update-spec[<?php echo $attrib->id; ?>]" class="attrib-select form-control">
                             <?php
                             foreach ($attribs as $key => $attr) {
@@ -46,7 +46,7 @@
                             ?>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                     <?php
                             if (strlen($attrib->attrib->prefix) > 0) {
                                 echo '<div class="input-group"><input type="text" name="update-spec-value-'.$attrib->id.'" class="aspecification-value form-control" value="'.$attrib->value.'"><span class="input-group-addon">'.$attrib->attrib->prefix.'</span></div>';
@@ -54,6 +54,9 @@
                                 echo '<input type="text" name="update-spec-value-'.$attrib->id.'" class="aspecification-value form-control" value="'.$attrib->value.'">';
                             }
                     ?>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="checkbox" name="update-show-on-table-<?php echo $attrib->id; ?>" value="1" <?php echo ($attrib->on_table == 1) ? 'checked' : ''; ?>>
                     </div>
                     <div class="col-md-2">
                         <input type="checkbox" name="update-show-on-list-<?php echo $attrib->id; ?>" value="1" <?php echo ($attrib->on_list == 1) ? 'checked' : ''; ?>>
@@ -82,7 +85,7 @@
             <script id="template-specifications" type="text/x-handlebars-template">
             <div class="aspecification form-group bordered">
                 <div class="row new-specification">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select name="select-specifications[attr_{{key}}]" class="attrib-select form-control">
                             <?php
                             foreach ($attribs as $key => $attrib) {
@@ -91,7 +94,7 @@
                             ?>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                     <?php
                             foreach ($attribs as $key => $attrib) {
                                 if ($key == 0 AND strlen($attrib->prefix) > 0) {
@@ -101,6 +104,9 @@
                                 }
                             }
                     ?>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="checkbox" name="show-on-table-{{key}}" value="1">
                     </div>
                     <div class="col-md-2">
                         <input type="checkbox" name="show-on-list-{{key}}" value="1">

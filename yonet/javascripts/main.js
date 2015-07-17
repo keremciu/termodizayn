@@ -14,16 +14,44 @@ $('document').ready(function(){
         }
     });
 */  
+    var have_sorting = 0;
+    $(".dataTable").each(function () {
+
+        $(this).find("thead tr th a.sort-link").each(function() {
+            if ($(this).hasClass("desc") || $(this).hasClass("asc")) {
+                have_sorting = 1;
+                if ($(this).hasClass("asc")) {
+                    $(this).parent().addClass("sorting_asc");
+                } else {
+                    $(this).parent().addClass("sorting_desc");
+                }
+                sortingindex = $(this).parent().index() +1;
+                $(this).parents('table').find('tbody tr td:nth-child('+sortingindex+')').addClass("sorting_1");
+            }
+        });
+
+        $(this).find("thead tr th:not(:first)").addClass("sorting");
+        if (have_sorting == 0) {
+            $("#ordering_id").addClass('sorting_desc');
+            $(this).find("tbody tr td:first-child").addClass("sorting_1");
+        }
+
+    });
 
     $(document).on('click', '.sort-link', function(e){
         var target = $( e.target );
         target.parent().toggle();
     });
 
-    $(".form-actions").appendTo(".site-nav .isActive .site-sub-nav").wrap('<li class="action-buttons"></li>').bind( "click", function() {
-        form = $(this).find('button').attr('data-form');
-        $("#"+form).submit();
-    });
+    $(".form-actions").appendTo(".site-nav .isActive .site-sub-nav")
+        .wrap(function() {
+            $(".hide-action").show();
+            return '<li class="action-buttons"></li>';
+        })
+        .bind( "click", function() {
+            form = $(this).find('button').attr('data-form');
+            $("#"+form).submit();
+        });
 
     $('.menu-tabs_item').on('shown.bs.tab', function (e) {
         $(this).siblings('.menu-tabs_item').removeClass("isActive");
@@ -59,6 +87,9 @@ $('document').ready(function(){
             console.log(ui);
             var uploaded_img = ui.result.images.filedata.name;
             api = evt.widget.__fileId;
+
+            $(this).find("[data-id="+api+"]").append('<label for="imagedesc">Açıklaması</label>');
+            $(this).find("[data-id="+api+"]").append('<input name="imagedesc[]" type="text" />');
             $(this).find("[data-id="+api+"]").append('<input name="images[]" type="hidden" value="'+uploaded_img+'" />');
         }
     });
@@ -156,6 +187,8 @@ $('document').ready(function(){
             console.log(ui);
             var uploaded_doc = ui.result.images.filedata.name;
             api = evt.widget.__fileId;
+            $(this).find("[data-id="+api+"]").append('<label for="filedesc">Açıklaması</label>');
+            $(this).find("[data-id="+api+"]").append('<input name="filedesc[]" type="text" />');
             $(this).find("[data-id="+api+"]").append('<input name="files[]" type="hidden" value="'+uploaded_doc+'" />');
         }
     });
@@ -183,12 +216,15 @@ $('document').ready(function(){
         var id = $(this).attr('data-id');
         var delete_url = $(this).attr('data-delete-url');
         var container = $(".extra-images .files-list");
+        var datainfo = $(this).find('.files-template-input');
 
         FileAPI.Image(item).preview(140, 140).get(function (err, img){
             var element = '<div class="files-template files-template-thumb">';
             element += '<div class="files-template-delete delete-image" data-id="'+id+'" data-url="'+delete_url+'"><svg class="td-icon td-icon-cancel"><use xlink:href="#icon-cancel"></use></svg></div>';
             element += '<div class="files-template-progress progress"><div class="files-template_progress-bar progress-bar"></div></div>';
-            element += '<div class="files-template-preview"><div id="get-main-photo'+key+'" class="files-template-preview_img"></div></div></div>';
+            element += '<div class="files-template-preview"><div id="get-main-photo'+key+'" class="files-template-preview_img"></div></div>';
+            element += '<div class="files-template-input">'+ datainfo.html() +'</div></div>';
+            datainfo.remove();
 
             container.prepend(element);
             $("#get-main-photo"+key).append(img);
@@ -201,11 +237,14 @@ $('document').ready(function(){
         var id = $(this).attr('data-id');
         var delete_url = $(this).attr('data-delete-url');
         var container = $(".extra-files .files-list");
+        var datainfo = $(this).find('.files-template-input');
 
             var element = '<div class="files-template files-template-thumb">';
             element += '<div class="files-template-delete delete-image" data-id="'+id+'" data-url="'+delete_url+'"><svg class="td-icon td-icon-cancel"><use xlink:href="#icon-cancel"></use></svg></div>';
             element += '<div class="files-template-progress progress"><div class="files-template_progress-bar progress-bar"></div></div>';
-            element += '<div class="files-template-preview"><div id="get-main-file'+key+'" class="files-template-preview_doc"><div class="files-template-preview_doc-name">'+item+'</div><div class="files-template-preview_doc-size">99.02 KB</div></div></div></div>';
+            element += '<div class="files-template-preview"><div id="get-main-file'+key+'" class="files-template-preview_doc"><div class="files-template-preview_doc-name">'+item+'</div></div></div>';
+            element += '<div class="files-template-input">'+ datainfo.html() +'</div></div>';
+            datainfo.remove();
 
             container.prepend(element);
     });
@@ -359,7 +398,7 @@ $('document').ready(function(){
     //     });
     // */
 
-    // Sticky
+   // Sticky
     $("[data-sticky_column]").stick_in_parent({
         sticky_class: "isSticky",
         offset_top: 90,

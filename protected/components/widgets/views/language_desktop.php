@@ -9,7 +9,7 @@
         echo CHtml::form();
         foreach($languages as $key=>$lang) { 
             echo '<li>';
-                echo CHtml::link(strtoupper($key),$this->getOwner()->createMultilanguageReturnUrl($key), array('class'=>'language-menu_item language-menu_item--'.$key));
+                echo CHtml::link($lang,$this->getOwner()->createMultilanguageReturnUrl($key), array('class'=>'language-menu_item language-menu_item--'.$key));
             echo '</li>';
         }
         echo CHtml::endForm(); 

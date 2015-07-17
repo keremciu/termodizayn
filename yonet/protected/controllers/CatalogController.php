@@ -1,13 +1,10 @@
 <?php
-
 class CatalogController extends Controller
 {
 /**
 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 * using two-column layout. See 'protected/views/layouts/column2.php'.
 */
-public $layout='//layouts/column2';
-
 /**
 * @return array action filters
 */
@@ -17,7 +14,6 @@ return array(
 'accessControl', // perform access control for CRUD operations
 );
 }
-
 /**
 * Specifies the access control rules.
 * This method is used by the 'accessControl' filter.
@@ -43,7 +39,6 @@ array('deny',  // deny all users
 ),
 );
 }
-
 /**
 * Displays a particular model.
 * @param integer $id the ID of the model to be displayed
@@ -54,54 +49,90 @@ $this->render('view',array(
 'model'=>$this->loadModel($id),
 ));
 }
-
-/**
-* Creates a new model.
-* If creation is successful, the browser will be redirected to the 'view' page.
-*/
 public function actionCreate()
 {
-$model=new Catalog;
-
-// Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
-
-if(isset($_POST['Catalog']))
-{
-$model->attributes=$_POST['Catalog'];
-if($model->save())
-$this->redirect(array('view','id'=>$model->id));
+	$model=new Catalog;
+	
+	if(isset($_POST['Catalog'])) {
+		$model->attributes=$_POST['Catalog'];
+		$path = Yii::app()->settings->get("photo","catalog_path");
+		$root = Yii::getPathOfAlias('webroot').'/../'.$path;
+		$image=CUploadedFile::getInstance($model,'image');
+		$ext = pathinfo($image, PATHINFO_EXTENSION);
+			
+		if(!empty($image)) {
+			$model->image = rand(0,99999999).'-'.rand(0,99999999).'-'.rand(0,99999999).'.'.$ext;
+			$image->saveAs($root.$model->image);
+		}
+		$model->path = CUploadedFile::getInstance($model,'path');
+			
+		if(!empty($model->path)) {
+			$model->path->saveAs($root.$model->path);
+		}
+				
+		if($model->save())
+			$this->redirect(array('index'));
+	}
+	$this->render('create',array(
+	'model'=>$model,
+	));
 }
 
-$this->render('create',array(
-'model'=>$model,
-));
-}
-
-/**
-* Updates a particular model.
-* If update is successful, the browser will be redirected to the 'view' page.
-* @param integer $id the ID of the model to be updated
-*/
 public function actionUpdate($id)
 {
-$model=$this->loadModel($id);
+	$model=$this->loadModel($id);
+	if(isset($_POST['Catalog'])) {
+		$oldimage = $model->image;
+		$oldfile = $model->path;
+		$model->attributes=$_POST['Catalog'];
+		$path = Yii::app()->settings->get("photo","catalog_path");
+		$root = Yii::getPathOfAlias('webroot').'/../'.$path;
+		$image=CUploadedFile::getInstance($model,'image');
+		$ext = pathinfo($image, PATHINFO_EXTENSION);
+			
+		if(!empty($image) && !($image === null) && $image ) {
+			$item = rand(0,99999999).'-'.rand(0,99999999).'-'.rand(0,99999999).'.'.$ext;
+			if ($image->saveAs($root.$item)) {
+				$model->image = $item;
+				if (file_exists($root.$oldimage)) {
+					unlink($root.$oldimage);
+				}
+			}
+		} else {
+			$model->image = $oldimage;
+		}
+		
+		$file = CUploadedFile::getInstance($model,'path');
+		if(!empty($file) && ($file != null) && $file) {
+			if ($file->saveAs($root.$file)) {
+				$model->path = $file;
+				if (file_exists($root.$oldfile)) {
+					unlink($root.$oldfile);
+				}
+			}
+		} else {
+			$model->path = $oldfile;
+		}
 
-// Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
+		// translate code here
+			$currentLang = Yii::app()->language;
+			$languages = Yii::app()->params->languages;
+			
+			foreach($languages as $key=>$lang) {
+				if($key != $currentLang) {
+					if(isset($_POST['publish_'.$key])) {
+						$this->translateIt($_POST['translate'],$model,$id);
+					}
+				}
+			}
 
-if(isset($_POST['Catalog']))
-{
-$model->attributes=$_POST['Catalog'];
-if($model->save())
-$this->redirect(array('view','id'=>$model->id));
+		if($model->save())
+			$this->redirect(array('index'));
+	}
+		$this->render('update',array(
+			'model'=>$model,
+		));
 }
-
-$this->render('update',array(
-'model'=>$model,
-));
-}
-
 /**
 * Deletes a particular model.
 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -113,7 +144,6 @@ if(Yii::app()->request->isPostRequest)
 {
 // we only allow deletion via POST request
 $this->loadModel($id)->delete();
-
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 if(!isset($_GET['ajax']))
 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -121,33 +151,19 @@ $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'
 else
 throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 }
-
-/**
-* Lists all models.
-*/
-public function actionIndex()
-{
-$dataProvider=new CActiveDataProvider('Catalog');
-$this->render('index',array(
-'dataProvider'=>$dataProvider,
-));
-}
-
 /**
 * Manages all models.
 */
-public function actionAdmin()
+public function actionIndex()
 {
 $model=new Catalog('search');
 $model->unsetAttributes();  // clear any default values
 if(isset($_GET['Catalog']))
 $model->attributes=$_GET['Catalog'];
-
 $this->render('admin',array(
 'model'=>$model,
 ));
 }
-
 /**
 * Returns the data model based on the primary key given in the GET variable.
 * If the data model is not found, an HTTP exception will be raised.
@@ -160,7 +176,6 @@ if($model===null)
 throw new CHttpException(404,'The requested page does not exist.');
 return $model;
 }
-
 /**
 * Performs the AJAX validation.
 * @param CModel the model to be validated

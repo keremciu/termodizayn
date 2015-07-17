@@ -11,9 +11,7 @@
 	</div>
 </div>
 <div class="col-md-6">
-	<div style="width:100%;overflow:hidden">
-		<?php echo $form->redactorGroup($model, 'desc', array('class'=>'form-control', 'rows'=>5)); ?><br/><br/>
-	</div>
+	<?php echo $form->textAreaGroup($model,'desc', array('widgetOptions' => array('htmlOptions' => array('rows' => 5,'class'=>'mini')))); ?>
 </div>
 </div>
 <div class="row">

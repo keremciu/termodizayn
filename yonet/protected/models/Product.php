@@ -4,6 +4,7 @@ class Product extends CActiveRecord
 {
 	public $category_search;
 	public $ordering_search;
+	public $updatedOrder;
 
 	public static function model($className=__CLASS__)
 	{
@@ -71,6 +72,16 @@ class Product extends CActiveRecord
 		return $this->ordering. ' ' .$this->title;
 	}
 
+	public function getUpdatedorder()
+	{
+		return $this->ordering + 1;
+	}
+
+	public function getOrderName()
+	{
+		return $this->ordering + 1 . ' -> bundan sonraya - ' .$this->title;
+	}
+
 	public function attributeLabels()
 	{
 		return array(
@@ -85,7 +96,7 @@ class Product extends CActiveRecord
 			'create_data' => 'Oluşturulma tarihi',
 			'ordering' => 'Sıralama',
 			'hits' => 'Görüntülenme',
-			'featured' => 'Manşet',
+			'featured' => 'Filtreyi Göster',
 			'is_published' => 'Yayınlandı',
 			'is_deleted' => 'Silindi',
 			'category_search' => 'Kategori',

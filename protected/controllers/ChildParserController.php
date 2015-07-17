@@ -49,7 +49,7 @@ class ChildParserController extends Controller
 
         if (isset($category)) {
         	// Get category details
-        	$this->getcategory = Category::model()->language(Yii::app()->getLanguage())->find(array('condition'=>'slug=:slug','params'=>array(':slug'=>$category)));
+        	$this->getcategory = Category::model()->language(Yii::app()->getLanguage())->find(array('condition'=>'t.slug=:slug OR translatecat.value=:slug OR translatecat.original_value=:slug','params'=>array(':slug'=>$category)));
         	$this->secondstep = $this->getcategory->title;
         }
 
@@ -61,7 +61,7 @@ class ChildParserController extends Controller
         if (isset($slug)) {
         	if ($this->menu->type=="blog") {
         		// get content
-        		$this->content = News::model()->language(Yii::app()->getLanguage())->find(array('condition'=>'slug=:slug OR translates.value','params'=>array(':slug'=>$slug)));
+        		$this->content = News::model()->language(Yii::app()->getLanguage())->find(array('condition'=>'slug=:slug OR translates.value=:slug','params'=>array(':slug'=>$slug)));
 
         		// content breadcrumb step
         		$this->thirdstep = $this->content->title;
@@ -69,7 +69,7 @@ class ChildParserController extends Controller
 
         	} else if ($this->menu->type=="categories") {
 				// get product
-				$this->product = Product::model()->with('productModels')->language(Yii::app()->getLanguage())->find(array('condition'=>'t.slug=:slug','params'=>array(':slug'=>$slug)));
+				$this->product = Product::model()->with('productModels')->language(Yii::app()->getLanguage())->find(array('condition'=>'t.slug=:slug OR translates.value=:slug OR translates.original_value=:slug','params'=>array(':slug'=>$slug)));
 
 				// product breadcrumb step
 				$this->thirdstep = $this->product->title;
@@ -114,7 +114,7 @@ class ChildParserController extends Controller
 		// blog page has a content view.
 		
 		// get product list sidebar
-		$this->getSidebar("contentlist");
+		// $this->getSidebar("contentlist");
 
 		$this->render('news',array(
 			'menu'=>$this->menu,
@@ -125,12 +125,20 @@ class ChildParserController extends Controller
 	// Categories page: menu type
 	public function _parserCategories()
 	{
+		// if user a guest
+		$register_menu = "";
+
+		if (Yii::app()->user->isGuest) {
+			$register_menu = Menu::model()->findByAttributes(array('type'=>'register'));
+		}
+
 		// if the menu type is "categories" run this page
 		// categories page has a product view.
 		$this->render('product',array(
 			'menu'=>$this->menu,
 			'category'=>$this->getcategory,
 			'product'=>$this->product,
+			'register_menu'=>$register_menu
 		));
 	}
 
@@ -139,11 +147,15 @@ class ChildParserController extends Controller
 		// if the menu type is "categories" and it has a model slug, run this page
 		// this page has a model view.
 
+		// Get siblings
+		$siblings = ProductModel::model()->findAll(array('condition' => 't.product = :parent','params'=>array(':parent'=>$this->product->id)));
+
 		$this->render('model',array(
 			'menu'=>$this->menu,
 			'category'=>$this->getcategory,
+			'siblings'=>$siblings,
 			'product'=>$this->product,
-			'model'=>$this->model
+			'model'=>$this->model,
 		));
 	}
 

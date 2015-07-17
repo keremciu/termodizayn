@@ -25,12 +25,25 @@ class Catalog extends CActiveRecord
 		return parent::model($className);
 	}
 
+	public function behaviors()
+	{
+	    return array(
+	        'Translatable' => array(
+	            'class'                 => 'ext.Translatable',
+	            'translationAttributes' => array('name','intro'),
+	            'translationRelation'   => 'translates',
+	            'translationTable'   	=> $this->tableName(),
+	            'languageColumn'        => 'lang_id',
+	        ),
+	    );
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'Catalog';
+		return 'catalog';
 	}
 
 	/**
@@ -41,13 +54,18 @@ class Catalog extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, intro, image, path, size, ordering, active', 'required'),
+			array('name, ordering, active', 'required'),
 			array('size, ordering, active', 'numerical', 'integerOnly'=>true),
 			array('name, image, path', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, intro, image, path, size, ordering, active', 'safe', 'on'=>'search'),
+			array('id, name, intro, image, path, size, ordering, active', 'safe'),
 		);
+	}
+
+	public function getOrderName()
+	{
+		return $this->ordering + 1 . ' -> bundan sonraya - ' .$this->name;
 	}
 
 	/**
@@ -58,6 +76,7 @@ class Catalog extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'translates' => array(self::HAS_MANY, 'Translates', 'reference_id','index'=>'reference_field'),
 		);
 	}
 
@@ -68,13 +87,13 @@ class Catalog extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'intro' => 'Intro',
-			'image' => 'Image',
-			'path' => 'Path',
-			'size' => 'Size',
-			'ordering' => 'Ordering',
-			'active' => 'Active',
+			'name' => 'Adı',
+			'intro' => 'Açıklama',
+			'image' => 'Fotoğraf',
+			'path' => 'PDF',
+			'size' => 'Boyut',
+			'ordering' => 'Sıralama',
+			'active' => 'Aktif',
 		);
 	}
 

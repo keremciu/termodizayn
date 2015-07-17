@@ -1,5 +1,5 @@
 $('document').ready(function(){
-
+    
     $(".currency-usd").currency({
         region: "USD",
         convertFrom: "TRY",
@@ -9,6 +9,7 @@ $('document').ready(function(){
         convertLoading: " ",
         convertLocation: "./convert.php"
     });
+
     $(".currency-eur").currency({
         region: "EUR",
         convertFrom: "TRY",
@@ -29,7 +30,7 @@ $('document').ready(function(){
         //     form.submit();
         // }
     });
-
+    /*
     $(".register-form").validate({
         ignore: [],
         rules: {
@@ -39,6 +40,35 @@ $('document').ready(function(){
                 },
             }
         }
+    });
+    */
+
+    // Filter Detail Button
+    $('.filter-detail-button').on('click', function(){
+        $('.filter-content--detail').slideToggle(200, function(){
+
+            $('.filter').toggleClass('filter-detail-active');
+
+            if ($('.filter').hasClass('filter-detail-active')){
+                $('.filter-detail-button-show').hide().next().show();
+            } else {
+                $('.filter-detail-button-hide').hide().prev().show();
+            }
+
+        });
+    });
+
+    // Hide-Show Action (Register Page)
+    $('.register-form-visibility-button').on('click', function(){
+
+        $(this).toggleClass('isVisibile');
+
+        if ($(this).hasClass('isVisibile')){
+            $('.register-form_password').attr('type', 'text');
+        }else {
+            $('.register-form_password').attr('type', 'password');
+        }
+
     });
     
     // FastClick
@@ -152,7 +182,32 @@ $('document').ready(function(){
             embedCSS: false
         });
 
+    } else if (windowWidth > 991) {
+
+        // Sticky Column (Product Detail Page)
+        $("[data-sticky_column]").stick_in_parent({
+            sticky_class: "isSticky",
+            parent: "[data-sticky_parent]"
+        }).on("sticky_kit:stick", function(e) {
+            $(e.target).css({
+                marginLeft: -$("[data-sticky_parent]").width() - 30,
+                left: "initial"
+            });
+        }).on("sticky_kit:unstick", function(e) {
+            $(e.target).css({
+                marginLeft: "",
+                left: ""
+            });
+        });
+        
     }
+    
+    // bxSlider - Filter
+    $('.filter-slider').bxSlider({
+        swipeThreshold: 100,
+        oneToOneTouch: false,
+        startSlide: 1
+    });
 
     // Masked Inputs
     $("#filter-textbox").mask("9999", {placeholder:""});

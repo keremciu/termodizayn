@@ -1,11 +1,8 @@
 <?php $model_path = Yii::app()->settings->get("photo","model_path"); ?>
 <!-- Section - #3 _ Main Photo -->
 <div class="form-section">
-	<h1 class="form-section_title">ÜRÜN FOTOĞRAFI</h1>
+	<h1 class="form-section_title">MODEL KAPAK FOTOĞRAFI</h1>
 	<div class="form-section_content">
-		<div class="alert alert-warning">
-			Ürün fotoğrafının boyutları; genişliği: 140px, yüksekliği 140px olacak şekilde ayarlayın ve yükleyin.
-		</div>
 		<div id="product-image-upload" action="<?php echo Yii::app()->createUrl("productmodel/fileupload"); ?>" method="POST" enctype="multipart/form-data" data-trigger-input="ProductModel_image" >
 			<!-- File Upload -->
 			<?php
@@ -48,7 +45,6 @@
 	<div class="form-section">
 		<h1 class="form-section_title">FOTOĞRAFLAR</h1>
 		<div class="form-section_content">
-			<div class="alert alert-warning">İlk sıraya eklenen fotoğraf kapak fotoğrafı olacaktır.</div>
 			<div id="product-gallery-upload" action="<?php echo Yii::app()->createUrl("productmodel/fileupload"); ?>" method="POST" enctype="multipart/form-data">
 				<!-- File Upload -->
 				<div class="files-container extra-images">
@@ -58,7 +54,14 @@
 						// get model image
 						foreach ($images as $key => $img) {
 							echo '<div class="old-images" data-id="'.$img->id.'" data-delete-url="'.Yii::app()->createUrl("productmodel/extraitemdelete").'"
-							data-img="'.Yii::app()->baseUrl.'/../'.$model_path.'extras/'.$img->path.'"></div>';
+							data-img="'.Yii::app()->baseUrl.'/../'.$model_path.'extras/'.$img->path.'">';
+							?>
+							<div class="files-template-input">
+								<label for="eximagedesc<?php echo $img->id;?>">#<?php echo $key;?> Açıklaması</label>
+								<input maxlength="255" name="Eximagedescs[eximagedesc<?php echo $img->id; ?>]" value="<?php echo $img->name; ?>" id="eximagedesc<?php echo $img->id;?>" />
+							</div>
+							<?php
+							echo '</div>';
 						}
 					?>
 					<!-- File Upload - List -->
@@ -101,7 +104,14 @@
 							// get model image
 							foreach ($files as $key => $file) {
 								echo '<div class="old-files" data-id="'.$file->id.'" data-delete-url="'.Yii::app()->createUrl("productmodel/extraitemdelete").'"
-								data-file="'.$file->path.'"></div>';
+								data-file="'.$file->path.'">';
+							?>
+							<div class="files-template-input">
+								<label for="exfiledesc<?php echo $file->id;?>">#<?php echo $file->ordering;?> açıklaması</label>
+								<input maxlength="255" name="Exfiledescs[exfiledesc<?php echo $file->id; ?>]" value="<?php echo $file->name; ?>" id="exfiledesc<?php echo $file->id;?>" type="text">
+							</div>
+							<?php
+							echo '</div>';
 							}
 					?>
 					<!-- File Upload - List -->

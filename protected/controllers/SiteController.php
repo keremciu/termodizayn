@@ -29,8 +29,9 @@ class SiteController extends Controller
 		$references=Photos::model()->language(Yii::app()->getLanguage())->findAll(array('condition'=>'gallery = :gallery','order'=>'t.ordering DESC','params'=>array(':gallery'=>$reference_gallery->id)));
 
 		// Get category items
-		$base_category = Category::model()->findByAttributes(array('slug'=>'urunler'));
-		$categories = Category::model()->with("product")->findAll(array('condition' => 't.parent = :parent AND t.type = "product"','params'=>array(':parent'=>$base_category->id)));
+		$product_menu = Menu::model()->findByAttributes(array('types_id'=>12));
+		$base_category = Category::model()->language(Yii::app()->getLanguage())->find(array('condition'=>'t.id=:id','params'=>array(':id'=>$product_menu->types_id)));
+		$categories = Category::model()->with("product")->findAll(array('condition' => 't.parent = :parent AND t.type = "product"','params'=>array(':parent'=>12)));
 
 		// Homepage check
 		$controller = Yii::app()->getController();
@@ -46,6 +47,7 @@ class SiteController extends Controller
 				'partners'=>$partners,
 				'reference_gallery'=>$reference_gallery,
 				'references'=>$references,
+				'product_menu'=>$product_menu,
 				'base_category'=>$base_category,
 				'categories'=>$categories
 			)

@@ -3,7 +3,7 @@
 $this->pageTitle=Yii::app()->name . ' - Giriş Yap';
 
 ?>
-<div class="login_form_content col-xs-4 col-xs-offset-4 main-content main-content--full">
+<div class="login_form_content col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1 main-content main-content--full">
     <div class="login_form">
         <h1 class="form-section_title">PANELE GİRİŞ YAP</h1>
         <div class="form-section_content">

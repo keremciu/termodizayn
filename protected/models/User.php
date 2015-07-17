@@ -47,7 +47,7 @@ class User extends CActiveRecord
 			'name' => Yii::t('main','Ad Soyad'),
 			'lastname' => 'Soyad',
 			'email' => Yii::t('main','E-Posta'),
-			'password' => Yii::t('main','Parola'),
+			'password' => Yii::t('main','Şifreniz'),
 			'role' => Yii::t('main','Rol'),
 			'country' => Yii::t('main','Ülke'),
 			'company' => Yii::t('main','Firma Adı'),

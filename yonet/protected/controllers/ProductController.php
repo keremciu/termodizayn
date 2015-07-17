@@ -6,36 +6,9 @@ class ProductController extends Controller
 	{
 		return array_merge(
 			array(),
-			// components/controller access rules
+			// components/controller
 			parent::accessRules()
 		);
-	}
-
-	public function actionExtraimagedelete($id) {
-		$model = Pimages::model()->findByPk($id);
-		$product_path = Yii::app()->settings->get("photo","product_path");
-		if (unlink(Yii::getPathOfAlias('webroot').'/../'.$product_path.'extras/'.$model->path)) {
-			$model->delete();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function actionExtrafiledelete($id) {
-		$model = Pimages::model()->findByPk($id);
-		$product_path = Yii::app()->settings->get("photo","product_path");
-		if (unlink(Yii::getPathOfAlias('webroot').'/../'.$product_path.'documents/'.$model->path)) {
-			$model->delete();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function actionExtravideodelete($id) {
-		$model = Pimages::model()->findByPk($id);
-		$model->delete();
 	}
 
 	public function actionView($id)
@@ -218,12 +191,29 @@ class ProductController extends Controller
 					}
 				}
 
+				// Update extra image descs
+				if (isset($_POST['Eximagedescs'])) {
+					$eximagedesc = $_POST['Eximagedescs'];
+
+					foreach ($eximagedesc as $key => $eximage) {
+						$id = str_replace("eximagedesc","",$key);
+						$expil = Pimages::model()->findByPk($id);
+						$expil->name = $eximage;
+						$expil->save();
+					}
+				}
+
 				// Get uploaded extra images
 				if (isset($_POST['images'])) {
 					$images = $_POST['images'];
 						foreach ($images as $key => $pic) {
+							$imagedesc = "imagedesc";
 							$img_add = new Pimages;
-	                        $img_add->name = '';
+	                        if (isset($_POST[$imagedesc][$key])) {
+	                        	$img_add->name = $_POST[$imagedesc][$key];
+	                        } else {
+	                        	$img_add->name = "";
+	                        }
 	                        $img_add->path = $pic;
 	                        $img_add->type = "image";
 	                        $img_add->size = "0";
@@ -234,12 +224,29 @@ class ProductController extends Controller
 						}
 				}
 
+				// Update extra document descs
+				if (isset($_POST['Exfiledescs'])) {
+					$exfiledescs = $_POST['Exfiledescs'];
+
+					foreach ($exfiledescs as $key => $exfile) {
+						$id = str_replace("exfiledesc","",$key);
+						$exdoc = Pimages::model()->findByPk($id);
+						$exdoc->name = $exfile;
+						$exdoc->save();
+					}
+				}
+
 				// Get uploaded doo images
 				if (isset($_POST['files'])) {
 					$files = $_POST['files'];
 						foreach ($files as $key => $file) {
+							$filedesc = "filedesc";
 							$doc_add = new Pimages;
-	                        $doc_add->name = '';
+							if (isset($_POST[$filedesc][$key])) {
+	                        	$doc_add->name = $_POST[$filedesc][$key];
+	                        } else {
+	                        	$doc_add->name = "";
+	                        }
 	                        $doc_add->path = $file;
 	                        $doc_add->type = "file";
 	                        $doc_add->size = "0";

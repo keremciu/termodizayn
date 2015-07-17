@@ -1,9 +1,51 @@
+.old-data {
+  display: none;
+  position: relative;
+}
+
+.files-template-preview_doc {
+  min-height: 160px;
+}
+
+.files-template-thumb, .files-buttons_browse label {
+  min-height: 160px;
+  height: auto;
+}
+
+.files-template-input input {
+  width: 148px;
+}
+
+.old_data_info {
+}
+
+.old_data_info label {
+  display: block;
+}
+
+.redactor_form-control {
+  line-height: 1.5;
+  min-height: 120px !important;
+}
+
 .site-nav_item {
     line-height: 24px;
 }
 
+.hide-action {
+  display: none;
+}
+
 .icon-large {
     font-size: 24px;
+}
+
+table thead tr th {
+  background-image: none;
+}
+
+.ui-helper-hidden-accessible {
+  display: none;
 }
 
 .label-padding {
@@ -103,10 +145,10 @@ table.dataTable td {
   
 }
 
-.dataTable.items th a.desc .caret {
+.dataTable.items th a .caret {
     border-bottom: 4px solid currentColor;
     border-top: none;
-    display: block;
+    display: none !important;
 }
 
 .dropdown-menu .divider {

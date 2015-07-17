@@ -97,10 +97,11 @@ class UserController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
-	public function actionAdmin()
+	public function actionAdmin($role)
 	{
 		$model=new User('search');
 		$model->unsetAttributes();
+		$model->role = $role;
 		if(isset($_GET['User']))
 			$model->attributes=$_GET['User'];
 

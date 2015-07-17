@@ -86,7 +86,7 @@
 					array(
 						'chlink'=>Yii::app()->createUrl('news/create',array('category'=>'haberler')),
 						'title'=>'+ Haber Ekle',
-						'visible'=>true
+						'visible'=>false
 					),
 					array(
 						'chlink'=>Yii::app()->createUrl('news/update',array('category'=>'haberler')),
@@ -101,7 +101,7 @@
 					array(
 						'chlink'=>Yii::app()->createUrl('news/create'),
 						'title'=>'+ İçerik Ekle',
-						'visible'=>true
+						'visible'=>false
 					),
 					array(
 						'chlink'=>Yii::app()->createUrl('news/update',array('category'=>'')),
@@ -116,7 +116,7 @@
 					array(
 						'chlink'=>Yii::app()->createUrl('category/create',array('type'=>'content')),
 						'title'=>'+ Ekle',
-						'visible'=>true
+						'visible'=>false
 					),
 					array(
 						'chlink'=>Yii::app()->createUrl('category/update',array('type'=>'content','id'=>'')),
@@ -162,7 +162,7 @@
 					array(
 						'chlink'=>Yii::app()->createUrl('product/create'),
 						'title'=>'+ Ekle',
-						'visible'=>true
+						'visible'=>false
 					),
 					array(
 						'chlink'=>Yii::app()->createUrl('product/update',array('id'=>'')),
@@ -177,7 +177,7 @@
 					array(
 						'chlink'=>Yii::app()->createUrl('productmodel/create'),
 						'title'=>'+ Ekle',
-						'visible'=>true
+						'visible'=>false
 					),
 					array(
 						'chlink'=>Yii::app()->createUrl('productmodel/update',array('id'=>'')),
@@ -192,7 +192,7 @@
 					array(
 						'chlink'=>Yii::app()->createUrl('category/create',array('type'=>'product')),
 						'title'=>'+ Ekle',
-						'visible'=>true
+						'visible'=>false
 					),
 					array(
 						'chlink'=>Yii::app()->createUrl('category/update',array('type'=>'product','id'=>'')),
@@ -207,7 +207,7 @@
 					array(
 						'chlink'=>Yii::app()->createUrl('productattrib/create'),
 						'title'=>'+ Ekle',
-						'visible'=>true
+						'visible'=>false
 					),
 					array(
 						'chlink'=>Yii::app()->createUrl('productattrib/update',array('id'=>'')),
@@ -253,7 +253,12 @@
 					array(
 						'chlink'=>Yii::app()->createUrl('menu/create'),
 						'title'=>'+ Yeni Sayfa Ekle',
-						'visible'=>true
+						'visible'=>false
+					),
+					array(
+						'chlink'=>Yii::app()->createUrl('menu/update',array('id'=>'')),
+						'title'=>'Sayfa Güncelle',
+						'visible'=>false
 					),
 					array(
 						'chlink'=>Yii::app()->createUrl('settings/index',array('lang'=>'')),

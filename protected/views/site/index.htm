@@ -49,7 +49,7 @@
 								<ul class="product-list">
 									{% for product in category.product %}
 									<li itemprop="itemListElement">
-										<a href="{{ base_category.slug }}/{{ category.slug }}/{{ product.slug }}" title="Yaprak buz makineleri (Tatlı su)" class="product-list_item" data-photo="{{ product.image }}" data-sourcepath="{{ App.settings.get('photo','product_path') }}" itemprop="url">
+										<a href="{{ product_menu.alias }}/{{ category.slug }}/{{ product.slug }}" title="Yaprak buz makineleri (Tatlı su)" class="product-list_item" data-photo="{{ product.image }}" data-sourcepath="{{ App.settings.get('photo','product_path') }}" itemprop="url">
 											{{ product.title }} <svg class="icon"><use xlink:href="#icon-chevron-right"></use></svg>
 										</a>
 									</li>
@@ -103,7 +103,9 @@
 							<ul class="references-slider">
 							{% for photo in partners %}
 								<li>
-									<img src="img/photos/{{ photo.photo }}" alt="{{ photo.name }}" class="references-icon">
+									<a href="{{ photo.url }}" title="{{ photo.name }}">
+										<img src="img/photos/{{ photo.photo }}" alt="{{ photo.name }}" class="references-icon">
+									</a>
 								</li>
 							{% endfor %}
 							</ul>
@@ -120,7 +122,9 @@
 							<ul class="references-slider">
 							{% for photo in references %}
 								<li>
-									<img src="img/photos/{{ photo.photo }}" alt="{{ photo.name }}" class="references-icon">
+									<a href="{{ photo.url }}" title="{{ photo.name }}">
+										<img src="img/photos/{{ photo.photo }}" alt="{{ photo.name }}" class="references-icon">
+									</a>
 								</li>
 							{% endfor %}
 							</ul>

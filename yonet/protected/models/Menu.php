@@ -97,6 +97,7 @@ class Menu extends CActiveRecord
 			'types_id' => 'Türe özel id',
 			'params' => 'Params',
 			'ordering' => 'Sıralama',
+			'ordering_search' => 'Sıra',
 			'level' => 'Menü Seviyesi',
 			'access' => 'Erişim Seviyesi',
 			'browsernav' => 'Tıklandığında aç',

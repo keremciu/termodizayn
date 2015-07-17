@@ -50,6 +50,7 @@ class Settings extends CFormModel
         'category_path' => '',
         'model_path' => '',
         'photo_path' => '',
+        'catalog_path' => '',
         'news_mini' => '',
         'product_mini' => '',
         'category_mini' => '',

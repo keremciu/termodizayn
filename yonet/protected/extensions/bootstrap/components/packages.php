@@ -14,14 +14,11 @@ return array(
 		'baseUrl' => $this->enableCdn ? '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/' : $this->getAssetsUrl().'/font-awesome/',
 		'css' => array(($this->minify || $this->enableCdn) ? 'css/font-awesome.min.css' : 'css/font-awesome.css'),
 	),
-	/*
 	'bootstrap.js' => array(
 		'baseUrl' => $this->enableCdn ? 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/' : $this->getAssetsUrl() . '/bootstrap/',
-		'js' => array($this->minify ? 'js/bootstrap.min.js' : 'js/bootstrap.js'),
-		'depends' => array('jquery'),
+		'js' => array(),
+		'depends' => array(),
 	),
-
-	*/
 	'bootstrap-yii' => array(
 		'baseUrl' => $this->getAssetsUrl(),
 		'css' => array('css/bootstrap-yii.css'),

@@ -157,9 +157,22 @@ class ParserController extends Controller
 	public function _parserRegister()
 	{
 		$model=new User;
+		$product_model = "";
+		
+		// if we had a model-id variable
+		if (isset($_GET['model-id'])) {
+			$model_id = $_GET['model-id'];
+			$product_model = ProductModel::model()->findByPk($model_id);
+		}
+		
+		// ajax request
+		if(Yii::app()->request->isAjaxRequest) {
+
+		}
 
 		if(isset($_POST['User'])) {
-			$model->attributes=$_POST['User'];
+			$model->attributes = $_POST['User'];
+			$model->username = $model->email;
 			
 			// Password hash
 			$temp=$model->password;
@@ -198,7 +211,8 @@ class ParserController extends Controller
 
 		$this->render('register',array(
 			'menu'=>$this->menu,
-			'model'=>$model
+			'model'=>$model,
+			'product_model'=>$product_model
 		));
 	}
 

@@ -121,20 +121,9 @@ throw new CHttpException(400,'Invalid request. Please do not repeat this request
 }
 
 /**
-* Lists all models.
-*/
-public function actionIndex()
-{
-$dataProvider=new CActiveDataProvider('Company');
-$this->render('index',array(
-'dataProvider'=>$dataProvider,
-));
-}
-
-/**
 * Manages all models.
 */
-public function actionAdmin()
+public function actionIndex()
 {
 $model=new Company('search');
 $model->unsetAttributes();  // clear any default values

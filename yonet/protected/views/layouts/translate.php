@@ -33,6 +33,7 @@ foreach($languages as $key=>$lang) {
 				foreach ($attrs as $type => $attr) {
 					echo '<div class="form-group">';
 						if ($attr=="slug") {
+							// slug create
 							Yii::app()->getClientScript()->registerScript(
 								'aliasmap',
 								'

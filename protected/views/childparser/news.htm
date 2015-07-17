@@ -1,17 +1,87 @@
-<!-- Page Head -->
-<div class="page-head">
-	<h1 class="page-head_title">{{ content.title }}</h1>
-</div>
-<div class="page-content news-detail">
-	<span class="news-detail_date">{{ App.dateFormatter.format('dd MMMM yyyy',content.date) }}</span>
-	<p class="lead">{{ content.description }}</p>
-	<div class="content-texts">{{ content.content }}</div>
-	<div class="news-detail-gallery">
-		<a href="{{ App.baseUrl }}/{{ App.settings.get("photo","news_path") ~ content.image }}" title="{{ content.title }}" class="news-detail-gallery_item">
-			<img src="{{ App.baseUrl }}/{{ App.settings.get("photo","news_path") ~ content.image }}" alt="{{ content.title }}">
-			<span class="news-detail-gallery_button hidden-xs">
-				<svg class="icon icon-aspect-ratio"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-aspect-ratio"></use></svg>
-			</span>
-		</a>
+<div class="col-md-6 col-md-offset-6 news-detail-right-col" itemscope itemtype="http://schema.org/Article">
+	<!-- Page Head -->
+	<div class="page-head page-head--news-detail">
+		<h1 class="page-head_title">{{ content.title }}</h1>
+	</div>
+	<div class="row">
+		<!-- News Detail - Media -->
+		<div class="col-md-6 detail-photo-container">
+			<div class="detail-photo">
+				<!-- Image -->
+				<div class="detail-photo_image">
+					<ul class="detail-slider" itemscope itemtype="http://schema.org/ImageGallery">
+						<li data-href="{{ App.baseUrl }}/{{ App.settings.get("photo","news_path") ~ content.image }}" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+							<img src="{{ App.baseUrl }}/{{ App.settings.get("photo","news_path") ~ content.image }}" alt="{{ content.title }}" itemprop="contentUrl" />
+						</li>
+					</ul>
+					<a href="img/product-image-normal.png?zoom" class="detail-photo-zoom">
+						<svg class="icon icon-loupe"><use xlink:href="#icon-loupe"></use></svg>
+					</a>
+				</div>
+				<div class="hidden-xs">
+					<!-- Thumbnails -->
+					<h3 class="detail-photo_title">GÖRSELLER</h3>
+					<div id="detail-pager" class="detail-photo-thumbnail" itemscope itemtype="http://schema.org/ImageGallery">
+						<a href="{{ App.baseUrl }}/{{ App.settings.get("photo","news_path") ~ content.image }}" title="{{ content.title }}" data-slide-index="0" class="detail-photo-thumbnail_item" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+							<img src="{{ App.baseUrl }}/{{ App.settings.get("photo","news_path") ~ content.image }}" alt="{{ content.title }}" />
+						</a>
+					</div>
+					<!-- Videos -->
+					<h3 class="detail-photo_title">VİDEOLAR</h3>
+					<div class="detail-photo-thumbnail" itemscope itemtype="http://schema.org/videoGallery">
+						<!--a href="https://www.youtube.com/watch?v=vXQKCBfRn3I" title="#" class="detail-photo-thumbnail_item detail-video" itemprop="associatedMedia" itemscope itemtype="http://schema.org/VideoObject">
+							<img src="img/dummy-thumbnail.png?1" itemprop="thumbnail">
+							<svg class="icon"><use xlink:href="#icon-play-circle-outline"></use></svg>
+						</a-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- News Detail - Content -->
+	<div class="news-detail">
+		<span class="news-detail_date">{{ App.dateFormatter.format('dd MMMM yyyy',content.date) }}</span>
+		<div class="news-detail_text">{{ content.content }}</div>
+		<!-- Social Buttons -->
+		<div class="news-detail_share">
+			<div class="google-share-button"><div class="g-plus" data-action="share" data-annotation="bubble"></div></div>
+			<div class="fb-share-button" data-href="{{ App.request.hostInfo ~ App.request.url }}" data-layout="button_count"></div>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-lang="tr">Tweet</a>
+			<div class="youtube-subscribe-button">
+				<div class="g-ytsubscribe" data-channel="TDGURAY" data-layout="default" data-count="default" data-onytevent="onYtEvent"></div>
+			</div>
+		</div>
 	</div>
 </div>
+<!-- Facebook -->
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/tr_TR/sdk.js#xfbml=1&version=v2.0";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- Google+ -->
+<script src="https://apis.google.com/js/platform.js" async defer>
+{lang: 'tr'}
+</script>
+
+<!-- Twitter -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<!-- YouTube -->
+<script>
+function onYtEvent(payload) {
+if (payload.eventType == 'subscribe') {
+// Add code to handle subscribe event.
+} else if (payload.eventType == 'unsubscribe') {
+// Add code to handle unsubscribe event.
+}
+if (window.console) { // for debugging only
+window.console.log('YT event: ', payload);
+}
+}
+</script>

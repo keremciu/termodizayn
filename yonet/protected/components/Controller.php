@@ -7,16 +7,16 @@
 */
 class Controller extends CController
 {
+	public $layout='//layouts/base';
+	public $menu=array();
+	public $breadcrumbs=array();
+
 	public function filters()
 	{
 		return array(
 			'accessControl',
 		);
 	}
-
-	public $layout='//layouts/base';
-	public $menu=array();
-	public $breadcrumbs=array();
 
 	public function accessRules()
 	{
@@ -35,10 +35,7 @@ class Controller extends CController
 			array('allow',
 				'actions'=>array('index','admin','sortable','toggle','delete','imagedelete','extraitemdelete','fileupload','attrdelete'),
 				'roles'=>array('admin'),
-			),
-			array('deny',
-                'users'=>array('*'),
-            ),
+			)
 		);
 	}
 
@@ -46,16 +43,19 @@ class Controller extends CController
 		return array(
 			'toggle' => array(
 				'class'		=> 'booster.actions.TbToggleAction',
-				'modelName' => $this->getUniqueId()
+				'modelName' => $this->getModel()
 			),
 			'sortable' => array(
 				'class'     => 'booster.actions.TbSortableAction',
-				'modelName' => $this->getUniqueId()
+				'modelName' => $this->getModel()
 			),
 		);
 	}
 
-
+	public function getModel() {
+		return ucwords($this->getUniqueId());
+	}
+		
 	protected function beforeAction($event) {
     	$action = $this->actionFixer(Yii::app()->controller->action->id);
     	$controller = $this->controllerFixer($this->getUniqueId());

@@ -35,7 +35,16 @@
 	</div>
 </div>
 <div class="form-group">
-	<?php echo $form->redactorGroup($model, 'content', array('class'=>'form-control', 'rows'=>3)); ?>
+	<?php echo $form->redactorGroup($model, 'content', 
+			array(
+				'widgetOptions' => array(
+					'editorOptions' =>array(
+						'class' => 'form-control', 
+						'rows' => 5
+					)
+				)
+			)
+		); ?>
 </div>
 <div class="row">
 	<div class="col-md-6">

@@ -1,38 +1,29 @@
 <?php
-$this->breadcrumbs=array(
-	'Menüler'=>array('index'),
-	$model->name=>array('view','id'=>$model->id),
-	'Güncelle',
-);
+	$form=$this->beginWidget('booster.widgets.TbActiveForm',array(
+		'id'=>$model->tableName().'-form',
+		'enableAjaxValidation'=>false,
+		'htmlOptions'=>array('class'=>'', 'enctype'=>'multipart/form-data'),
+	));
+	$this->renderPartial('/layouts/getlanguages');
 ?>
-
-<h1>Menü Güncelle</h1>
-
-<?php
-$form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'id'=>'menu-form',
-	'enableAjaxValidation'=>false,
-	'htmlOptions'=>array('class'=>'well', 'enctype'=>'multipart/form-data'),
-));
-
-$tabs = array(
-	array('id' => 'tab1', 'label' => 'Menü Bilgileri', 'content' => $this->renderPartial('_form', array('model'=>$model,'form'=>$form), true), 'active' => true),
-	array('id' => 'tab2', 'label' => 'Başka Dile Çevir', 'content' => $this->renderPartial('/layouts/translate', array('model'=>$model,'form'=>$form), true)),
-);
-
-$this->widget('bootstrap.widgets.TbTabs', array(
-	'type'=>'tabs',
-	'tabs'=>$tabs,
-));
+<div class="main-area col-md-12 main-content main-content--full">
+	<?php
+		$this->renderPartial('_form', array('model'=>$model,'form'=>$form));
+echo "</div></div>";
+$this->renderPartial('/layouts/translate', array('model'=>$model,'form'=>$form));
 ?>
-
 	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
+		<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Menü Ekle' : 'Menüyü Kaydet',
+			'context'=>'success',
+			'encodeLabel'=>false,
+			'htmlOptions'=>array(
+				'data-form'=>$model->tableName().'-form'
+			),
+			'label'=> '<svg class="td-icon td-icon-done"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-done"></use></svg> Menü Kaydet'
 		)); ?>
 	</div>
 <?php
 $this->endWidget();
+
 ?>

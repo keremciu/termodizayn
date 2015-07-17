@@ -1,15 +1,30 @@
 <?php
-$this->breadcrumbs=array(
-	'Catalogs'=>array('index'),
-	'Create',
-);
-
-$this->menu=array(
-array('label'=>'List Catalog','url'=>array('index')),
-array('label'=>'Manage Catalog','url'=>array('admin')),
-);
+	$this->renderPartial('/layouts/nolanguage');
 ?>
+<div class="main-area col-md-12 main-content main-content--full">
+	<div class="form-section">
+<?php
+	// form area
+	$form=$this->beginWidget('booster.widgets.TbActiveForm',array(
+		'id'=>$model->tableName().'-form',
+		'enableAjaxValidation'=>false,
+		'htmlOptions'=>array('class'=>'', 'enctype'=>'multipart/form-data'),
+	));
 
-<h1>Create Catalog</h1>
+	echo $this->renderPartial('_form', array('model'=>$model, 'form' => $form));
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+?>
+	<div class="form-actions">
+		<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'context'=>'success',
+			'encodeLabel'=>false,
+			'htmlOptions'=>array(
+				'data-form'=>$model->tableName().'-form'
+			),
+			'label'=> '<svg class="td-icon td-icon-done"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-done"></use></svg> Kataloğu Ekle'
+		)); ?>
+	</div>
+<?php
+$this->endWidget();
+?>

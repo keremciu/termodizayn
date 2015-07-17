@@ -22,6 +22,7 @@ $this->widget('booster.widgets.TbGridView',array(
 		array('name'=>'role','value'=>'roleFixer($data->role)'), 
 		array(
 			'class'=>'booster.widgets.TbButtonColumn',
+			'template'=>'{update}{delete}',
 		),
 	),
 )); ?>

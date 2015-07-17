@@ -1,60 +1,22 @@
-<?php
-$this->breadcrumbs=array(
-	'Catalogs'=>array('index'),
-	'Manage',
-);
-
-$this->menu=array(
-array('label'=>'List Catalog','url'=>array('index')),
-array('label'=>'Create Catalog','url'=>array('create')),
-);
-
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-$('.search-form').toggle();
-return false;
-});
-$('.search-form form').submit(function(){
-$.fn.yiiGridView.update('catalog-grid', {
-data: $(this).serialize()
-});
-return false;
-});
-");
-?>
-
-<h1>Manage Catalogs</h1>
-
-<p>
-	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
-		&lt;&gt;</b>
-	or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
-<div class="search-form" style="display:none">
-	<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-
-<?php $this->widget('booster.widgets.TbGridView',array(
-'id'=>'catalog-grid',
-'dataProvider'=>$model->search(),
-'filter'=>$model,
-'columns'=>array(
-		'id',
-		'name',
-		'intro',
-		'image',
-		'path',
-		'size',
-		/*
-		'ordering',
-		'active',
-		*/
-array(
-'class'=>'booster.widgets.TbButtonColumn',
-),
-),
-)); ?>
+<div class="admin_content col-md-12 main-content main-content--full hide-action">
+	<div class="table-area dataTables_wrapper no-footer">
+		<?php $this->widget('booster.widgets.TbGridView',array(
+		'id'=>'catalog-grid',
+		'dataProvider'=>$model->search(),
+		'columns'=>array(
+				'id',
+				'name',
+				'intro',
+		array(
+		'class'=>'booster.widgets.TbButtonColumn',
+		'template'=>'{update}{delete}',
+		),
+		),
+		)); ?>
+		<div class="form-actions">
+			<a href="<?php echo Yii::app()->createUrl('/catalog/create'); ?>" class="btn btn-success" >
+				<svg class="td-icon td-icon-add"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-add"></use></svg> Yeni Katalog Ekle
+			</a>
+		</div>
+	</div>
+</div>

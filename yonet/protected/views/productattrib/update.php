@@ -26,7 +26,7 @@
 			'htmlOptions'=>array(
 				'data-form'=>$model->tableName().'-form'
 			),
-			'label'=> '<svg class="td-icon td-icon-done"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-done"></use></svg> Haberi Kaydet'
+			'label'=> '<svg class="td-icon td-icon-done"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-done"></use></svg> Ozelligi Kaydet'
 		)); ?>
 	</div>
 	<?php

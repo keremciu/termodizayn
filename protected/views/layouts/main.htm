@@ -80,7 +80,7 @@
 		</div>
 		<div class="container">
 			<!-- Logo -->
-			<a href="{{ base }}" class="site-logo" title="Termodizayn">
+			<a href="{{ base }}/" class="site-logo" title="Termodizayn">
 				<img src="{{ base }}/img/site-logo.png" alt="Termodizayn">
 			</a>
 			<!-- Menu -->
@@ -94,7 +94,7 @@
 						{% if this.ishomepage %}
 							{% set getactive = true %}
 						{% endif %}
-						{% set link = App.baseUrl %}
+						{% set link = App.baseUrl ~ "/" %}
 					{% endif %}
 					<a href="{{ link }}" title="{{ menu.name }}" class="site-nav_item {{ ( menu.alias in geturl ) or ( getactive ) ? 'isActive' : '' }}">{{ menu.name }}</a>
 				{% endfor %}
@@ -109,7 +109,7 @@
 						{% for menu in this.dynamicmenu %}
 							{% set link = menu.alias %}
 							{% if menu.type == "frontpage" %}
-								{% set link = base %}
+								{% set link = base ~ "/" %}
 							{% endif %}
 							<li>
 								<a href="{{ link }}" title="{{ menu.name }}" class="mobile-nav-menu_item {{ menu.alias in geturl ? 'isActive' : '' }}">{{ menu.name }}</a>

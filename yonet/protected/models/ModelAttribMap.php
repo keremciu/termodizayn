@@ -43,11 +43,11 @@ class ModelAttribMap extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('attrib_id, model_id, ordering, on_list, value', 'required'),
-			array('attrib_id, model_id, ordering, on_list', 'numerical', 'integerOnly'=>true),
+			array('attrib_id, model_id, ordering, on_table, on_list, value', 'required'),
+			array('attrib_id, model_id, ordering, on_table, on_list', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, attrib_id, model_id, ordering, on_list, value', 'safe'),
+			array('id, attrib_id, model_id, ordering, on_table, on_list, value', 'safe'),
 		);
 	}
 
@@ -95,6 +95,7 @@ class ModelAttribMap extends CActiveRecord
 		$criteria->compare('model_id',$this->model_id);
 		$criteria->compare('ordering',$this->ordering);
 		$criteria->compare('on_list',$this->on_list);
+		$criteria->compare('on_table',$this->on_table);
 		$criteria->compare('value',$this->value,true);
 
 		return new CActiveDataProvider($this, array(

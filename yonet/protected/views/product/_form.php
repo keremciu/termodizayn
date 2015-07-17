@@ -8,8 +8,8 @@ if ($model->isNewRecord) {
 	$model->featured = 0;
 	$model->ordering = $lastorder;
 }
-$orderdata = CHtml::listData($model->findAll(array('order' => 'ordering')),'ordering','fullName');
-$orderinglist = CMap::mergeArray(array(0=>'0 İlk sırada'),$orderdata,array($lastorder=>$lastorder.' Son sırada'));
+$orderdata = CHtml::listData($model->findAll(array('order' => 'ordering')),'updatedorder','orderName');
+$orderinglist = CMap::mergeArray(array(1=>'1 -> İlk sıraya'),$orderdata);
 $tags = $model->getAllTags();
 
 	echo $form->errorSummary($model); 
@@ -91,11 +91,13 @@ $tags = $model->getAllTags();
 				<?php echo $form->switchGroup($model, 'is_published'); ?>
 			</div>
 		</div>
+		<div class="col-md-4">
+				<?php echo $form->switchGroup($model, 'featured'); ?>
+		</div>
 	</div>
 </div>
 <?php 
 	echo $form->hiddenField($model,'create_data');
 	echo $form->hiddenField($model,'hits');
-	echo $form->hiddenField($model,'featured');
 ?>
 <input name="Product[is_deleted]" id="Product_is_deleted" value="0" type="hidden">

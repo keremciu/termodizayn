@@ -33,7 +33,7 @@ class LoginPortlet extends CPortlet
                 $model->attributes=$_POST['LoginForm'];
                 // validate user input and redirect to the previous page if valid
                 if($model->validate() && $model->login())
-                    $this->controller->redirect(Yii::app()->user->returnUrl);
+                    $this->controller->redirect(Yii::app()->request->urlReferrer);
         }
 
         // display the login form
